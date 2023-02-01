@@ -1,52 +1,88 @@
-require("dotenv").config();
-const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const mongoose = require('mongoose');
+const crypto = require('crypto');
 
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: [true, "Please provide username"],
     trim: true,
-    minlength: 3,
-    maxlength: 20,
   },
   email: {
     type: String,
-    unique: true,
-    required: [true, "please provide email"],
-    match: [
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      "Please provide valid email",
-    ],
+    trim: true,
+    unique: 'Email already exists',
+    match: [/.+\@.+\..+/, 'Please fill a valid email address'],
+    required: 'Email is required'
   },
-  password: {
-    type: String,
-    required: [true, "Please provide password"],
-    minlength: 6,
-  },
-
   mobile: {
     type: Number,
-    required: [true, "Please provide mobile number"],
-    trim: true,
-    minlength: 10,
+    unique: 'Mobile Number is already registered',
+    required: 'Mobile Number is required'
+  }
+  ,
+  hashed_password: {
+    type: String,
+    required: "Password is required"
   },
-});
-
-UserSchema.pre("save", async function () {
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-});
-
-UserSchema.methods.createToken = function () {
-  return jwt.sign(
-    { userId: this._id, name: this.name },
-    process.env.JWT_SECRET,
+  salt: String,
+  updated: Date,
+  created: {
+    type: Date,
+    default: Date.now
+  },
+  products: [
     {
-      expiresIn: process.env.JWT_LIFETIME,
+      product: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'SellProduct'
+      }
     }
-  );
-};
+  ]
+})
 
-module.exports = mongoose.model("user", UserSchema);
+// set hashed_password = encrypted password in schema 
+UserSchema
+  .virtual('password')
+  .set(function (password) {
+    this._password = password
+    this.salt = this.makeSalt()
+    this.hashed_password = this.encryptPassword(password)
+  })
+  .get(function () {
+    return this._password
+  })
+
+// validating password
+UserSchema.path('hashed_password').validate(function (v) {
+  if (this._password && this._password.length < 6) {
+    this.invalidate('password', 'Password must be at least 6 characters.')
+  }
+  if (this.isNew && !this._password) {
+    this.invalidate('password', 'Password is required')
+  }
+}, null)
+
+
+// authenticate password
+// encrypt password
+// create random string salt 
+UserSchema.methods = {
+  authenticate: function (plainText) {
+    return this.encryptPassword(plainText) === this.hashed_password
+  },
+  encryptPassword: function (password) {
+    if (!password) return ''
+    try {
+      return crypto
+        .createHmac('sha1', this.salt)
+        .update(password)
+        .digest('hex')
+    } catch (err) {
+      return ''
+    }
+  },
+  makeSalt: function () {
+    return Math.round((new Date().valueOf() * Math.random())) + ''
+  }
+}
+
+module.exports = mongoose.model('User', UserSchema);
