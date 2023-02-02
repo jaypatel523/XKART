@@ -71,7 +71,7 @@ export const Header = () => {
             </Link>
 
             <Link
-              to="/chat"
+              to="/wishlist"
               className="btn border"
               style={{ marginRight: "1rem" }}
             >

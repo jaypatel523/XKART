@@ -190,9 +190,6 @@ const Navbar = () => {
                       <Link to="/login" className="nav-item nav-link">
                         Login
                       </Link>
-                      <Link to="/register" className="nav-item nav-link">
-                        Login
-                      </Link>
                     </div>
                   </div>
                 </>
