@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
+import Sell from "./components/Sell";
 
 const router = createBrowserRouter([
   {
@@ -8,7 +9,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/sell",
-    element: <h1> Selling page comming soon...</h1>,
+    element: <Sell />,
   },
   {
     path: "/chat",
