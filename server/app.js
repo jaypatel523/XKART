@@ -4,8 +4,9 @@ const app = express();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const userRoutes = require('./routes/user');
 const connectDB = require('./db/connect');
+const userRoutes = require('./routes/user');
+const productRoutes = require('./routes/product');
 
 // const path = require('path');
 // app.use(express.static(path.join(__dirname, '../client/dist')));
@@ -17,6 +18,7 @@ app.use(cors());
 
 
 app.use('/', userRoutes);
+app.use('/', productRoutes);
 
 
 

@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 const Sell = () => {
+  const handleClick = () => {};
+  const [brand, setBrand] = useState("");
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [price, setPrice] = useState(0);
+  const [state, setState] = useState("");
+  const [city, setCity] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const post = { brand, title, desc, price, state, city };
+    axios
+      .post("http://localhost:8000/addProduct", post)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
-    <div
+    <form
       style={{
         color: "black",
         height: "100vh",
       }}
+      onSubmit={handleSubmit}
     >
       <section
         style={{
@@ -43,12 +66,20 @@ const Sell = () => {
           }}
         >
           {/* Brand part */}
-          <input type="text" placeholder="Brand" style={{ width: "100%" }} />
+          <input
+            type="text"
+            placeholder="Brand"
+            style={{ width: "100%" }}
+            value={brand}
+            onChange={(e) => setBrand(e.target.value)}
+          />
           {/* Title part */}
           <div>
             <input
               type="text"
               placeholder="Ad title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               style={{ width: "100%" }}
             />
           </div>
@@ -58,6 +89,8 @@ const Sell = () => {
               id=""
               rows={3}
               placeholder="Description"
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
               style={{ width: "100%" }}
             ></textarea>
           </div>
@@ -67,6 +100,8 @@ const Sell = () => {
               type="number"
               placeholder="Price"
               style={{ width: "100%" }}
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
             />
           </div>
 
@@ -111,18 +146,32 @@ const Sell = () => {
             </div>
           </div>
           <div>
-            <input type="text" placeholder="State" style={{ width: "100%" }} />
+            <input
+              type="text"
+              placeholder="State"
+              style={{ width: "100%" }}
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+            />
           </div>
           <div>
-            <input type="text" placeholder="City" style={{ width: "100%" }} />
+            <input
+              type="text"
+              placeholder="City"
+              style={{ width: "100%" }}
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
           </div>
           <div>
             <input type="text" placeholder="Name" style={{ width: "100%" }} />
           </div>
+          <button type="submit" style={{ width: "450px" }}>
+            Post Now
+          </button>
         </div>
-        <button style={{ width: "450px" }}>Post Now</button>
       </section>
-    </div>
+    </form>
   );
 };
 
