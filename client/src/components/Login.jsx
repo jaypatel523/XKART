@@ -1,10 +1,7 @@
 import React from "react";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Login = () => {
-  const [isLogin, setIsLogin] = useState(true);
-
   return (
     <>
       <div
