@@ -7,6 +7,7 @@ const cors = require('cors');
 const connectDB = require('./db/connect');
 const userRoutes = require('./routes/user');
 const productRoutes = require('./routes/product');
+const wishlistRoutes = require('./routes/wishlist');
 
 // const path = require('path');
 // app.use(express.static(path.join(__dirname, '../client/dist')));
@@ -19,6 +20,7 @@ app.use(cors());
 
 app.use('/', userRoutes);
 app.use('/', productRoutes);
+app.use('/', wishlistRoutes);
 
 
 

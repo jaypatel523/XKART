@@ -1,27 +1,54 @@
-const SellProduct = require('../models/product');
-
-const sellProduct = async (req, res) => {
-    try {
-        res.send({ msg: "add product" });
-    } catch (error) {
-        res.send(error);
-    }
-}
+const AllProduct = require('../models/allProducts');
 
 const getAllProducts = async (req, res) => {
     try {
-        res.send('get all products');
+        const products = await AllProduct.find({});
+        res.send({ products });
     } catch (error) {
         res.send(error);
     }
 }
+
+
+
 
 const getProductCategorywise = async (req, res) => {
     try {
-        res.send('get product category-wise');
+        const products = await AllProduct.find({ category: req.body.category });
+        res.send({ products });
     } catch (error) {
         res.send(error);
     }
 }
 
-module.exports = { sellProduct, getAllProducts, getProductCategorywise }
+const getProductStatewise = async (req, res) => {
+    try {
+        let params = req.params;
+        params.state = params.state.toUpperCase();
+        const products = await AllProduct.find({ state: params.state })
+        res.send({ products });
+    } catch (error) {
+        res.send(error);
+    }
+}
+
+
+
+
+const getProductCitywise = async (req, res) => {
+    try {
+        let params = req.params;
+        params.city = params.city.toUpperCase();
+        const products = await AllProduct.find({ city: params.city })
+        res.send({ products });
+    }
+    catch (error) {
+        res.send(error);
+    }
+}
+
+
+
+
+
+module.exports = { getAllProducts, getProductCategorywise, getProductStatewise, getProductCitywise };
