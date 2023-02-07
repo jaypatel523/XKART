@@ -1,6 +1,5 @@
 import React from "react";
 import { BsFillChatDotsFill, BsSuitHeartFill, BsSearch } from "react-icons/bs";
-import "../App.css";
 import "../index.css";
 import { Link } from "react-router-dom";
 
