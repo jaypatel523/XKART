@@ -9,14 +9,15 @@ const register = async (req, res) => {
 
     try {
         const user = new User(req.body)
-        const dbemail = await User.findOne({ email: req.body.email });
-        if (dbemail) {
-            throw new Error("Email Address already exists")
-        }
 
         const dbmobile = await User.findOne({ mobile: req.body.mobile });
         if (dbmobile) {
             throw new Error('Mobile Number already exists');
+        }
+
+        const dbemail = await User.findOne({ email: req.body.email });
+        if (dbemail) {
+            throw new Error("Email Address already exists")
         }
         await user.save()
         res.status(200).json({ message: "Successfully Registered!" })
@@ -42,7 +43,7 @@ const login = async (req, res) => {
         }, process.env.JWT_SECRET)
 
         res.cookie("token", token, {
-            expire: new Date() + 9999
+            maxAge: 86400000
         })
 
         return res.json({ token, user: { _id: user._id, username: user.username, email: user.email }, message: "Successfully logged in!" })
@@ -52,8 +53,8 @@ const login = async (req, res) => {
 }
 
 const logout = (req, res) => {
-    res.clearCookie("t")
-    res.status(200).json({ message: "signed out" })
+    res.clearCookie("token")
+    res.status(200).json({ message: "logged out" })
 }
 
 const requireSignin = jwt({
@@ -65,9 +66,7 @@ const requireSignin = jwt({
 const hasAuthorization = (req, res, next) => {
     const authorized = req.profile && req.auth && req.profile._id == req.auth._id
     if (!(authorized)) {
-        return res.status(403).json({
-            error: "User is not authorized"
-        })
+        return res.status(403).json({ error: "User is not authorized" })
     }
     next()
 }
