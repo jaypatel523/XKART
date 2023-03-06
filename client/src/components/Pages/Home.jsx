@@ -1,12 +1,17 @@
 import React from "react";
+import Categories from "./Categories";
 import Navbar from "./Navbar";
+import Products from "./Products";
+import Search from "./Search";
 
 const Home = () => {
   return (
     <>
       <div className="">
-        {/* hi */}
         <Navbar />
+        <Categories />
+        <Search />
+        <Products />
       </div>
     </>
   );

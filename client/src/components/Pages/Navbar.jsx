@@ -10,90 +10,53 @@ import { AiOutlineClose } from "react-icons/ai";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigateTo = useNavigate();
   const handleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    navigateTo("/menu");
   };
 
   return (
     <>
-      {!isMenuOpen && (
-        <>
-          <div className="drop-shadow-sm shadow-lg w-auto px-4 flex justify-between items-center">
-            <div className="py-4 flex items-center">
-              <div className="mr-4">XKART</div>
-              <div className="mr-4">
-                <button className="border border-black  py-2 px-4 hidden md:flex justify-between items-center rounded-lg">
-                  <span>Location</span>
-                  <TiArrowSortedDown />
-                </button>
-              </div>
-              <form className="hidden md:flex items-center">
-                <div>
-                  <input
-                    type="text"
-                    className="p-2 border border-black rounded-lg  focus:outline-none"
-                    placeholder="search any product..."
-                  />
-                </div>
-              </form>
-            </div>
-            <div className="hidden md:flex justify-between items-center">
-              <Link to="/chat" className="p-2">
-                <BsChatDots className="w-6 h-6" />
-              </Link>
-              <Link to="/chat" className="p-2">
-                <IoMdNotificationsOutline className="w-6 h-6" />
-              </Link>
-              <Link to="/login" className="p-2">
-                <VscAccount className="w-6 h-6" />
-              </Link>
-              <Link
-                to="/sell"
-                className="bg-blue-500 text-white rounded-lg px-10 py-2"
-              >
-                sell
-              </Link>
-            </div>
-            <div className="md:hidden">
-              <FiMenu className="w-6 h-6" onClick={handleMenu} />
-            </div>
+      <div className="drop-shadow-sm shadow-lg w-auto px-4 flex justify-between items-center">
+        <div className="py-4 flex items-center">
+          <div className="mr-4">XKART</div>
+          <div className="mr-4">
+            <button className="border border-black  py-2 px-4 hidden md:flex justify-between items-center rounded-lg">
+              <span>Location</span>
+              <TiArrowSortedDown />
+            </button>
           </div>
-        </>
-      )}
-
-      {/* responsive part */}
-      {isMenuOpen && (
-        <>
-          <div className="px-4 drop-shadow-sm shadow-lg flex justify-between items-center">
-            <div className="py-2 flex items-center">
-              <div className="mr-4">XKART</div>
-              <div className="mr-4">
-                <button className="border border-black  py-2 px-4 flex justify-between items-center rounded-lg">
-                  <span>Location</span>
-                  <TiArrowSortedDown />
-                </button>
-              </div>
-            </div>
-            <div className="">
-              <AiOutlineClose className="w-6 h-6" onClick={handleMenu} />
-            </div>
-          </div>
-        </>
-      )}
-
-      {!isMenuOpen && (
-        <>
-          <div className="py-4  block md:hidden">
-            <form className="mx-6 flex items-center justify-center">
+          <form className="hidden md:flex items-center">
+            <div>
               <input
                 type="text"
-                className="p-2 w-full border border-black rounded-lg  focus:outline-none"
+                className="p-2 border border-black rounded-lg  focus:outline-none"
                 placeholder="search any product..."
               />
-            </form>
-          </div>
-        </>
-      )}
+            </div>
+          </form>
+        </div>
+        <div className="hidden md:flex justify-between items-center">
+          <Link to="/chat" className="p-2">
+            <BsChatDots className="w-6 h-6" />
+          </Link>
+          <Link to="/chat" className="p-2">
+            <IoMdNotificationsOutline className="w-6 h-6" />
+          </Link>
+          <Link to="/login" className="p-2">
+            <VscAccount className="w-6 h-6" />
+          </Link>
+          <Link
+            to="/sell"
+            className="bg-blue-500 text-white rounded-lg px-10 py-2"
+          >
+            sell
+          </Link>
+        </div>
+        <div className="md:hidden">
+          <FiMenu className="w-6 h-6" onClick={handleMenu} />
+        </div>
+      </div>
     </>
   );
 };
