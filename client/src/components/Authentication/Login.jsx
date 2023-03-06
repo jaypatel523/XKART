@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 // import { MediaContext } from "../../Context";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigateTo = useNavigate();
   //   const { user, setUser } = useContext(MediaContext);
 
   const handleLogin = () => {
@@ -16,6 +17,7 @@ const Login = () => {
         // sessionStorage.setItem("userId", res.data.user._id);
         // sessionStorage.setItem("username", res.data.user.username);
         // sessionStorage.setItem("email", res.data.user.email);
+        navigateTo("/");
         alert(res.data.message);
       })
       .catch((err) => {
