@@ -17,7 +17,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="drop-shadow-sm shadow-lg w-auto px-4 flex justify-between items-center">
+      <div className="drop-shadow-sm shadow-md w-auto px-4 flex justify-between items-center">
         <div className="py-4 flex items-center">
           <div className="mr-4">XKART</div>
           <div className="mr-4">
