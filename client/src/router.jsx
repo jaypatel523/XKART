@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import Wishlist from "./components/Pages/Wishlist";
 import Login from "./components/Authentication/Login";
 import Register from "./components/Authentication/Register";
 import Chat from "./components/Pages/Chat";
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: "/sell",
     element: <Sell />,
+  },
+  {
+    path: "/wishlist",
+    element: <Wishlist />,
   },
   {
     path: "/menu",

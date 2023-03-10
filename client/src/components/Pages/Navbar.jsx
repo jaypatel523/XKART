@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { TiArrowSortedDown } from "react-icons/ti";
-import { BsChatDots } from "react-icons/bs";
+import { BsChatDots, BsCartPlus } from "react-icons/bs";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { VscAccount } from "react-icons/vsc";
 import { BiSearch } from "react-icons/bi";
@@ -42,6 +42,9 @@ const Navbar = () => {
           </Link>
           <Link to="/chat" className="p-2">
             <IoMdNotificationsOutline className="w-6 h-6" />
+          </Link>
+          <Link to="/wishlist" className="p-2">
+            <BsCartPlus className="w-6 h-6" />
           </Link>
           <Link to="/login" className="p-2">
             <VscAccount className="w-6 h-6" />
