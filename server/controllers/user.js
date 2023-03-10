@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const jwttoken = require('jsonwebtoken');
-const getErrorMessage = require('../errorHandler/errorHandler');
 const { expressjwt: jwt } = require("express-jwt");
 
 

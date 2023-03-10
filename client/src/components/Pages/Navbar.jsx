@@ -10,11 +10,13 @@ import { AiOutlineClose } from "react-icons/ai";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const navigateTo = useNavigate();
   const handleMenu = () => {
     navigateTo("/menu");
   };
-
+  
+  
   return (
     <>
       <div className="drop-shadow-sm shadow-md w-auto px-4 flex justify-between items-center">
