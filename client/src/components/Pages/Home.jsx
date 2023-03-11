@@ -1,4 +1,5 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import Categories from "./Categories";
 import Navbar from "./Navbar";
 import Products from "./Products";
@@ -8,7 +9,6 @@ const Home = () => {
   return (
     <>
       <div className="">
-        <Navbar />
         <Categories />
         <Search />
         <Products />

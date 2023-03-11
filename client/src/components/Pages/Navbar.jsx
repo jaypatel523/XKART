@@ -6,7 +6,7 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { VscAccount } from "react-icons/vsc";
 import { BiSearch } from "react-icons/bi";
 import { FiMenu } from "react-icons/fi";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineLogout } from "react-icons/ai";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -48,9 +48,14 @@ const Navbar = () => {
           <Link to="/wishlist" className="p-2">
             <BsCartPlus className="w-6 h-6" />
           </Link>
-          <Link to="/login" className="p-2">
-            <VscAccount className="w-6 h-6" />
+          <Link to="/profile" className="p-2">
+            {sessionStorage.getItem("userId") && (
+              <>
+                <VscAccount className="w-6 h-6" />
+              </>
+            )}
           </Link>
+
           <Link
             to="/sell"
             className="bg-blue-500 text-white rounded-lg px-10 py-2"

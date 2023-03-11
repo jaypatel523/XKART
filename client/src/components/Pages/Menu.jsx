@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { createBrowserRouter, useNavigate } from "react-router-dom";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { BsChatDots, BsCartPlus, BsCartDash } from "react-icons/bs";
 import { IoMdNotificationsOutline } from "react-icons/io";
@@ -13,6 +13,8 @@ const Menu = () => {
   const handleMenu = () => {
     navigateTo("/");
   };
+
+  console.log(sessionStorage.getItem("userId"));
   return (
     <>
       <div className="px-4 drop-shadow-sm shadow-lg flex justify-between items-center">
@@ -43,17 +45,31 @@ const Menu = () => {
           <span>Wish list</span>
           <BsCartPlus className="w-6 h-6" />
         </div>
+        {/* This is for Profile */}
         <div className="flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
-          <span>Profile</span>
-          <VscAccount className="w-6 h-6" />
+          {sessionStorage.getItem("userId") && (
+            <>
+              <span>Profile</span>
+              <VscAccount className="w-6 h-6" />
+            </>
+          )}
         </div>
         <div className="flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
           <span>Sell</span>
           <BsCartDash className="w-6 h-6" />
         </div>
         <div className="flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
-          <span>Login/Register or Logout</span>
-          <AiOutlineLogout className="w-6 h-6" />
+          {sessionStorage.getItem("userId") ? (
+            <>
+              <span>Logout</span>
+              <AiOutlineLogout className="w-6 h-6" />
+            </>
+          ) : (
+            <>
+              <span>Login / Register</span>
+              <AiOutlineLogout className="w-6 h-6" />
+            </>
+          )}
         </div>
       </div>
     </>
