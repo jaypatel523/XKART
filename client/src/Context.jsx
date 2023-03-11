@@ -1,2 +1,2 @@
 import { createContext } from "react";
-export const MediaContext = createContext();
+export const UserContext = createContext();

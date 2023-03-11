@@ -7,16 +7,15 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigateTo = useNavigate();
-  //   const { user, setUser } = useContext(MediaContext);
 
   const handleLogin = () => {
     const data = { email, password };
     axios
       .post("/api/login", data)
       .then((res) => {
-        // sessionStorage.setItem("userId", res.data.user._id);
-        // sessionStorage.setItem("username", res.data.user.username);
-        // sessionStorage.setItem("email", res.data.user.email);
+        sessionStorage.setItem("userId", res.data.user._id);
+        sessionStorage.setItem("username", res.data.user.username);
+        sessionStorage.setItem("email", res.data.user.email);
         navigateTo("/");
         alert(res.data.message);
       })
