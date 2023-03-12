@@ -4,6 +4,7 @@ import Categories from "./Categories";
 import Navbar from "./Navbar";
 import Products from "./Products";
 import Search from "./Search";
+import SingleProduct from "./SingleProduct";
 
 const Home = () => {
   return (

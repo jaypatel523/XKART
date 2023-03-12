@@ -4,7 +4,7 @@ const SellProduct = new mongoose.Schema({
 
   userId: {
     type: String,
-    ref: 'User'
+    ref: 'User',
   },
   products: []
 

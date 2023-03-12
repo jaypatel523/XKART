@@ -5,6 +5,7 @@ const getAllProducts = async (req, res) => {
         const products = await AllProduct.find({});
         res.send({ products });
     } catch (error) {
+        console.log(error);
         res.send(error);
     }
 }
@@ -15,6 +16,9 @@ const getAllProducts = async (req, res) => {
 const getProductCategorywise = async (req, res) => {
     try {
         const products = await AllProduct.find({ category: req.body.category });
+        if (!products) {
+            throw new Error('invalid category');
+        }
         res.send({ products });
     } catch (error) {
         res.send(error);
