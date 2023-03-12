@@ -1,14 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 import Wishlist from "./components/Pages/Wishlist";
 import Login from "./components/Authentication/Login";
+import Main from "./components/Pages"
 import Register from "./components/Authentication/Register";
 import ChatPage from "./components/Pages/ChatPage";
 import Home from "./components/Pages/Home";
 import Menu from "./components/Pages/Menu";
-import Navbar from "./components/Pages/Navbar";
 import Sell from "./components/Pages/Sell";
-import Profile from "./components/Pages/Profile";
-import Main from "./components/Pages";
+import Profile from "./components/Pages/Profile"
+import SingleProduct from "./components/Pages/SingleProduct";
+
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,11 @@ const router = createBrowserRouter([
     path: "/menu",
     element: <Menu />,
   },
+  {
+    path: "/singleproduct",
+    element : <SingleProduct />
+  }
+
 ]);
 
 export default router;

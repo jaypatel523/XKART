@@ -1,7 +1,8 @@
 import React from "react";
 import { createBrowserRouter, useNavigate } from "react-router-dom";
 import { TiArrowSortedDown } from "react-icons/ti";
-import { BsChatDots, BsCartPlus, BsCartDash } from "react-icons/bs";
+import { BsChatDots, BsCartDash } from "react-icons/bs";
+import { FaRegHeart } from "react-icons/fa";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { VscAccount } from "react-icons/vsc";
 import { BiSearch } from "react-icons/bi";
@@ -43,7 +44,7 @@ const Menu = () => {
         </div>
         <div className="flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
           <span>Wish list</span>
-          <BsCartPlus className="w-6 h-6" />
+          <FaRegHeart className="w-6 h-6" />
         </div>
         {/* This is for Profile */}
         {/* <div className="flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
