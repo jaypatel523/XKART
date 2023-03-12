@@ -46,14 +46,14 @@ const Menu = () => {
           <BsCartPlus className="w-6 h-6" />
         </div>
         {/* This is for Profile */}
-        <div className="flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
+        {/* <div className="flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
           {sessionStorage.getItem("userId") && (
             <>
               <span>Profile</span>
               <VscAccount className="w-6 h-6" />
             </>
           )}
-        </div>
+        </div> */}
         <div className="flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
           <span>Sell</span>
           <BsCartDash className="w-6 h-6" />
