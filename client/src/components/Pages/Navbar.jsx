@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { TiArrowSortedDown } from "react-icons/ti";
-import { BsChatDots, BsCartPlus } from "react-icons/bs";
+import { BsChatDots } from "react-icons/bs";
+import { FaRegHeart } from "react-icons/fa";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { VscAccount } from "react-icons/vsc";
 import { BiSearch } from "react-icons/bi";
@@ -15,8 +16,7 @@ const Navbar = () => {
   const handleMenu = () => {
     navigateTo("/menu");
   };
-  
-  
+
   return (
     <>
       <div className="drop-shadow-sm shadow-md w-auto px-4 flex justify-between items-center">
@@ -46,7 +46,7 @@ const Navbar = () => {
             <IoMdNotificationsOutline className="w-6 h-6" />
           </Link>
           <Link to="/wishlist" className="p-2">
-            <BsCartPlus className="w-6 h-6" />
+            <FaRegHeart className="w-6 h-6" />
           </Link>
           <Link to="/profile" className="p-2">
             {sessionStorage.getItem("userId") && (
