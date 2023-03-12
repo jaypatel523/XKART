@@ -4,14 +4,14 @@ const Card1 = () => {
   return (
     <>
       <div className="flex justify-center border border-gray-200 shadow-lg">
-        <div className="block px-10 py-2 bg-white">
+        <div className="block px-20 py-2 bg-white">
           <img
             className="w-full h-[100]"
-            src="../../../assets/pic-laptop.jpg"
+            src="../../../../assets/pic-laptop.jpg"
             alt=""
           />
 
-          <div className="p-4">
+          <div className="py-4">
             <h5 className="mb-2 text-xl font-semibold">Details</h5>
 
             <div>

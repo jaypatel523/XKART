@@ -17,7 +17,7 @@ const Card = () => {
                 <IoIosArrowForward className="my-auto" />
               </div>
             </div>
-            <div className="">
+            <div>
               <div className="cursor-pointer text-center mb-2 py-3 text-2xl bg-blue-500 text-white rounded-lg">
                 Chat with seller
               </div>

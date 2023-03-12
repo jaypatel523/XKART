@@ -13,12 +13,12 @@ const Card = () => {
             </div>
           </div>
           <div>
-            <p className="mb-4 text-base sm:text-lg">
+            <div className="mb-4 text-base sm:text-lg">
               Some quick example text to build Lorem ipsum dolor sit amet
               consectetur adipisicing elit. Illum est eaque illo cum quo
               deleniti doloremque sequi, error nam quidem, molestiae facere
               mollitia hic id. Eligendi enim ea iusto tenetur.
-            </p>
+            </div>
           </div>
           <div className="flex justify-between ">
             <p className="text-sm md:text-base">Surat, Gujarat</p>
