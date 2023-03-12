@@ -9,6 +9,7 @@ import Navbar from "./components/Pages/Navbar";
 import Sell from "./components/Pages/Sell";
 import Profile from "./components/Pages/Profile";
 import Main from "./components/Pages";
+import SingleProduct from "./components/Pages/SingleProduct/SingleProduct";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/singleProduct",
+        element: <SingleProduct />,
       },
     ],
   },

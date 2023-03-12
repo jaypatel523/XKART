@@ -23,6 +23,7 @@ const initialState = {
 const Sell = () => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [state, dispatch] = useReducer(sellReducer, initialState);
+  const [img, setImg] = useState("");
 
   const firebaseConfig = {
     apiKey: "AIzaSyC22nzqEqUynJgTmhzDcKDla5lkillxWJ4",
@@ -43,7 +44,7 @@ const Sell = () => {
     uploadBytes(storageRef, image)
       .then((snapshot) => {
         getDownloadURL(storageRef).then((res) => {
-          return res;
+          console.log(res);
         });
       })
       .catch((err) => {
@@ -56,6 +57,7 @@ const Sell = () => {
     const storageRef1 = ref(storage, `XKART/${state.image1.name}`);
     const storageRef2 = ref(storage, `XKART/${state.image2.name}`);
     const storageRef3 = ref(storage, `XKART/${state.image3.name}`);
+
     let url1 = handleUpload(storageRef1, state.image1);
     let url2 = handleUpload(storageRef2, state.image2);
     let url3 = handleUpload(storageRef3, state.image3);
