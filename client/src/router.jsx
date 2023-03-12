@@ -3,13 +3,13 @@ import Wishlist from "./components/Pages/Wishlist";
 import Login from "./components/Authentication/Login";
 import Main from "./components/Pages"
 import Register from "./components/Authentication/Register";
-import ChatPage from "./components/Pages/ChatPage";
+import ChatPage from "./components/Pages/Chat/ChatPage";
 import Home from "./components/Pages/Home";
 import Menu from "./components/Pages/Menu";
 import Sell from "./components/Pages/Sell";
-import Profile from "./components/Pages/Profile"
-import SingleProduct from "./components/Pages/SingleProduct";
-
+import Profile from "./components/Pages/Profile";
+import Main from "./components/Pages";
+import SingleProduct from "./components/Pages/SingleProduct/SingleProduct";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/singleProduct",
+        element: <SingleProduct />,
       },
     ],
   },
