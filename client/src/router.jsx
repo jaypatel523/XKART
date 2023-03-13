@@ -8,14 +8,13 @@ import Home from "./components/Pages/Home";
 import Menu from "./components/Pages/Menu";
 import Sell from "./components/Pages/Sell";
 import Profile from "./components/Pages/Profile";
-import Main from "./components/Pages";
 import SingleProduct from "./components/Pages/SingleProduct/SingleProduct";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
-    children: [
+    children: [ 
       {
         path: "/",
         element: <Home />,
