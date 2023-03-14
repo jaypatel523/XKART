@@ -5,7 +5,7 @@ const Card1 = () => {
     <>
       <div className="flex justify-center border border-gray-200 shadow-lg">
         <div className="block px-20 py-2 bg-white">
-          <img
+          <img 
             className="w-full h-[100]"
             src="../../../../assets/pic-laptop.jpg"
             alt=""

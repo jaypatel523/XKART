@@ -14,10 +14,7 @@ const Card = () => {
           </div>
           <div>
             <div className="mb-4 text-base sm:text-lg">
-              Some quick example text to build Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Illum est eaque illo cum quo
-              deleniti doloremque sequi, error nam quidem, molestiae facere
-              mollitia hic id. Eligendi enim ea iusto tenetur.
+              Some quick example text to build
             </div>
           </div>
           <div className="flex justify-between ">
