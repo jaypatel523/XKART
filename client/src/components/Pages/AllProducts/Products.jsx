@@ -1,9 +1,11 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useContext} from "react";
+import { UserContext } from "../../../Context";
 import Card from "./Card";
 
 const Products = () => {
   const [allProducts, setAllProducts] = useState();
+  const {user} = useContext(UserContext);
 
   useEffect(() => {
     axios
@@ -15,6 +17,10 @@ const Products = () => {
         console.log("err", err);
       });
   }, []);
+
+  
+
+
 
   return (
     <>

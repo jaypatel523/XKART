@@ -10,15 +10,13 @@ import Login from "../Authentication/Login";
 const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsOpen(!isOpen);
-    }, 5000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setIsOpen(!isOpen);
+  //   }, 5000);
+  // }, []);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  
 
   return (
     <>
@@ -27,13 +25,6 @@ const Home = () => {
         <Search />
         <Products />
         <div className="">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={toggleMenu}
-          >
-            Show Menu
-          </button>
-
           {isOpen && (
             <div className="h-[600px] w-full bg-opacity-40 backdrop-blur-sm absolute top-0 left-0 mt-2 bg-white rounded-md shadow-lg">
               <Login />
