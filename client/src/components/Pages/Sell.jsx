@@ -18,12 +18,16 @@ const initialState = {
   image3: "",
   state: "",
   city: "",
+  seller: "",
+  contact: "",
 };
 
 const Sell = () => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [state, dispatch] = useReducer(sellReducer, initialState);
-  const [img, setImg] = useState("");
+  const [img1, setImg1] = useState();
+  const [img2, setImg2] = useState();
+  const [img3, setImg3] = useState();
 
   const firebaseConfig = {
     apiKey: "AIzaSyC22nzqEqUynJgTmhzDcKDla5lkillxWJ4",
@@ -39,38 +43,48 @@ const Sell = () => {
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app, bucket_url);
 
-  const handleUpload = (storageRef, image) => {
-    // const storageRef = ref(storage, `XKART/${state.image1.name}`);
-    uploadBytes(storageRef, image)
-      .then((snapshot) => {
-        getDownloadURL(storageRef).then((res) => {
-          console.log(res);
-        });
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
-  };
-
   const handleSell = () => {
     console.log(state);
-    const storageRef1 = ref(storage, `XKART/${state.image1.name}`);
-    const storageRef2 = ref(storage, `XKART/${state.image2.name}`);
-    const storageRef3 = ref(storage, `XKART/${state.image3.name}`);
+    const storageRef1 = ref(storage, `XKART/${img1.name}`);
+    const storageRef2 = ref(storage, `XKART/${img2.name}`);
+    const storageRef3 = ref(storage, `XKART/${img3.name}`);
 
-    let url1 = handleUpload(storageRef1, state.image1);
-    let url2 = handleUpload(storageRef2, state.image2);
-    let url3 = handleUpload(storageRef3, state.image3);
+    uploadBytes(storageRef1, img1).then((snapshot) => {
+      getDownloadURL(storageRef1).then((res) => {
+        console.log("URL1", res);
+        dispatch({ type: "IMAGE_URL1", payload: res });
+        console.log(state);
+      });
+    });
 
-    // axios
-    //   .post("/api/sellProduct", state)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log("Error", err);
-    //   });
+    uploadBytes(storageRef2, img2).then((snapshot) => {
+      getDownloadURL(storageRef2).then((res) => {
+        console.log("URL2", res);
+        dispatch({ type: "IMAGE_URL2", payload: res });
+      });
+    });
+
+    uploadBytes(storageRef3, img3).then((snapshot) => {
+      getDownloadURL(storageRef3).then((res) => {
+        console.log("URL3", res);
+        dispatch({ type: "IMAGE_URL3", payload: res });
+      });
+    });
   };
+
+  if (state.image1 && state.image2 && state.image3) {
+    console.log("Post request");
+    let data = { userId: sessionStorage.getItem("userId"), state };
+    axios
+      .post("/api/sellProduct", data)
+      .then((res) => {
+        console.log(res);
+        dispatch({ type: "INITIAL_STATE" });
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
+  }
 
   return (
     <>
@@ -87,7 +101,7 @@ const Sell = () => {
             >
               <input
                 type="text"
-                className="focus:outline-none"
+                className="focus:outline-none cursor-pointer"
                 name="category"
                 id="category"
                 value={state.category}
@@ -101,7 +115,10 @@ const Sell = () => {
                       className="p-2 hover:bg-gray-200 cursor-pointer"
                       //   onClick={() => (state.category = "Mobile")}
                       onClick={() => {
-                        dispatch({ type: "CHAGE_CATEGORY", payload: "Mobile" });
+                        dispatch({
+                          type: "CHAGE_CATEGORY",
+                          payload: "Mobile",
+                        });
                       }}
                     >
                       Mobile
@@ -110,7 +127,10 @@ const Sell = () => {
                       className="p-2 hover:bg-gray-200 cursor-pointer"
                       //   onClick={() => (state.category = "Laptop")}
                       onClick={() => {
-                        dispatch({ type: "CHAGE_CATEGORY", payload: "Laptop" });
+                        dispatch({
+                          type: "CHAGE_CATEGORY",
+                          payload: "Laptop",
+                        });
                       }}
                     >
                       Laptop
@@ -187,13 +207,13 @@ const Sell = () => {
           <h1 className="font-bold text-xl my-4">Set Price</h1>
           <div className="flex flex-col">
             <label htmlFor="price">Price</label>
-            <div className="flex items-center justify-start border border-gray-200">
+            <div className="flex items-center justify-start hover:border-gray-400 border border-gray-200">
               <label htmlFor="price">
                 <BsCurrencyRupee className="w-4 h-4 ml-2" />
               </label>
               <input
                 type="text"
-                className="w-full p-2 hover:border-gray-400 focus:outline-none"
+                className="w-full p-2 focus:outline-none"
                 name="price"
                 id="price"
                 value={state.price}
@@ -214,9 +234,7 @@ const Sell = () => {
                 id="img1"
                 className="hidden invisible w-[450px]"
                 name="img1"
-                onChange={(e) => {
-                  dispatch({ type: "ONCHANGE_IMG1", payload: e });
-                }}
+                onChange={(e) => setImg1(e.target.files[0])}
               />
               <label htmlFor="img1">
                 <AiFillCamera className="cursor-pointer w-20 h-20 hover:bg-gray-200" />
@@ -228,9 +246,7 @@ const Sell = () => {
                 id="img2"
                 className="hidden invisible w-[450px] my-4"
                 name="img2"
-                onChange={(e) => {
-                  dispatch({ type: "ONCHANGE_IMG2", payload: e });
-                }}
+                onChange={(e) => setImg2(e.target.files[0])}
               />
               <label htmlFor="img2">
                 <AiFillCamera className="cursor-pointer w-20 h-20 hover:bg-gray-200" />
@@ -242,9 +258,7 @@ const Sell = () => {
                 id="img3"
                 className="hidden invisible w-[450px] my-4"
                 name="img3"
-                onChange={(e) => {
-                  dispatch({ type: "ONCHANGE_IMG3", payload: e });
-                }}
+                onChange={(e) => setImg3(e.target.files[0])}
               />
               <label htmlFor="img3">
                 <AiFillCamera className="cursor-pointer w-20 h-20 hover:bg-gray-200" />
@@ -278,6 +292,36 @@ const Sell = () => {
               value={state.city}
               onChange={(e) => {
                 dispatch({ type: "ONCHANGE_CITY", payload: e });
+              }}
+            />
+          </div>
+        </div>
+        <div className="border border-gray-300 my-2"></div>
+        <div className="sm:px-6 md:px-10 md:py-4 p-2">
+          <h1 className="font-bold text-xl my-4">Confirm Your Details</h1>
+          <div className="flex flex-col my-4">
+            <label htmlFor="seller">Name</label>
+            <input
+              type="text"
+              className="p-2 border border-gray-200 hover:border-gray-400 focus:outline-none"
+              name="seller"
+              id="seller"
+              value={state.seller}
+              onChange={(e) => {
+                dispatch({ type: "ONCHANGE_SELLER", payload: e });
+              }}
+            />
+          </div>
+          <div className="flex flex-col my-4">
+            <label htmlFor="contact">Contact No</label>
+            <input
+              type="text"
+              className="p-2 border border-gray-200 hover:border-gray-400 focus:outline-none"
+              name="contact"
+              id="contact"
+              value={state.contact}
+              onChange={(e) => {
+                dispatch({ type: "ONCHANGE_CONTACT", payload: e });
               }}
             />
           </div>

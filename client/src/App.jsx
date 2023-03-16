@@ -5,7 +5,12 @@ import { UserContext } from "./Context";
 import router from "./router";
 
 const App = () => {
-  const [user, setUser] = useState({ userId: "", username: "", email: "" });
+  const [user, setUser] = useState({
+    userId: sessionStorage.getItem("userId"),
+    username: sessionStorage.getItem("username"),
+    email: sessionStorage.getItem("email"),
+  });
+
   return (
     <>
       <UserContext.Provider value={{ user, setUser }}>

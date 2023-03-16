@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { BsChatDots } from "react-icons/bs";
@@ -8,13 +8,38 @@ import { VscAccount } from "react-icons/vsc";
 import { BiSearch } from "react-icons/bi";
 import { FiMenu } from "react-icons/fi";
 import { AiOutlineLogout } from "react-icons/ai";
+import axios from "axios";
+import { UserContext } from "../../Context";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const { user, setUser } = useContext(UserContext);
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    setIsLogin(!isLogin);
+  }, [user]);
+
   const navigateTo = useNavigate();
   const handleMenu = () => {
     navigateTo("/menu");
+  };
+
+  const handleLogout = () => {
+    axios
+      .get("/api/logout")
+      .then((res) => {
+        sessionStorage.removeItem("userId");
+        sessionStorage.removeItem("username");
+        sessionStorage.removeItem("email");
+        setUser({ userId: "", username: "", email: "" });
+        alert(res.data.message);
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+        console.log(err);
+      });
   };
 
   return (
@@ -39,22 +64,37 @@ const Navbar = () => {
           </form>
         </div>
         <div className="hidden md:flex justify-between items-center">
-          <Link to="/chat" className="p-2">
+          <Link to="/chat" className="p-2 relative" title="Chat">
             <BsChatDots className="w-6 h-6" />
           </Link>
-          <Link to="/chat" className="p-2">
+          <Link to="/chat" className="p-2" title="Notification">
             <IoMdNotificationsOutline className="w-6 h-6" />
           </Link>
-          <Link to="/wishlist" className="p-2">
+          <Link to="/wishlist" className="p-2" title="Wishlist">
             <FaRegHeart className="w-6 h-6" />
           </Link>
-          <Link to="/profile" className="p-2">
-            {sessionStorage.getItem("userId") && (
-              <>
-                <VscAccount className="w-6 h-6" />
-              </>
-            )}
-          </Link>
+
+          {isLogin && (
+            <>
+              <Link to="/profile" className="p-2">
+                <VscAccount className="w-6 h-6" title="Profile" />
+              </Link>
+            </>
+          )}
+
+          {isLogin ? (
+            <>
+              <button onClick={handleLogout} className="p-2">
+                <AiOutlineLogout className="w-6 h-6" title="Logout" />
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="p-2">
+                <AiOutlineLogout className="w-6 h-6" title="Login" />
+              </Link>
+            </>
+          )}
 
           <Link
             to="/sell"

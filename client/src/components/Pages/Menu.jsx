@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { createBrowserRouter, useNavigate } from "react-router-dom";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { BsChatDots, BsCartDash } from "react-icons/bs";
@@ -8,14 +8,44 @@ import { VscAccount } from "react-icons/vsc";
 import { BiSearch } from "react-icons/bi";
 import { FiMenu } from "react-icons/fi";
 import { AiOutlineClose, AiOutlineLogout } from "react-icons/ai";
+import axios from "axios";
+import { UserContext } from "../../Context";
 
 const Menu = () => {
+  const { user, setUser } = useContext(UserContext);
+
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    setIsLogin(!isLogin);
+  }, [user]);
+
   const navigateTo = useNavigate();
   const handleMenu = () => {
     navigateTo("/");
   };
 
-  console.log(sessionStorage.getItem("userId"));
+  const handleLogout = () => {
+    axios
+      .get("/api/logout")
+      .then((res) => {
+        sessionStorage.removeItem("userId");
+        sessionStorage.removeItem("username");
+        sessionStorage.removeItem("email");
+        setUser({ userId: "", username: "", email: "" });
+        alert(res.data.message);
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+        console.log(err);
+      });
+  };
+
+  const handleLogin = () => {
+    navigateTo("/login");
+  };
+
+  // console.log(sessionStorage.getItem("userId"));
   return (
     <>
       <div className="px-4 drop-shadow-sm shadow-lg flex justify-between items-center">
@@ -34,18 +64,24 @@ const Menu = () => {
       </div>
 
       <div className="my-10">
-        <div className="flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
+        <div className="cursor-pointer flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
           <span>Chat</span>
           <BsChatDots className="w-6 h-6" />
         </div>
-        <div className="flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
+        <div className="cursor-pointer flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
           <span>Notification</span>
           <IoMdNotificationsOutline className="w-6 h-6" />
         </div>
-        <div className="flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
+        <div className="cursor-pointer flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
           <span>Wish list</span>
           <FaRegHeart className="w-6 h-6" />
         </div>
+        {isLogin && (
+          <div className="cursor-pointer flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
+            <span>Profile</span>
+            <VscAccount className="w-6 h-6" />
+          </div>
+        )}
         {/* This is for Profile */}
         {/* <div className="flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
           {sessionStorage.getItem("userId") && (
@@ -55,23 +91,28 @@ const Menu = () => {
             </>
           )}
         </div> */}
-        <div className="flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
+        <div className="cursor-pointer flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
           <span>Sell</span>
           <BsCartDash className="w-6 h-6" />
         </div>
-        <div className="flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200">
-          {sessionStorage.getItem("userId") ? (
-            <>
-              <span>Logout</span>
-              <AiOutlineLogout className="w-6 h-6" />
-            </>
-          ) : (
-            <>
-              <span>Login / Register</span>
-              <AiOutlineLogout className="w-6 h-6" />
-            </>
-          )}
-        </div>
+
+        {isLogin ? (
+          <div
+            className="cursor-pointer flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200"
+            onClick={handleLogout}
+          >
+            <span>Logout</span>
+            <AiOutlineLogout className="w-6 h-6" />
+          </div>
+        ) : (
+          <div
+            className="cursor-pointer flex justify-between p-4 hover:bg-gray-300 ease-in-out duration-200"
+            onClick={handleLogin}
+          >
+            <span>Login / Register</span>
+            <AiOutlineLogout className="w-6 h-6" />
+          </div>
+        )}
       </div>
     </>
   );

@@ -16,7 +16,7 @@ const Categories = () => {
           </div>
         </div>
         {isAllOpen && (
-          <div className="absolute top-[135px] w-52 shadow-lg border border-gray-100">
+          <div className="absolute top-[135px] z-50 w-52 shadow-lg bg-white border border-gray-100">
             <div className="p-2 hover:bg-gray-200 cursor-pointer">Mobiles</div>
             <div className="p-2 cursor-pointer hover:bg-gray-200">Tvs</div>
             <div className="p-2 cursor-pointer hover:bg-gray-200">Laptops</div>

@@ -1,20 +1,20 @@
 import { createBrowserRouter } from "react-router-dom";
 import Wishlist from "./components/Pages/Wishlist";
 import Login from "./components/Authentication/Login";
-import Main from "./components/Pages"
+import Main from "./components/Pages";
 import Register from "./components/Authentication/Register";
 import ChatPage from "./components/Pages/Chat/ChatPage";
 import Home from "./components/Pages/Home";
 import Menu from "./components/Pages/Menu";
 import Sell from "./components/Pages/Sell";
 import Profile from "./components/Pages/Profile";
-import SingleProduct from "./components/Pages/SingleProduct/SingleProduct";
+import SingleProduct from "./components/Pages/AllProducts/SingleProduct/SingleProduct";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
-    children: [ 
+    children: [
       {
         path: "/",
         element: <Home />,
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: "/singleProduct",
+        path: "/:productId",
         element: <SingleProduct />,
       },
     ],
@@ -53,11 +53,6 @@ const router = createBrowserRouter([
     path: "/menu",
     element: <Menu />,
   },
-  {
-    path: "/singleproduct",
-    element : <SingleProduct />
-  }
-
 ]);
 
 export default router;

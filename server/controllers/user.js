@@ -52,8 +52,10 @@ const login = async (req, res) => {
 }
 
 const logout = (req, res) => {
-    res.clearCookie("token")
-    res.status(200).json({ message: "logged out" })
+    res.cookie("token", "", {
+        httpOnly: true,
+        expires: new Date(0)
+    }).status(200).send({ message: 'logged out!' });
 }
 
 const requireSignin = jwt({
