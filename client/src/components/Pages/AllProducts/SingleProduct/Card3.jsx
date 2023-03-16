@@ -2,7 +2,7 @@ import React from "react";
 import { VscAccount } from "react-icons/vsc";
 import { IoIosArrowForward } from "react-icons/io";
 
-const Card = () => {
+const Card3 = ({ product }) => {
   return (
     <>
       <div className="border border-gray-200 shadow-lg">
@@ -12,7 +12,7 @@ const Card = () => {
               <div className="flex mb-2 justify-between text-xl font-semibold cursor-pointer">
                 <div className="flex justify-between">
                   <VscAccount className="w-12 h-12" />
-                  <div className="my-auto ml-2">Mungerilal</div>
+                  <div className="my-auto ml-2">{product.seller}</div>
                 </div>
                 <IoIosArrowForward className="my-auto" />
               </div>
@@ -29,4 +29,4 @@ const Card = () => {
   );
 };
 
-export default Card;
+export default Card3;

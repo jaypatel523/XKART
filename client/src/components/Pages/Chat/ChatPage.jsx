@@ -8,7 +8,7 @@ import Chat from "./Chat";
 const ChatPage = () => {
   return (
     <>
-      <div className="border border-blue-500 h-[35rem] m-10 flex">
+      <div className="border border-black h-[35rem] m-10 flex">
         <div className="w-full md:w-1/2 border border-r-gray-300">
           <div className="px-4 py-6 flex items-center justify-between">
             <h1 className="font-bold ml-4">Inbox</h1>

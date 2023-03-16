@@ -11,6 +11,10 @@ const getAllProducts = async (req, res) => {
 }
 
 
+const getProductById = async (req, res) => {
+
+}
+
 
 
 const getProductCategorywise = async (req, res) => {
@@ -55,4 +59,4 @@ const getProductCitywise = async (req, res) => {
 
 
 
-module.exports = { getAllProducts, getProductCategorywise, getProductStatewise, getProductCitywise };
+module.exports = { getAllProducts, getProductById, getProductCategorywise, getProductStatewise, getProductCitywise };
