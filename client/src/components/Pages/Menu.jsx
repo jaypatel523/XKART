@@ -10,15 +10,11 @@ import { FiMenu } from "react-icons/fi";
 import { AiOutlineClose, AiOutlineLogout } from "react-icons/ai";
 import axios from "axios";
 import { UserContext } from "../../Context";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Menu = () => {
-  const { user, setUser } = useContext(UserContext);
-
-  const [isLogin, setIsLogin] = useState(false);
-
-  useEffect(() => {
-    setIsLogin(!isLogin);
-  }, [user]);
+  const { user, setUser, isLogin, setIsLogin } = useContext(UserContext);
 
   const navigateTo = useNavigate();
   const handleMenu = () => {
@@ -33,7 +29,12 @@ const Menu = () => {
         sessionStorage.removeItem("username");
         sessionStorage.removeItem("email");
         setUser({ userId: "", username: "", email: "" });
-        alert(res.data.message);
+        setIsLogin(false);
+        toast("Logout successfully", {
+          position: "top-center",
+          autoClose: 1500,
+        });
+        // alert(res.data.message);
       })
       .catch((err) => {
         alert(err.response.data.message);

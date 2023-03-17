@@ -1,12 +1,16 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-// import { MediaContext } from "../../Context";
+import { UserContext } from "../../Context";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigateTo = useNavigate();
+
+  const { isLogin, setIsLogin } = useContext(UserContext);
 
   const handleLogin = () => {
     const data = { email, password };
@@ -16,8 +20,13 @@ const Login = () => {
         sessionStorage.setItem("userId", res.data.user._id);
         sessionStorage.setItem("username", res.data.user.username);
         sessionStorage.setItem("email", res.data.user.email);
+        setIsLogin(true);
+        toast("Login successfully", {
+          position: "top-center",
+          autoClose: 1500,
+        });
         navigateTo("/");
-        alert(res.data.message);
+        // alert(res.data.message);
       })
       .catch((err) => {
         alert(err.response.data.message);
@@ -94,6 +103,10 @@ const Login = () => {
           </div>
         </div>
       </div>
+
+      {/* <div className="w-52 h-52 fixed inset-0 bg-opacity-30 backdrop-blur-sm flex justify-center items-center border border-black">
+        THis is model
+      </div> */}
     </>
   );
 };
