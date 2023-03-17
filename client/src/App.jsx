@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { RouterProvider } from "react-router-dom";
 import { UserContext } from "./Context";
 import router from "./router";
@@ -11,9 +13,14 @@ const App = () => {
     email: sessionStorage.getItem("email"),
   });
 
+  const [isLogin, setIsLogin] = useState(
+    sessionStorage.getItem("userId") ? true : false
+  );
+
   return (
     <>
-      <UserContext.Provider value={{ user, setUser }}>
+      <ToastContainer />
+      <UserContext.Provider value={{ user, setUser, isLogin, setIsLogin }}>
         <RouterProvider router={router} />
       </UserContext.Provider>
     </>
