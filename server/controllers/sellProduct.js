@@ -12,24 +12,46 @@ const sellProduct = async (req, res) => {
 
         // product id must be setted from frontend
 
-        const userId = req.body.userId;
-        const productObj = req.body.product; // object
-        productObj.state = productObj.state.toUpperCase();
-        productObj.city = productObj.city.toUpperCase();
+        // const userId = req.body.userId;
+        // const productObj = req.body.product; // object
+        // productObj.state = productObj.state.toUpperCase();
+        // productObj.city = productObj.city.toUpperCase();
 
-        // to store every product into all products
-        await AllProduct.create(productObj);
+        // // to store every product into all products
+        // await AllProduct.create(productObj);
 
-        let productdb = await SellProduct.findOne({ userId: userId });
-        if (!productdb) {
-            const newProduct = new SellProduct({ userId: userId, products: [productObj] })
+        // let productdb = await SellProduct.findOne({ userId: userId });
+        // if (!productdb) {
+        //     const newProduct = new SellProduct({ userId: userId, products: [productObj] })
+        //     await newProduct.save();
+        //     return res.send({ msg: "new product added" })
+        // }
+
+        // productdb.products.push(productObj);
+        // await productdb.save();
+
+        let oldSeller = await SellProduct.findOne({ userId: req.body.userId })
+
+        if (!oldSeller) {
+            let newProduct = new SellProduct();
+            newProduct.userId = req.body.userId;
+            newProduct.products = req.body.state;
+
+            let product = new AllProduct(req.body.state);
+            console.log("newProduct", newProduct);
+            console.log("product", product);
+
             await newProduct.save();
-            return res.send({ msg: "new product added" })
+            await product.save();
         }
 
-        productdb.products.push(productObj);
-        await productdb.save();
-        res.send({ msg: "new product added" });
+        oldSeller.products.push(req.body.state);
+        let product = new AllProduct(req.body.state);
+
+        await oldSeller.save();
+        await product.save();
+
+        res.send({ message: "new product added" });
 
 
     } catch (error) {

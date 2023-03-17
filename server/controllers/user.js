@@ -1,68 +1,61 @@
 const User = require('../models/user');
 const jwttoken = require('jsonwebtoken');
-const getErrorMessage = require('../errorHandler/errorHandler');
 const { expressjwt: jwt } = require("express-jwt");
 
 
 
-const signup = async (req, res) => {
-    const user = new User(req.body)
-    // console.log(user);
+const register = async (req, res) => {
+
     try {
+        const user = new User(req.body)
+
+        const dbmobile = await User.findOne({ mobile: req.body.mobile });
+        if (dbmobile) {
+            throw new Error('Mobile Number already exists');
+        }
+
+        const dbemail = await User.findOne({ email: req.body.email });
+        if (dbemail) {
+            throw new Error("Email Address already exists")
+        }
         await user.save()
-        return res.status(200).json({
-            message: "Successfully signed up!"
-        })
+        res.status(200).json({ message: "Successfully Registered!" })
     } catch (err) {
-        console.log(typeof (errorHandler));
-        return res.status(400).json({
-            error: getErrorMessage(err)
-        })
+        res.status(400).json({ message: err.message })
     }
 }
 
 
 
-const signin = async (req, res) => {
+const login = async (req, res) => {
     try {
         let user = await User.findOne({ email: req.body.email })
-        console.log(req.body);
         if (!user)
-            return res.status(401).json({
-                error: "User not found"
-            })
+            throw new Error('User not found');
 
         if (!user.authenticate(req.body.password)) {
-            return res.status(401).send({
-                error: "Email and password don't match."
-            })
+            throw new Error('Email and password don\'t match');
         }
 
         const token = jwttoken.sign({
             _id: user._id
         }, process.env.JWT_SECRET)
 
-        res.cookie("t", token, {
-            expire: new Date() + 9999
+        res.cookie("token", token, {
+            maxAge: 86400000
         })
 
-        return res.json({
-            token,
-            user: { _id: user._id, name: user.name, email: user.email }
-        })
+        return res.json({ token, user: { _id: user._id, username: user.username, email: user.email }, message: "Successfully logged in!" })
     } catch (err) {
-        console.log(err)
-        return res.status(401).json({
-            error: "Could not sign in"
-        })
+        res.status(400).json({ message: err.message })
     }
 }
 
-const signout = (req, res) => {
-    res.clearCookie("t")
-    return res.status(200).json({
-        message: "signed out"
-    })
+const logout = (req, res) => {
+    res.cookie("token", "", {
+        httpOnly: true,
+        expires: new Date(0)
+    }).status(200).send({ message: 'logged out!' });
 }
 
 const requireSignin = jwt({
@@ -74,17 +67,15 @@ const requireSignin = jwt({
 const hasAuthorization = (req, res, next) => {
     const authorized = req.profile && req.auth && req.profile._id == req.auth._id
     if (!(authorized)) {
-        return res.status(403).json({
-            error: "User is not authorized"
-        })
+        return res.status(403).json({ error: "User is not authorized" })
     }
     next()
 }
 
 module.exports = {
-    signin,
-    signout,
-    signup,
+    login,
+    logout,
+    register,
     requireSignin,
     hasAuthorization
 }

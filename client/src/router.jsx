@@ -1,13 +1,45 @@
 import { createBrowserRouter } from "react-router-dom";
-import App from "./App";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Sell from "./components/Sell";
+import Wishlist from "./components/Pages/Wishlist";
+import Login from "./components/Authentication/Login";
+import Main from "./components/Pages";
+import Register from "./components/Authentication/Register";
+import ChatPage from "./components/Pages/Chat/ChatPage";
+import Home from "./components/Pages/Home";
+import Menu from "./components/Pages/Menu";
+import Sell from "./components/Pages/Sell";
+import Profile from "./components/Pages/Profile";
+import SingleProduct from "./components/Pages/AllProducts/SingleProduct/SingleProduct";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Main />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/chat",
+        element: <ChatPage />,
+      },
+      {
+        path: "/wishlist",
+        element: <Wishlist />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/:productId",
+        element: <SingleProduct />,
+      },
+    ],
+  },
+  {
+    path: "/sell",
+    element: <Sell />,
   },
   {
     path: "/login",
@@ -18,16 +50,8 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: "/sell",
-    element: <Sell />,
-  },
-  {
-    path: "/chat",
-    element: <h1>Chat page comming soon...</h1>,
-  },
-  {
-    path: "/wishlist",
-    element: <h1>Wishlist page comming soon...</h1>,
+    path: "/menu",
+    element: <Menu />,
   },
 ]);
 

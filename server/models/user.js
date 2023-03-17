@@ -29,14 +29,14 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  products: [
-    {
-      product: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'SellProduct'
-      }
-    }
-  ]
+  // products: [
+  //   {
+  //     product: {
+  //       type: mongoose.Schema.ObjectId,
+  //       ref: 'SellProduct'
+  //     }
+  //   }
+  // ]
 })
 
 // set hashed_password = encrypted password in schema 

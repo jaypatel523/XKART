@@ -1,12 +1,21 @@
-import React from "react";
-import { Header } from "./components/Header";
-import Navbar from "./components/Navbar";
+import React, { useState } from "react";
+
+import { RouterProvider } from "react-router-dom";
+import { UserContext } from "./Context";
+import router from "./router";
 
 const App = () => {
+  const [user, setUser] = useState({
+    userId: sessionStorage.getItem("userId"),
+    username: sessionStorage.getItem("username"),
+    email: sessionStorage.getItem("email"),
+  });
+
   return (
     <>
-      <Header />
-      <Navbar />
+      <UserContext.Provider value={{ user, setUser }}>
+        <RouterProvider router={router} />
+      </UserContext.Provider>
     </>
   );
 };
