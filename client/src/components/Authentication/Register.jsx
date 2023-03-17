@@ -14,7 +14,11 @@ const Register = () => {
     axios
       .post("/api/register", data)
       .then((res) => {
-        alert(res.data.message);
+        // alert(res.data.message);
+        toast("Register successfully", {
+          position: "top-center",
+          autoClose: 1500,
+        });
         navigateTo("/login");
       })
       .catch((err) => {

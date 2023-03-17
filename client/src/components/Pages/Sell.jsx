@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import { SlArrowDown } from "react-icons/sl";
 import { BsCurrencyRupee } from "react-icons/bs";
 import { AiFillCamera } from "react-icons/ai";
@@ -6,6 +6,9 @@ import sellReducer from "../Reducer/sellReducer";
 import axios from "axios";
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { UserContext } from "../../Context";
 
 const initialState = {
   category: "Mobile",
@@ -28,6 +31,8 @@ const Sell = () => {
   const [img1, setImg1] = useState();
   const [img2, setImg2] = useState();
   const [img3, setImg3] = useState();
+
+  const { isLogin, setIsLogin } = useContext(UserContext);
 
   const firebaseConfig = {
     apiKey: "AIzaSyC22nzqEqUynJgTmhzDcKDla5lkillxWJ4",
@@ -79,6 +84,10 @@ const Sell = () => {
       .post("/api/sellProduct", data)
       .then((res) => {
         console.log(res);
+        toast("Product added successfully", {
+          position: "top-center",
+          autoClose: 1500,
+        });
         dispatch({ type: "INITIAL_STATE" });
       })
       .catch((err) => {
