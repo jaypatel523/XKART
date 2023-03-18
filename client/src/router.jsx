@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import Wishlist from "./components/Pages/Wishlist";
 import Login from "./components/Authentication/Login";
 import Main from "./components/Pages";
 import Register from "./components/Authentication/Register";
@@ -9,6 +8,7 @@ import Menu from "./components/Pages/Menu";
 import Sell from "./components/Pages/Sell";
 import Profile from "./components/Pages/Profile";
 import SingleProduct from "./components/Pages/AllProducts/SingleProduct/SingleProduct";
+import Wishlist from "./components/Pages/Wishlist/Wishlist";
 
 const router = createBrowserRouter([
   {

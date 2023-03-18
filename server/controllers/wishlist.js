@@ -19,21 +19,25 @@ const addToWishList = async (req, res) => {
 
     const userId = req.body.userId;
     const productObj = req.body.productId;
+    let wishlistedProd = await WishListProduct.findOne({ userId: userId })
 
-    let wishlistedProd = await WishListProduct.findOne({ userId: userId });
 
     if (!wishlistedProd) {
-      const addToWishList = new WishListProduct({
+      let addToWishList = new WishListProduct({
         userId: userId,
-        wishlist: [productObj],
       });
+      addToWishList.wishlist.push({ product: productObj })
       await addToWishList.save();
-      return res.send({ msg: "Product added to wishlist" });
+      return res.send({ message: "Product added to wishlist" });
     }
 
-    wishlistedProd.wishlist.push(productObj);
+
+    wishlistedProd.wishlist.push({ product: productObj });
     await wishlistedProd.save();
-    res.send({ msg: "Product added to wishlist" });
+    res.send({ message: "Product added to wishlist" });
+
+
+
   } catch (error) {
     res.send(error);
   }
@@ -61,15 +65,16 @@ const deleteFromWishlist = async (req, res) => {
 
 const getAllWishlist = async (req, res) => {
   try {
-    console.log(req.params);
     const { userId } = req.params;
 
-    const allProduct = await WishListProduct.findOne({ userId: userId });
-    if (allProduct) {
-      return res.send({ all: allProduct, msg: "all product of wishlist" });
+    const allProducts = await WishListProduct.findOne({ userId: userId }).populate('wishlist.product', 'title category brand description price image1 image2 image3 state city');
+
+
+    if (allProducts) {
+      return res.send({ products: allProducts, message: "all product of wishlist" });
     }
 
-    res.send({ msg: "no product" });
+    res.send({ message: "no product" });
   } catch (error) {
     res.send(error);
   }
