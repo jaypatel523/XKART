@@ -35,6 +35,7 @@ const Sell = () => {
   const [img1, setImg1] = useState();
   const [img2, setImg2] = useState();
   const [img3, setImg3] = useState();
+  const { user } = useContext(UserContext);
 
   const navigate = useNavigate();
 

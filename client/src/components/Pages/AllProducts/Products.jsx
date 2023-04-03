@@ -36,8 +36,6 @@ const Products = ({ type, color }) => {
       });
   }, [params.category]);
 
-  console.log(allProducts);
-
   return (
     <>
       <section className="max-w-[84rem] mx-auto px-4 sm:px-6 lg:px-4 py-10">

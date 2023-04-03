@@ -39,7 +39,6 @@ const ChatPage = () => {
 
   const navigateTo = useNavigate();
   useEffect(() => {
-    console.log(user);
     if (!user.userId) {
       navigateTo("/login");
     }
@@ -73,7 +72,7 @@ const ChatPage = () => {
     if (!user.userId) return;
 
     socket.current.emit("addUser", user.userId);
-    console.log("HI");
+
 
     // to check working of getUsers event of socket server
     // socket.current.on("getUsers", (users) => {
@@ -95,7 +94,7 @@ const ChatPage = () => {
       });
   }, []);
 
-  console.log("sender", user.userId);
+
   // get all messages using conversation id
   useEffect(() => {
     if (!currentChat) return;
@@ -110,7 +109,7 @@ const ChatPage = () => {
   }, [currentChat]);
 
   // handle current message which user will write in input box
-  console.log(currentChat);
+
   const handleNewChat = (e) => {
     e.preventDefault();
 
@@ -124,7 +123,6 @@ const ChatPage = () => {
       (member) => member !== user.userId
     );
 
-    console.log("rec", receiverId);
 
     socket.current.emit("sendMessage", {
       senderId: user.userId,
