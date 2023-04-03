@@ -1,11 +1,13 @@
 const epxress = require('express');
 const router = epxress.Router();
-const { sellProduct, } = require('../controllers/sellProduct');
+const { sellProduct, updateApprove ,updateReject } = require('../controllers/sellProduct');
 const { getAllProducts, getProductById, getProductCategorywise, getProductStatewise, getProductCitywise } = require('../controllers/product');
 const authentication = require('../middleware/authentication');
 
 
 router.route('/sellProduct').post(authentication, sellProduct);
+router.route('/adminApproved').patch(updateApprove);
+router.route('/adminRejected').patch(updateReject);
 router.route('/getAllProducts').get(getAllProducts);
 router.route('/getProductById/:productId').get(getProductById);
 router.route('/getProductCategorywise/:category').get(getProductCategorywise);
