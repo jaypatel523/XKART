@@ -52,7 +52,9 @@ const Navbar = () => {
     <>
       <div className="drop-shadow-sm shadow-md w-auto px-4 flex justify-between items-center">
         <div className="py-4 flex items-center">
-          <div className="mr-4">XKART</div>
+          <div className="mr-4 cursor-pointer" onClick={() => navigateTo("/")}>
+            XKART
+          </div>
           <div className="mr-4">
             <button className="border border-black  py-2 px-4 hidden md:flex justify-between items-center rounded-lg">
               <span>Location</span>
@@ -109,7 +111,7 @@ const Navbar = () => {
             sell
           </Link>
         </div>
-        <div className="md:hidden">
+        <div className="md:hidden cursor-pointer">
           <FiMenu className="w-6 h-6" onClick={handleMenu} />
         </div>
       </div>

@@ -10,7 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigateTo = useNavigate();
 
-  const { isLogin, setIsLogin } = useContext(UserContext);
+  const { isLogin, setIsLogin, user, setUser } = useContext(UserContext);
 
   const handleLogin = () => {
     const data = { email, password };
@@ -20,6 +20,11 @@ const Login = () => {
         sessionStorage.setItem("userId", res.data.user._id);
         sessionStorage.setItem("username", res.data.user.username);
         sessionStorage.setItem("email", res.data.user.email);
+        setUser({
+          userId: res.data.user._id,
+          username: res.data.user.username,
+          email: res.data.user.email,
+        });
         setIsLogin(true);
         toast("Login successfully", {
           position: "top-center",

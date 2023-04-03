@@ -9,6 +9,7 @@ import Sell from "./components/Pages/Sell";
 import Profile from "./components/Pages/Profile";
 import SingleProduct from "./components/Pages/AllProducts/SingleProduct/SingleProduct";
 import Wishlist from "./components/Pages/Wishlist/Wishlist";
+import Products from "./components/Pages/AllProducts/Products";
 
 const router = createBrowserRouter([
   {
@@ -32,7 +33,11 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: "/:productId",
+        path: "/:category",
+        element: <Products />,
+      },
+      {
+        path: "/product/:productId",
         element: <SingleProduct />,
       },
     ],

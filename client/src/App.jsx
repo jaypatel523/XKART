@@ -7,6 +7,8 @@ import { UserContext } from "./Context";
 import router from "./router";
 
 const App = () => {
+  // console.log(socket);
+
   const [user, setUser] = useState({
     userId: sessionStorage.getItem("userId"),
     username: sessionStorage.getItem("username"),

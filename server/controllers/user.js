@@ -9,15 +9,17 @@ const register = async (req, res) => {
     try {
         const user = new User(req.body)
 
+        console.log("1", user)
         const dbmobile = await User.findOne({ mobile: req.body.mobile });
         if (dbmobile) {
             throw new Error('Mobile Number already exists');
         }
-
+        console.log("2", user)
         const dbemail = await User.findOne({ email: req.body.email });
         if (dbemail) {
             throw new Error("Email Address already exists")
         }
+        console.log("3", user)
         await user.save()
         res.status(200).json({ message: "Successfully Registered!" })
     } catch (err) {
@@ -58,6 +60,17 @@ const logout = (req, res) => {
     }).status(200).send({ message: 'logged out!' });
 }
 
+
+const getUserDetails = async (req, res) => {
+    try {
+        const user = await User.findOne({ _id: req.params.userId });
+        res.send(user);
+    } catch (error) {
+        res.send(error);
+    }
+}
+
+
 const requireSignin = jwt({
     secret: process.env.JWT_SECRET,
     userProperty: 'auth',
@@ -76,6 +89,7 @@ module.exports = {
     login,
     logout,
     register,
+    getUserDetails,
     requireSignin,
     hasAuthorization
 }
