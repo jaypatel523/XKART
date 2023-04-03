@@ -103,7 +103,6 @@ const Navbar = () => {
               </Link>
             </>
           )}
-
           <Link
             to="/sell"
             className="bg-blue-500 text-white rounded-lg px-10 py-2"

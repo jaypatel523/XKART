@@ -23,4 +23,19 @@ const getConversation = async (req, res) => {
     }
 }
 
-module.exports = { startChat, getConversation };
+
+const findConversation = async (req, res) => {
+    try {
+        console.log(req.params);
+        const conversation = await Conversation.find({
+            members: { $in: [req.params.userId, req.params.receiverId] },
+        });
+        res.status(200).json({ conversation, success: true });
+    } catch (error) {
+        res.send(error);
+    }
+}
+
+
+module.exports = { startChat, getConversation, findConversation };
+

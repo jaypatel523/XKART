@@ -73,6 +73,7 @@ const ChatPage = () => {
 
     socket.current.emit("addUser", user.userId);
 
+
     // to check working of getUsers event of socket server
     // socket.current.on("getUsers", (users) => {
     //   console.log(users);
@@ -93,6 +94,7 @@ const ChatPage = () => {
       });
   }, []);
 
+
   // get all messages using conversation id
   useEffect(() => {
     if (!currentChat) return;
@@ -107,6 +109,7 @@ const ChatPage = () => {
   }, [currentChat]);
 
   // handle current message which user will write in input box
+
   const handleNewChat = (e) => {
     e.preventDefault();
 
@@ -119,6 +122,7 @@ const ChatPage = () => {
     const receiverId = currentChat.members.find(
       (member) => member !== user.userId
     );
+
 
     socket.current.emit("sendMessage", {
       senderId: user.userId,

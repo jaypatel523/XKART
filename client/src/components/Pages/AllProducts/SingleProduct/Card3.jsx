@@ -9,6 +9,7 @@ const Card3 = ({ product }) => {
   const { user } = useContext(UserContext);
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const [isSellerSame, setIsSameSeller] = useState(false);
+  const [isStarted, setIsStarted] = useState(false);
   const navigateTo = useNavigate();
 
   useEffect(() => {
@@ -23,6 +24,7 @@ const Card3 = ({ product }) => {
 
   const openDialog = () => {
     setIsOpenDialog(true);
+    navigateTo("/chat");
   };
 
   const closeDialog = () => {
@@ -42,6 +44,19 @@ const Card3 = ({ product }) => {
         console.log("error", err);
       });
   };
+
+//  console.log(product);
+  useEffect(() => {
+    axios
+      .get("/api/findconversation/" + user.userId + "/" + product.sellerId)
+      .then((res) => {
+        console.log(res);
+        setIsStarted(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <>
@@ -82,7 +97,7 @@ const Card3 = ({ product }) => {
         </div>
       </div>
 
-      {isOpenDialog && (
+      {isOpenDialog && !isStarted && (
         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-40 bg-black text-white">
           <div className="rounded-sm w-[400px] p-10 text-center bg-white text-black">
             <div className=" p-4 ">Are you sure you want to chat ?</div>

@@ -44,14 +44,18 @@ const Products = ({ type, color }) => {
             <>
               {categoryWiseProduct &&
                 categoryWiseProduct.map((product, index) => {
-                  return <Card key={index} product={product} />;
+                  if (product.adminApproved === true) {
+                    return <Card key={index} product={product} />;
+                  }
                 })}
             </>
           ) : (
             <>
               {allProducts &&
                 allProducts.map((product, index) => {
-                  return <Card key={index} product={product} />;
+                  if (product.adminApproved === true) {
+                    return <Card key={index} product={product} />;
+                  }
                 })}
             </>
           )}

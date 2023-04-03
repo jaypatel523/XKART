@@ -2,30 +2,19 @@ const WishListProduct = require("../models/wishlist");
 
 const addToWishList = async (req, res) => {
   try {
-    // console.log(req.body);
-    // const userId = req.body.userId;
-    // const productObj = req.body.product;
-    // productObj.state = productObj.state.toUpperCase();
-    // productObj.city = productObj.city.toUpperCase();
-    // let wishlistedProd = await WishListProduct.findOne({ userId: userId });
-    // if (!wishlistedProd) {
-    //     const addToWislist = new WishListProduct({ userId: userId, wishlist: [productObj] })
-    //     await addToWislist.save();
-    //     return res.send({ msg: "product wishlisted" })
-    // }
-    // wishlistedProd.wishlist.push(productObj);
-    // await wishlistedProd.save();
-    // res.send({ msg: "product wishlisted" });
+
 
     const userId = req.body.userId;
     const productId = req.body.productId;
     let wishlistedProd = await WishListProduct.findOne({ userId: userId })
 
 
+
     if (!wishlistedProd) {
       let addToWishList = new WishListProduct({
         userId: userId,
       });
+
       addToWishList.wishlist.push({ product: productId })
       await addToWishList.save();
       return res.send({ message: "Product added to wishlist" });
@@ -35,9 +24,6 @@ const addToWishList = async (req, res) => {
     wishlistedProd.wishlist.push({ product: productId });
     await wishlistedProd.save();
     res.send({ message: "Product added to wishlist" });
-
-
-
   } catch (error) {
     res.send(error);
   }
@@ -69,9 +55,11 @@ const getAllWishlist = async (req, res) => {
     const product = await WishListProduct.find({ wishlist: { $elemMatch: { product: req.params.productId } } });
     // console.log("product", product);
 
+
     if (product) {
       return res.send("yes");
-    }
+
+
 
     res.send("Not");
   } catch (error) {

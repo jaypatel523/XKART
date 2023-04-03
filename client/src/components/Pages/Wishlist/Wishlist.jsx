@@ -11,18 +11,21 @@ const Wishlist = () => {
     axios
       .get(`/api/getallwishlist/${user.userId}`)
       .then((res) => {
-        // console.log(res);
-        setWishlist(res.data.products.wishlist);
+        if (res.data.message === "success") {
+          setWishlist(res.data.products.wishlist);
+        }
       })
-      .catch((err) => console.log(err));
-  }, []);
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [wishlist]);
 
   // console.log(wishlist);
 
   return (
     <>
       {/* <div>wishlist is this </div> */}
-      {wishlist ? (
+      {wishlist.length !== 0 ? (
         <>
           <section className="max-w-[84rem] mx-auto px-4 sm:px-6 lg:px-4 py-10">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 b11:grid-cols-4 gap-6">
@@ -34,7 +37,9 @@ const Wishlist = () => {
           </section>
         </>
       ) : (
-        <>Wishlist is empty</>
+        <>
+          <div>Wishlist is empty</div>
+        </>
       )}
     </>
   );
