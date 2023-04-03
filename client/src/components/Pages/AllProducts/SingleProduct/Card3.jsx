@@ -45,7 +45,7 @@ const Card3 = ({ product }) => {
       });
   };
 
-  console.log(product);
+//  console.log(product);
   useEffect(() => {
     axios
       .get("/api/findconversation/" + user.userId + "/" + product.sellerId)

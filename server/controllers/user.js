@@ -5,26 +5,26 @@ const Admin = require("../models/admin");
 
 const register = async (req, res) => {
 
-  try {
-    const user = new User(req.body)
 
+    try {
+        const user = new User(req.body)
 
-    const dbmobile = await User.findOne({ mobile: req.body.mobile });
-    if (dbmobile) {
-      throw new Error('Mobile Number already exists');
+        
+        const dbmobile = await User.findOne({ mobile: req.body.mobile });
+        if (dbmobile) {
+            throw new Error('Mobile Number already exists');
+        }
+
+        const dbemail = await User.findOne({ email: req.body.email });
+        if (dbemail) {
+            throw new Error("Email Address already exists")
+        }
+
+        await user.save()
+        res.status(200).json({ message: "Successfully Registered!" })
+    } catch (err) {
+        res.status(400).json({ message: err.message })
     }
-
-    const dbemail = await User.findOne({ email: req.body.email });
-    if (dbemail) {
-      throw new Error("Email Address already exists")
-    }
-
-    await user.save()
-    res.status(200).json({ message: "Successfully Registered!" })
-  } catch (err) {
-    res.status(400).json({ message: err.message })
-
-  }
 };
 
 
@@ -108,6 +108,16 @@ const getUserDetails = async (req, res) => {
   } catch (error) {
     res.send(error);
   }
+}
+
+
+const getUserDetails = async (req, res) => {
+    try {
+        const user = await User.findOne({ _id: req.params.userId });
+        res.send(user);
+    } catch (error) {
+        res.send(error);
+    }
 }
 
 

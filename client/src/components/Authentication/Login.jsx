@@ -25,6 +25,11 @@ const Login = () => {
           sessionStorage.setItem("username", res.data.user.username);
           sessionStorage.setItem("email", res.data.user.email);
           setIsLogin(true);
+          setUser({
+          userId: res.data.user._id,
+          username: res.data.user.username,
+          email: res.data.user.email,
+        });
           toast("Login successfully", {
             position: "top-center",
             autoClose: 1500,
@@ -48,6 +53,11 @@ const Login = () => {
           sessionStorage.setItem("username", res.data.user.username);
           sessionStorage.setItem("email", res.data.user.email);
           setIsLogin(true);
+          setUser({
+          userId: res.data.user._id,
+          username: res.data.user.username,
+          email: res.data.user.email,
+        });
           toast("Login successfully", {
             position: "top-center",
             autoClose: 1500,
@@ -67,7 +77,6 @@ const Login = () => {
         .catch((err) => {
           alert(err.response.data.message);
 
-        });
     }
   };
 

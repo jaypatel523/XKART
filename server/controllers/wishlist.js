@@ -5,7 +5,6 @@ const addToWishList = async (req, res) => {
 
 
     const userId = req.body.userId;
-
     const productId = req.body.productId;
     let wishlistedProd = await WishListProduct.findOne({ userId: userId })
 
@@ -17,14 +16,12 @@ const addToWishList = async (req, res) => {
       });
 
       addToWishList.wishlist.push({ product: productId })
-
       await addToWishList.save();
       return res.send({ message: "Product added to wishlist" });
     }
 
 
     wishlistedProd.wishlist.push({ product: productId });
-
     await wishlistedProd.save();
     res.send({ message: "Product added to wishlist" });
   } catch (error) {
@@ -62,7 +59,7 @@ const getAllWishlist = async (req, res) => {
     if (product) {
       return res.send("yes");
 
-    }
+
 
     res.send("Not");
   } catch (error) {

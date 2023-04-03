@@ -10,8 +10,7 @@ const Card = ({ product }) => {
 
   const { user, setUser } = useContext(UserContext);
   const [wishlistProducts, setWishlistProducts] = useState([]);
-
-
+  
   // console.log(user);
   const navigateTo = useNavigate();
   const handleProduct = () => {
@@ -52,7 +51,6 @@ const Card = ({ product }) => {
     }
   };
 
-
   const removeFromWishlist = () => {
     axios
       .patch("/deletefromwishlist/:userId/:productId")
@@ -77,7 +75,6 @@ const Card = ({ product }) => {
   //       console.log(err);
   //     });
   // }, []);
-
 
   return (
     <>
