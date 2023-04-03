@@ -11,9 +11,10 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigateTo = useNavigate();
 
-  const { isLogin, setIsLogin } = useContext(UserContext);
+  const { isLogin, setIsLogin, user, setUser } = useContext(UserContext);
 
   const handleLogin = () => {
+
     const data = { email, password, admin };
 
     if (admin === "admin") {
@@ -65,6 +66,7 @@ const Login = () => {
         })
         .catch((err) => {
           alert(err.response.data.message);
+
         });
     }
   };

@@ -10,11 +10,12 @@ const getAllProducts = async (req, res) => {
   }
 };
 
-const getProductById = async (req, res) => {};
+const getProductById = async (req, res) => { };
 
 const getProductCategorywise = async (req, res) => {
   try {
-    const products = await AllProduct.find({ category: req.body.category });
+    const products = await AllProduct.find({ category: req.params.category });
+
     if (!products) {
       throw new Error("invalid category");
     }

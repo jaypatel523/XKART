@@ -5,6 +5,7 @@ const sellProduct = async (req, res) => {
   try {
     
 
+
     let oldSeller = await SellProduct.findOne({ userId: req.body.userId });
 
     if (!oldSeller) {
@@ -32,14 +33,23 @@ const sellProduct = async (req, res) => {
   }
 };
 
+        let oldSeller = await SellProduct.findOne({ userId: req.body.userId })
+
+
 const updateApprove = async (req, res) => {
   try {
     // console.log(req.body);
+
 
     let product = await AllProduct.updateOne(
       { adminApproved: false },
       { adminApproved: true }
     );
+
+            let product = new AllProduct(req.body.state);
+            // console.log("newProduct", newProduct);
+            // console.log("product", product);
+
 
     await product.save()
 

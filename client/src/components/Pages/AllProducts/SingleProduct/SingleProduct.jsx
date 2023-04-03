@@ -53,13 +53,13 @@ const SingleProduct = () => {
 
   return (
     <>
-      <div className="mt-10 b5:m-10">
+      <div className="m-10">
         <div className="block md:flex justify-evenly">
           <div className="mb-10 w-full md:w-[700px] md:mr-4">
             <Card1 product={location.state} />
           </div>
 
-          <div className="">
+          <div className="b5:min-w-[250px]">
             <Card2 product={location.state} />
             <Card3 product={location.state} />
             <div className=" flex mt-10 justify-around">

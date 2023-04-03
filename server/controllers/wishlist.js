@@ -5,19 +5,26 @@ const addToWishList = async (req, res) => {
 
 
     const userId = req.body.userId;
-    const productObj = req.body.productId;
-    let wishlistedProd = await WishListProduct.findOne({ userId: userId });
+
+    const productId = req.body.productId;
+    let wishlistedProd = await WishListProduct.findOne({ userId: userId })
+
+
 
     if (!wishlistedProd) {
       let addToWishList = new WishListProduct({
         userId: userId,
       });
-      addToWishList.wishlist.push({ product: productObj });
+
+      addToWishList.wishlist.push({ product: productId })
+
       await addToWishList.save();
       return res.send({ message: "Product added to wishlist" });
     }
 
-    wishlistedProd.wishlist.push({ product: productObj });
+
+    wishlistedProd.wishlist.push({ product: productId });
+
     await wishlistedProd.save();
     res.send({ message: "Product added to wishlist" });
   } catch (error) {
@@ -32,7 +39,7 @@ const deleteFromWishlist = async (req, res) => {
     const { userId, productId } = req.params;
     const deleted = await WishListProduct.findOneAndUpdate(
       { userId: userId },
-      { $pull: { wishlist: { prodId: productId } } },
+      { $pull: { wishlist: { product: productId } } },
       { safe: true }
     ).clone();
     // const deleted = await WishListProduct.findByIdAndUpdate({ "userId": userId }, { "$pull": { "wishlist": { "prodId": productId } } });
@@ -47,23 +54,17 @@ const deleteFromWishlist = async (req, res) => {
 
 const getAllWishlist = async (req, res) => {
   try {
-    const { userId } = req.params;
+    // console.log(req.params);
+    const product = await WishListProduct.find({ wishlist: { $elemMatch: { product: req.params.productId } } });
+    // console.log("product", product);
 
-    const allProducts = await WishListProduct.findOne({
-      userId: userId,
-    }).populate(
-      "wishlist.product",
-      "title category brand description price image1 image2 image3 state city"
-    );
 
-    if (allProducts) {
-      return res.send({
-        products: allProducts,
-        message: "success",
-      });
+    if (product) {
+      return res.send("yes");
+
     }
 
-    res.send({ message: "no product" });
+    res.send("Not");
   } catch (error) {
     res.send(error);
   }

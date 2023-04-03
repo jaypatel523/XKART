@@ -8,11 +8,9 @@ import { UserContext } from "../../Context";
 import Login from "../Authentication/Login";
 
 const Home = () => {
-
   return (
     <>
       <div className="">
-        <Categories />
         <Search />
         <Products />
       </div>
