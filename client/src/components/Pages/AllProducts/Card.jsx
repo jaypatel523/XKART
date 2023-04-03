@@ -7,10 +7,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Card = ({ product }) => {
-
   const { user, setUser } = useContext(UserContext);
   const [wishlistProducts, setWishlistProducts] = useState([]);
-  
+
   // console.log(user);
   const navigateTo = useNavigate();
   const handleProduct = () => {
@@ -82,7 +81,7 @@ const Card = ({ product }) => {
       <div className="flex justify-center w-full b5:w-80 border border-gray-200 shadow-lg">
         <div className="block py-2 bg-white ">
           <img
-            className="w-full hover:cursor-pointer"
+            className="w-80 h-96 hover:cursor-pointer"
             src={product.image1}
             onClick={handleProduct}
             alt=""
@@ -111,9 +110,6 @@ const Card = ({ product }) => {
               </p>
               <p className="text-sm md:text-base">4 days ago</p>
             </div>
-
-            
-            
           </div>
         </div>
       </div>

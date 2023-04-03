@@ -9,7 +9,13 @@ const Card1 = ({ product }) => {
   return (
     <>
       <div className="flex flex-col rounded justify-center border border-gray-200 shadow-lg">
-        <img className="w-full " src={imageIoShow || product.image1} alt="" />
+        <div className="flex justify-center items-center">
+          <img
+            className="w-[500px] h-[500px]"
+            src={imageIoShow || product.image1}
+            alt=""
+          />
+        </div>
 
         <div className="px-4 flex justify-start gap-4 mt-4">
           <img
