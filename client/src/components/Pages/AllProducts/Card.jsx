@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Card = ({ product }) => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const navigateTo = useNavigate();
   const handleProduct = () => {
@@ -47,6 +47,9 @@ const Card = ({ product }) => {
     }
   };
 
+
+    
+
   return (
     <>
       <div className="flex justify-center border border-gray-200 shadow-lg">
@@ -68,15 +71,20 @@ const Card = ({ product }) => {
                 />
               </div>
             </div>
+
             <div>
               <div className="mb-4 text-base sm:text-lg">{product.title}</div>
             </div>
+
             <div className="flex justify-between ">
               <p className="text-sm md:text-base">
                 {product.city}, {product.state}
               </p>
               <p className="text-sm md:text-base">4 days ago</p>
             </div>
+
+            
+            
           </div>
         </div>
       </div>

@@ -9,6 +9,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../../Context";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   category: "Mobile",
@@ -23,6 +24,8 @@ const initialState = {
   city: "",
   seller: "",
   contact: "",
+  adminApproved: false,
+  adminRejected: false,
 };
 
 const Sell = () => {
@@ -31,6 +34,7 @@ const Sell = () => {
   const [img1, setImg1] = useState();
   const [img2, setImg2] = useState();
   const [img3, setImg3] = useState();
+  const navigate = useNavigate();
 
   const { isLogin, setIsLogin } = useContext(UserContext);
 
@@ -94,6 +98,7 @@ const Sell = () => {
           progress: undefined,
         });
         dispatch({ type: "INITIAL_STATE" });
+        navigate("/");
       })
       .catch((err) => {
         console.log("Error", err);

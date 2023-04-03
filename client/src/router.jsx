@@ -9,6 +9,7 @@ import Sell from "./components/Pages/Sell";
 import Profile from "./components/Pages/Profile";
 import SingleProduct from "./components/Pages/AllProducts/SingleProduct/SingleProduct";
 import Wishlist from "./components/Pages/Wishlist/Wishlist";
+import AdminDashboard from "./components/Authentication/AdminDashboard";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
     path: "/menu",
     element: <Menu />,
   },
+  {
+    path: "/admindashboard",
+    element : <AdminDashboard />
+  }
 ]);
 
 export default router;

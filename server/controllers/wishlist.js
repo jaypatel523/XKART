@@ -2,42 +2,24 @@ const WishListProduct = require("../models/wishlist");
 
 const addToWishList = async (req, res) => {
   try {
-    // console.log(req.body);
-    // const userId = req.body.userId;
-    // const productObj = req.body.product;
-    // productObj.state = productObj.state.toUpperCase();
-    // productObj.city = productObj.city.toUpperCase();
-    // let wishlistedProd = await WishListProduct.findOne({ userId: userId });
-    // if (!wishlistedProd) {
-    //     const addToWislist = new WishListProduct({ userId: userId, wishlist: [productObj] })
-    //     await addToWislist.save();
-    //     return res.send({ msg: "product wishlisted" })
-    // }
-    // wishlistedProd.wishlist.push(productObj);
-    // await wishlistedProd.save();
-    // res.send({ msg: "product wishlisted" });
+
 
     const userId = req.body.userId;
     const productObj = req.body.productId;
-    let wishlistedProd = await WishListProduct.findOne({ userId: userId })
-
+    let wishlistedProd = await WishListProduct.findOne({ userId: userId });
 
     if (!wishlistedProd) {
       let addToWishList = new WishListProduct({
         userId: userId,
       });
-      addToWishList.wishlist.push({ product: productObj })
+      addToWishList.wishlist.push({ product: productObj });
       await addToWishList.save();
       return res.send({ message: "Product added to wishlist" });
     }
 
-
     wishlistedProd.wishlist.push({ product: productObj });
     await wishlistedProd.save();
     res.send({ message: "Product added to wishlist" });
-
-
-
   } catch (error) {
     res.send(error);
   }
@@ -67,11 +49,18 @@ const getAllWishlist = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const allProducts = await WishListProduct.findOne({ userId: userId }).populate('wishlist.product', 'title category brand description price image1 image2 image3 state city');
-
+    const allProducts = await WishListProduct.findOne({
+      userId: userId,
+    }).populate(
+      "wishlist.product",
+      "title category brand description price image1 image2 image3 state city"
+    );
 
     if (allProducts) {
-      return res.send({ products: allProducts, message: "all product of wishlist" });
+      return res.send({
+        products: allProducts,
+        message: "success",
+      });
     }
 
     res.send({ message: "no product" });

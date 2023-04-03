@@ -7,35 +7,66 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
+  const [admin, setAdmin] = useState("user");
   const [password, setPassword] = useState("");
   const navigateTo = useNavigate();
 
   const { isLogin, setIsLogin } = useContext(UserContext);
 
   const handleLogin = () => {
-    const data = { email, password };
-    axios
-      .post("/api/login", data)
-      .then((res) => {
-        sessionStorage.setItem("userId", res.data.user._id);
-        sessionStorage.setItem("username", res.data.user.username);
-        sessionStorage.setItem("email", res.data.user.email);
-        setIsLogin(true);
-        toast("Login successfully", {
-          position: "top-center",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+    const data = { email, password, admin };
+
+    if (admin === "admin") {
+      axios
+        .post("/api/adminlogin", data)
+        .then((res) => {
+          sessionStorage.setItem("userId", res.data.user._id);
+          sessionStorage.setItem("username", res.data.user.username);
+          sessionStorage.setItem("email", res.data.user.email);
+          setIsLogin(true);
+          toast("Login successfully", {
+            position: "top-center",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+
+          navigateTo("/admindashboard");
+        })
+        .catch((err) => {
+          alert(err.response.data.message);
         });
-        navigateTo("/");
-        // alert(res.data.message);
-      })
-      .catch((err) => {
-        alert(err.response.data.message);
-      });
+    } else {
+      axios
+        .post("/api/login", data)
+        .then((res) => {
+          sessionStorage.setItem("userId", res.data.user._id);
+          sessionStorage.setItem("username", res.data.user.username);
+          sessionStorage.setItem("email", res.data.user.email);
+          setIsLogin(true);
+          toast("Login successfully", {
+            position: "top-center",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+
+          if (admin === "admin") {
+            navigateTo("/admindashboard");
+          } else {
+            navigateTo("/");
+          }
+        })
+        .catch((err) => {
+          alert(err.response.data.message);
+        });
+    }
   };
 
   return (
@@ -49,6 +80,35 @@ const Login = () => {
                 <h1 className="text-2xl font-semibold max-w-xs w-64 text-center">
                   Login to your account
                 </h1>
+              </div>
+              <div className=" flex justify-around ">
+                <div>
+                  <input
+                    type="radio"
+                    id="admin"
+                    name="admin"
+                    value="admin"
+                    onChange={(e) => {
+                      setAdmin(e.target.value);
+                    }}
+                    checked={admin === "admin"}
+                    className="mx-1.5"
+                  />
+
+                  <label htmlFor="admin">Admin</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    id="user"
+                    name="user"
+                    value="user"
+                    onChange={(e) => setAdmin(e.target.value)}
+                    checked={admin === "user"}
+                    className="mx-1.5"
+                  />
+                  <label htmlFor="user">User</label>
+                </div>
               </div>
               <div className="divide-y divide-gray-200">
                 <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
