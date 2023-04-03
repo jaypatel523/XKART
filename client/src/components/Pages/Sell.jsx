@@ -23,6 +23,7 @@ const initialState = {
   city: "",
   seller: "",
   contact: "",
+  sellerId: "",
 };
 
 const Sell = () => {
@@ -31,6 +32,7 @@ const Sell = () => {
   const [img1, setImg1] = useState();
   const [img2, setImg2] = useState();
   const [img3, setImg3] = useState();
+  const { user } = useContext(UserContext);
 
   const { isLogin, setIsLogin } = useContext(UserContext);
 
@@ -79,6 +81,7 @@ const Sell = () => {
 
   if (state.image1 && state.image2 && state.image3) {
     console.log("Post request");
+    state.sellerId = user.userId;
     let data = { userId: sessionStorage.getItem("userId"), state };
     axios
       .post("/api/sellProduct", data)

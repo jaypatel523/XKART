@@ -13,8 +13,8 @@ const Card = ({ product }) => {
 
   const navigateTo = useNavigate();
   const handleProduct = () => {
-    navigateTo(`/${product.productId}`, {
-      state: product,
+    navigateTo(`/product/${product.product._id}`, {
+      state: product.product,
     });
   };
 
@@ -51,11 +51,11 @@ const Card = ({ product }) => {
 
   return (
     <>
-      <div className="flex justify-center border border-gray-200 shadow-lg">
+      <div className="flex justify-center w-full b5:w-80 border border-gray-200 shadow-lg">
         <div className="block max-w-xs py-2 bg-white ">
           <img
-            className="w-80 h-44 hover:cursor-pointer"
-            src={product.product.image3}
+            className="w-full hover:cursor-pointer"
+            src={product.product?.image3}
             onClick={handleProduct}
             alt=""
           />
@@ -63,7 +63,7 @@ const Card = ({ product }) => {
           <div className="p-4">
             <div>
               <div className="flex justify-between mb-2 text-base sm:text-2xl font-semibold">
-                Rs {product.product.price}
+                Rs {product.product?.price}
                 <RxHeartFilled
                   className="hover:cursor-pointer"
                   onClick={() => removeWishlist(product.product)}
@@ -72,12 +72,12 @@ const Card = ({ product }) => {
             </div>
             <div>
               <div className="mb-4 text-base sm:text-lg">
-                {product.product.title}
+                {product.product?.title}
               </div>
             </div>
             <div className="flex justify-between ">
               <p className="text-sm md:text-base">
-                {product.product.city}, {product.product.state}
+                {product.product?.city}, {product.product?.state}
               </p>
               <p className="text-sm md:text-base">4 days ago</p>
             </div>

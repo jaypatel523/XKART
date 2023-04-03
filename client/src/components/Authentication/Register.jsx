@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -27,7 +29,7 @@ const Register = () => {
         navigateTo("/login");
       })
       .catch((err) => {
-        alert(err.response.data.message);
+        console.log(err);
       });
   };
 

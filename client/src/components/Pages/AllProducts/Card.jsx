@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../Context";
@@ -8,10 +8,12 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Card = ({ product }) => {
   const { user, setUser } = useContext(UserContext);
+  const [wishlistProducts, setWishlistProducts] = useState([]);
 
+  // console.log(user);
   const navigateTo = useNavigate();
   const handleProduct = () => {
-    navigateTo(`/${product.productId}`, {
+    navigateTo(`/product/${product._id}`, {
       state: product,
     });
   };
@@ -31,7 +33,8 @@ const Card = ({ product }) => {
             draggable: true,
             progress: undefined,
           });
-          console.log(res);
+          console.log("result", res);
+          console.log("product", product);
         })
         .catch((err) => console.log("error : ", err));
     } else {
@@ -47,16 +50,44 @@ const Card = ({ product }) => {
     }
   };
 
+  const removeFromWishlist = () => {
+    axios
+      .patch("/deletefromwishlist/:userId/:productId")
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // handle wishlist
+  // useEffect(() => {
+  //   // console.log(product);
+  //   axios
+  //     .get("/api/getallwishlist/" + user.userId + "/" + product._id)
+  //     .then((res) => {
+  //       // setWishlistProducts(res.data.products.wishlist);
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
+
   return (
     <>
-      <div className="flex justify-center border border-gray-200 shadow-lg">
-        <div className="block max-w-xs py-2 bg-white ">
+      {/* <div>hio</div> */}
+      <div className="flex justify-center w-full b5:w-80 border border-gray-200 shadow-lg">
+        <div className="block py-2 bg-white ">
           <img
-            className="w-80 h-44 hover:cursor-pointer"
-            src={product.image3}
+            className="w-full hover:cursor-pointer"
+            src={product.image1}
             onClick={handleProduct}
             alt=""
           />
+
+          <div></div>
 
           <div className="p-4">
             <div>
