@@ -23,7 +23,10 @@ const AdminDashboard = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 b11:grid-cols-4 gap-6">
           {allProducts &&
             allProducts.map((product, index) => {
-              if (product.adminApproved === false && product.adminRejected === false ) {
+              if (
+                product.adminApproved === false &&
+                product.adminRejected === false
+              ) {
                 return <Card key={index} product={product} />;
               }
               // console.log(product)

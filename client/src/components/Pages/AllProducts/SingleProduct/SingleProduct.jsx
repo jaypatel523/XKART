@@ -34,22 +34,27 @@ const SingleProduct = () => {
   };
 
   const handleReject = () => {
-    axios.patch("/api/adminRejected", location.state).then((res)=>{
-         toast("Product Rejected", {
-           position: "top-center",
-           autoClose: 1500,
-           hideProgressBar: false,
-           closeOnClick: true,
-           pauseOnHover: true,
-           draggable: true,
-           progress: undefined,
-         });
+    axios
+      .patch("/api/adminRejected", location.state)
+      .then((res) => {
+        toast("Product Rejected", {
+          position: "top-center",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
 
-         navigateTo("/admindashboard");
-    }).catch((err)=>{
-      console.log(err)
-    })
+        navigateTo("/admindashboard");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
+  console.log(location.state);
 
   return (
     <>
@@ -62,20 +67,22 @@ const SingleProduct = () => {
           <div className="b5:min-w-[250px]">
             <Card2 product={location.state} />
             <Card3 product={location.state} />
-            <div className=" flex mt-10 justify-around">
-              <button
-                className="bg-green-500 text-white rounded-lg py-2 px-4 w-24"
-                onClick={handleApprove}
-              >
-                Aprrove
-              </button>
-              <button
-                className="bg-red-500 text-white rounded-lg py-2 px-4 w-24"
-                onClick={handleReject}
-              >
-                Reject
-              </button>
-            </div>
+            {!location.state.adminApproved && (
+              <div className=" flex mt-10 justify-around">
+                <button
+                  className="bg-green-500 text-white rounded-lg py-2 px-4 w-24"
+                  onClick={handleApprove}
+                >
+                  Aprrove
+                </button>
+                <button
+                  className="bg-red-500 text-white rounded-lg py-2 px-4 w-24"
+                  onClick={handleReject}
+                >
+                  Reject
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -3,8 +3,6 @@ const AllProduct = require("../models/allProducts");
 
 const sellProduct = async (req, res) => {
   try {
-    
-
 
     let oldSeller = await SellProduct.findOne({ userId: req.body.userId });
 
@@ -33,9 +31,6 @@ const sellProduct = async (req, res) => {
   }
 };
 
-        let oldSeller = await SellProduct.findOne({ userId: req.body.userId })
-
-
 const updateApprove = async (req, res) => {
   try {
     // console.log(req.body);
@@ -46,14 +41,9 @@ const updateApprove = async (req, res) => {
       { adminApproved: true }
     );
 
-            let product = new AllProduct(req.body.state);
-            // console.log("newProduct", newProduct);
-            // console.log("product", product);
-
-
     await product.save()
 
-    res.send({message : "updated"});
+    res.send({ message: "updated" });
   } catch (error) {
     res.send(error);
   }
@@ -70,11 +60,11 @@ const updateReject = async (req, res) => {
 
     await product.save()
 
-    res.send({message : "updated"});
+    res.send({ message: "updated" });
   } catch (error) {
     res.send(error);
   }
 };
 
 
-module.exports = { sellProduct, updateApprove , updateReject };
+module.exports = { sellProduct, updateApprove, updateReject };

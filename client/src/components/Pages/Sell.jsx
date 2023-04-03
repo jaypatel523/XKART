@@ -24,11 +24,9 @@ const initialState = {
   city: "",
   seller: "",
   contact: "",
-
   adminApproved: false,
   adminRejected: false,
   sellerId: "",
-
 };
 
 const Sell = () => {
@@ -41,7 +39,6 @@ const Sell = () => {
   const navigate = useNavigate();
 
   const { user } = useContext(UserContext);
-
 
   const { isLogin, setIsLogin } = useContext(UserContext);
 
@@ -112,6 +109,13 @@ const Sell = () => {
         console.log("Error", err);
       });
   }
+
+  useEffect(() => {
+    // console.log(user);
+    if (!user?.userId) {
+      navigate("/login");
+    }
+  }, []);
 
   return (
     <>

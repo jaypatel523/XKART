@@ -4,43 +4,26 @@ const { expressjwt: jwt } = require("express-jwt");
 const Admin = require("../models/admin");
 
 const register = async (req, res) => {
+
   try {
-    const user = new User(req.body);
+    const user = new User(req.body)
 
 
     const dbmobile = await User.findOne({ mobile: req.body.mobile });
     if (dbmobile) {
-      throw new Error("Mobile Number already exists");
-
-    try {
-        const user = new User(req.body)
-
-        
-        const dbmobile = await User.findOne({ mobile: req.body.mobile });
-        if (dbmobile) {
-            throw new Error('Mobile Number already exists');
-        }
-      
-        const dbemail = await User.findOne({ email: req.body.email });
-        if (dbemail) {
-            throw new Error("Email Address already exists")
-        }
-       
-        await user.save()
-        res.status(200).json({ message: "Successfully Registered!" })
-    } catch (err) {
-        res.status(400).json({ message: err.message })
-
+      throw new Error('Mobile Number already exists');
     }
 
     const dbemail = await User.findOne({ email: req.body.email });
     if (dbemail) {
-      throw new Error("Email Address already exists");
+      throw new Error("Email Address already exists")
     }
-    await user.save();
-    res.status(200).json({ message: "Successfully Registered!" });
+
+    await user.save()
+    res.status(200).json({ message: "Successfully Registered!" })
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ message: err.message })
+
   }
 };
 
@@ -55,7 +38,7 @@ const login = async (req, res) => {
       throw new Error("Email and password don't match");
     }
 
-    
+
     const token = jwttoken.sign(
       {
         _id: user._id,
@@ -85,7 +68,7 @@ const adminLogin = async (req, res) => {
       throw new Error("Email and password don't match");
     }
 
-    
+
     const token = jwttoken.sign(
       {
         _id: user._id,
@@ -119,12 +102,12 @@ const logout = (req, res) => {
 
 
 const getUserDetails = async (req, res) => {
-    try {
-        const user = await User.findOne({ _id: req.params.userId });
-        res.send(user);
-    } catch (error) {
-        res.send(error);
-    }
+  try {
+    const user = await User.findOne({ _id: req.params.userId });
+    res.send(user);
+  } catch (error) {
+    res.send(error);
+  }
 }
 
 

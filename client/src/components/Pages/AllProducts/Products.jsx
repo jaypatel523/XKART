@@ -36,17 +36,18 @@ const Products = ({ type, color }) => {
       });
   }, [params.category]);
 
+  console.log(allProducts);
+
   return (
     <>
       <section className="max-w-[84rem] mx-auto px-4 sm:px-6 lg:px-4 py-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 b11:grid-cols-4 gap-6">
-
           {params?.category ? (
             <>
               {categoryWiseProduct &&
                 categoryWiseProduct.map((product, index) => {
-                if (product.adminApproved === true) {
-                  return <Card key={index} product={product} />;
+                  if (product.adminApproved === true) {
+                    return <Card key={index} product={product} />;
                   }
                 })}
             </>
@@ -54,13 +55,12 @@ const Products = ({ type, color }) => {
             <>
               {allProducts &&
                 allProducts.map((product, index) => {
-                if (product.adminApproved === true) {
-                  return <Card key={index} product={product} />;
+                  if (product.adminApproved === true) {
+                    return <Card key={index} product={product} />;
                   }
                 })}
             </>
           )}
-
         </div>
       </section>
     </>
