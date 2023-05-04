@@ -1,16 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { VscAccount } from "react-icons/vsc";
 import { IoIosArrowForward } from "react-icons/io";
 import { UserContext } from "../../../../Context";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { io } from "socket.io-client";
 
 const Card3 = ({ product }) => {
   const { user } = useContext(UserContext);
-  const [isOpenDialog, setIsOpenDialog] = useState(false);
   const [isSellerSame, setIsSameSeller] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
   const navigateTo = useNavigate();
+  const socket = useRef();
 
   useEffect(() => {
     if (user.userId === product.sellerId) {
@@ -18,39 +21,46 @@ const Card3 = ({ product }) => {
     }
   }, []);
 
-  const handleOpenChat = () => {
-    navigateTo("/chat");
-  };
-
-  const openDialog = () => {
-    setIsOpenDialog(true);
-    navigateTo("/chat");
-  };
-
-  const closeDialog = () => {
-    setIsOpenDialog(false);
-  };
-
   const startConversation = () => {
+    if (!user.userId) {
+      toast("You need to login first", {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
     const receiverId = product.sellerId;
     let conversation = { senderId: user.userId, receiverId };
-    console.log(conversation);
+    // console.log(conversation);
+    socket.current = io("http://localhost:8000");
     axios
       .post("/api/startchat", conversation)
       .then((res) => {
-        navigateTo("/chat");
+        socket.current.emit("startConversation", { userId: user.userId });
+        navigateTo("/chat", {
+          state: product,
+        });
       })
       .catch((err) => {
         console.log("error", err);
       });
   };
 
-//  console.log(product);
   useEffect(() => {
+    if (!user.userId) {
+      return;
+    }
+
     axios
       .get("/api/findconversation/" + user.userId + "/" + product.sellerId)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setIsStarted(true);
       })
       .catch((err) => {
@@ -60,7 +70,7 @@ const Card3 = ({ product }) => {
 
   return (
     <>
-      <div className="border rounded border-gray-200 shadow-lg">
+      <div className="border rounded border-gray-200 bg-white shadow-lg">
         <div className="">
           <div className="p-4">
             <div>
@@ -75,18 +85,15 @@ const Card3 = ({ product }) => {
             <div>
               {isSellerSame ? (
                 <>
-                  <div
-                    className="cursor-pointer text-center mb-2 py-3 text-2xl bg-blue-500 text-white rounded-lg"
-                    onClick={handleOpenChat}
-                  >
-                    Open Chat
+                  <div className="cursor-pointer text-center mb-2 py-3 text-2xl bg-blue-500 text-white rounded-lg">
+                    It's Your {product.category}
                   </div>
                 </>
               ) : (
                 <>
                   <div
                     className="cursor-pointer text-center mb-2 py-3 text-2xl bg-blue-500 text-white rounded-lg"
-                    onClick={openDialog}
+                    onClick={startConversation}
                   >
                     Chat with seller
                   </div>
@@ -96,28 +103,6 @@ const Card3 = ({ product }) => {
           </div>
         </div>
       </div>
-
-      {isOpenDialog && !isStarted && (
-        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-40 bg-black text-white">
-          <div className="rounded-sm w-[400px] p-10 text-center bg-white text-black">
-            <div className=" p-4 ">Are you sure you want to chat ?</div>
-            <div className="flex justify-evenly">
-              <button
-                className="bg-blue-500 hover:bg-blue-400 text-white rounded-lg px-4 py-2"
-                onClick={startConversation}
-              >
-                Start Chat
-              </button>
-              <button
-                className="bg-blue-500 hover:bg-blue-400 text-white rounded-lg px-4 py-2"
-                onClick={closeDialog}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 };

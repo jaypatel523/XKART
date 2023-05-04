@@ -11,7 +11,9 @@ const Chat = ({ message }) => {
       {message?.sender === user.userId ? (
         <>
           <div className="flex flex-col items-end">
-            <span className="bg-gray-200 p-2 rounded-full">{message.text}</span>
+            <span className="bg-gray-200 text-black p-2 rounded-full">
+              {message.text}
+            </span>
             <span className="text-[12px] mx-2">
               {" "}
               {format(message.createdAt)}

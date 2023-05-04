@@ -1,10 +1,11 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RouterProvider } from "react-router-dom";
 import { UserContext } from "./Context";
 import router from "./router";
+import { io } from "socket.io-client";
 
 const App = () => {
   // console.log(socket);
@@ -19,10 +20,15 @@ const App = () => {
     sessionStorage.getItem("userId") ? true : false
   );
 
+  const socket = useRef();
+  socket.current = io("http://localhost:8000");
+
   return (
     <>
       <ToastContainer />
-      <UserContext.Provider value={{ user, setUser, isLogin, setIsLogin }}>
+      <UserContext.Provider
+        value={{ user, setUser, isLogin, setIsLogin, socket }}
+      >
         <RouterProvider router={router} />
       </UserContext.Provider>
     </>

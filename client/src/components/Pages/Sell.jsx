@@ -10,13 +10,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../../Context";
 import { useNavigate } from "react-router-dom";
+import ReactLoading from "react-loading";
 
 const initialState = {
   category: "Mobile",
   title: "",
   brand: "",
   description: "",
-  price: 0,
+  price: "",
   image1: "",
   image2: "",
   image3: "",
@@ -35,6 +36,8 @@ const Sell = () => {
   const [img1, setImg1] = useState();
   const [img2, setImg2] = useState();
   const [img3, setImg3] = useState();
+  const [isPostLoading, setIsPostLoading] = useState(false);
+  const [isPosted, setIsPosted] = useState(false);
   const { user } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -58,7 +61,33 @@ const Sell = () => {
   const storage = getStorage(app, bucket_url);
 
   const handleSell = () => {
+    if (
+      !state.title ||
+      !state.brand ||
+      !state.description ||
+      !state.price ||
+      !state.state ||
+      !state.city ||
+      !state.city ||
+      !img1 ||
+      !img2 ||
+      !img3
+    ) {
+      toast("Please, provide complete details", {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
+    setIsPostLoading(true);
     console.log(state);
+
     const storageRef1 = ref(storage, `XKART/${img1.name}`);
     const storageRef2 = ref(storage, `XKART/${img2.name}`);
     const storageRef3 = ref(storage, `XKART/${img3.name}`);
@@ -104,19 +133,37 @@ const Sell = () => {
           progress: undefined,
         });
         dispatch({ type: "INITIAL_STATE" });
-        navigate("/");
+        setIsPostLoading(false);
+        setIsPosted(true);
+        // navigate("/");
       })
       .catch((err) => {
         console.log("Error", err);
       });
   }
-
+  // console.log(user);
   useEffect(() => {
-    // console.log(user);
-    if (!user?.userId) {
-      navigate("/login");
+    if (!user.userId) {
+      toast("You need to login first", {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      navigate("/");
     }
   }, []);
+
+  useEffect(() => {
+    if (!isPosted) return;
+    setTimeout(() => {
+      setIsPosted(false);
+      navigate("/");
+    }, 2000);
+  }, [isPosted]);
 
   return (
     <>
@@ -204,6 +251,7 @@ const Sell = () => {
               onChange={(e) => {
                 dispatch({ type: "ONCHANGE_TITLE", payload: e });
               }}
+              required
             />
           </div>
           <div className="flex flex-col my-4">
@@ -260,7 +308,7 @@ const Sell = () => {
         <div className="sm:px-6 md:px-10 md:py-4 p-2">
           <h1 className="font-bold text-xl my-4">Upload Photos</h1>
           <div className="flex justify-between">
-            <div>
+            <div className="">
               <input
                 type="file"
                 id="img1"
@@ -271,6 +319,19 @@ const Sell = () => {
               <label htmlFor="img1">
                 <AiFillCamera className="cursor-pointer w-20 h-20 hover:bg-gray-200" />
               </label>
+              {img1 && (
+                <div className="flex justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    color="#3B82F6"
+                    fill="currentColor"
+                    className="w-8 h-8"
+                  >
+                    <path d="M7.493 18.75c-.425 0-.82-.236-.975-.632A7.48 7.48 0 016 15.375c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75 2.25 2.25 0 012.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23h-.777zM2.331 10.977a11.969 11.969 0 00-.831 4.398 12 12 0 00.52 3.507c.26.85 1.084 1.368 1.973 1.368H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 01-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227z" />
+                  </svg>
+                </div>
+              )}
             </div>
             <div className="">
               <input
@@ -283,6 +344,19 @@ const Sell = () => {
               <label htmlFor="img2">
                 <AiFillCamera className="cursor-pointer w-20 h-20 hover:bg-gray-200" />
               </label>
+              {img2 && (
+                <div className="flex justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    color="#3B82F6"
+                    fill="currentColor"
+                    className="w-8 h-8"
+                  >
+                    <path d="M7.493 18.75c-.425 0-.82-.236-.975-.632A7.48 7.48 0 016 15.375c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75 2.25 2.25 0 012.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23h-.777zM2.331 10.977a11.969 11.969 0 00-.831 4.398 12 12 0 00.52 3.507c.26.85 1.084 1.368 1.973 1.368H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 01-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227z" />
+                  </svg>
+                </div>
+              )}
             </div>
             <div>
               <input
@@ -295,6 +369,19 @@ const Sell = () => {
               <label htmlFor="img3">
                 <AiFillCamera className="cursor-pointer w-20 h-20 hover:bg-gray-200" />
               </label>
+              {img3 && (
+                <div className="flex justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    color="#3B82F6"
+                    fill="currentColor"
+                    className="w-8 h-8"
+                  >
+                    <path d="M7.493 18.75c-.425 0-.82-.236-.975-.632A7.48 7.48 0 016 15.375c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75 2.25 2.25 0 012.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23h-.777zM2.331 10.977a11.969 11.969 0 00-.831 4.398 12 12 0 00.52 3.507c.26.85 1.084 1.368 1.973 1.368H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 01-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227z" />
+                  </svg>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -329,7 +416,7 @@ const Sell = () => {
           </div>
         </div>
         <div className="border border-gray-300 my-2"></div>
-        <div className="sm:px-6 md:px-10 md:py-4 p-2">
+        {/* <div className="sm:px-6 md:px-10 md:py-4 p-2">
           <h1 className="font-bold text-xl my-4">Confirm Your Details</h1>
           <div className="flex flex-col my-4">
             <label htmlFor="seller">Name</label>
@@ -357,16 +444,58 @@ const Sell = () => {
               }}
             />
           </div>
-        </div>
-        <div className="border border-gray-300 my-2"></div>
-        <div className="sm:px-6 md:px-10 md:py-4 p-2">
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-10 py-2"
-            onClick={handleSell}
-          >
-            Post Now
-          </button>
+        </div> */}
+        {/* <div className="border border-gray-300 my-2"></div> */}
+        <div className="sm:px-6 md:px-10 md:py-4 p-2 flex">
+          {!isPostLoading && !isPosted && (
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-10 py-2"
+              onClick={handleSell}
+            >
+              Post Now
+            </button>
+          )}
+
+          {isPostLoading && (
+            <button
+              type="submit"
+              className="bg-blue-500 text-white rounded-lg px-10 py-2 disabled:opacity-75"
+              disabled
+            >
+              Posting...
+            </button>
+          )}
+
+          {isPosted && !isPostLoading && (
+            <button
+              type="submit"
+              className="bg-blue-500 text-white rounded-lg px-10 py-2 disabled:opacity-75"
+              disabled
+            >
+              Posted
+            </button>
+          )}
+
+          {isPostLoading && (
+            <div className="ml-4 w-10 h-10">
+              <ReactLoading type="spin" color="#3B82F6" width="100%" />
+            </div>
+          )}
+
+          {isPosted && !isPostLoading && (
+            <div className="ml-4 w-10 h-10">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                color="#3B82F6"
+                fill="currentColor"
+                className="w-full"
+              >
+                <path d="M7.493 18.75c-.425 0-.82-.236-.975-.632A7.48 7.48 0 016 15.375c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75 2.25 2.25 0 012.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23h-.777zM2.331 10.977a11.969 11.969 0 00-.831 4.398 12 12 0 00.52 3.507c.26.85 1.084 1.368 1.973 1.368H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 01-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227z" />
+              </svg>
+            </div>
+          )}
         </div>
       </div>
     </>

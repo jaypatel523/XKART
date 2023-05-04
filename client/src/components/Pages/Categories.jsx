@@ -8,8 +8,8 @@ const Categories = () => {
   const navigateTo = useNavigate();
 
   return (
-    <>
-      <div className="p-4 mt-2 text-sm flex gap-3 justify-between overflow-x-scroll">
+    <div className="bg-white">
+      <div className="border p-2 px-4 text-sm flex gap-3 justify-between overflow-x-scroll">
         <div>
           <div
             className="font-bold flex items-center p-2 hover:bg-gray-200 cursor-pointer"
@@ -131,7 +131,7 @@ const Categories = () => {
           Motorcycles
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
