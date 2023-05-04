@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useRef, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { BsChatDots } from "react-icons/bs";
@@ -8,14 +8,23 @@ import { VscAccount } from "react-icons/vsc";
 import { BiSearch } from "react-icons/bi";
 import { FiMenu } from "react-icons/fi";
 import { AiOutlineLogout } from "react-icons/ai";
+import { SlArrowDown } from "react-icons/sl";
 import axios from "axios";
 import { UserContext } from "../../Context";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { format } from "timeago.js";
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, setUser, isLogin, setIsLogin } = useContext(UserContext);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [Location, setLocation] = useState("Location");
+  const { user, setUser, isLogin, setIsLogin, socket } =
+    useContext(UserContext);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [notifications, setNotifications] = useState([]);
+  const [temp, settemp] = useState(false);
 
   const navigateTo = useNavigate();
   const handleMenu = () => {
@@ -48,20 +57,91 @@ const Navbar = () => {
       });
   };
 
+  useEffect(() => {
+    if (!user.userId) {
+      return;
+    }
+
+    socket.current.on("getMessage", (data) => {
+      setIsNotificationOpen(true);
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+      console.log("hi");
+      setNotifications((prev) => [arrivalMessage, ...prev]);
+    });
+  }, []);
+
+  // const handleProfile = () => {};
+  const handleNotificationOpen = () => {
+    setIsNotificationOpen(false);
+    navigateTo("/chat");
+  };
+
   return (
-    <>
-      <div className="drop-shadow-sm shadow-md w-auto px-4 flex justify-between items-center">
-        <div className="py-4 flex items-center">
-          <div className="mr-4 cursor-pointer" onClick={() => navigateTo("/")}>
+    <div className="bg-gray-200">
+      <div className="drop-shadow-sm p-2 py-4 shadow-md w-auto px-4 flex justify-between items-center">
+        <div className=" flex items-center text-center">
+          <div
+            className="px-8 mr-10 text-xl flex cursor-pointer bg-blue-500 text-white p-2 rounded"
+            onClick={() => navigateTo("/")}
+          >
             XKART
           </div>
-          <div className="mr-4">
+          {/* <div className="flex flex-col my-4">
+            <div
+              className="relative flex items-center justify-between  bg-white border border-gray-200 rounded-md cursor-pointer"
+              onClick={() => setIsLocationOpen(!isLocationOpen)}
+            >
+              <input
+                className="p-2 focus:outline-none cursor-pointer"
+                value={Location}
+                readOnly
+              />
+              <div className="p-2">
+                <SlArrowDown />
+              </div>
+              {isLocationOpen && (
+                <>
+                  <div className="absolute top-10 text-start left-0 w-[100%] h-32 border border-gray-200 bg-gray-50 overflow-scroll">
+                    <div
+                      className="p-2 hover:bg-gray-200 cursor-pointer"
+                      onClick={(e) => setLocation("Bayad")}
+                    >
+                      Bayad
+                    </div>
+                    <div
+                      className="p-2 hover:bg-gray-200 cursor-pointer"
+                      onClick={(e) => setLocation("Surat")}
+                    >
+                      Surat
+                    </div>
+                    <div
+                      className="p-2 hover:bg-gray-200 cursor-pointer"
+                      onClick={(e) => setLocation("Anand")}
+                    >
+                      Anand
+                    </div>
+                    <div
+                      className="p-2 hover:bg-gray-200 cursor-pointer"
+                      onClick={(e) => setLocation("Vadodara")}
+                    >
+                      Vadodara
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          </div> */}
+          {/* <div className="mr-4">
             <button className="border border-black  py-2 px-4 hidden md:flex justify-between items-center rounded-lg">
               <span>Location</span>
               <TiArrowSortedDown />
             </button>
-          </div>
-          <form className="hidden md:flex items-center">
+          </div> */}
+          {/* <form className="hidden md:flex items-center">
             <div>
               <input
                 type="text"
@@ -69,52 +149,86 @@ const Navbar = () => {
                 placeholder="search any product..."
               />
             </div>
-          </form>
+          </form> */}
         </div>
         <div className="hidden md:flex justify-between items-center">
-          <Link to="/chat" className="p-2 relative" title="Chat">
+          <Link
+            to="/chat"
+            className="py-2 px-4  text-center relative hover:bg-blue-500 hover:text-white rounded-lg"
+            title="Chat"
+          >
             <BsChatDots className="w-6 h-6" />
+            {/* Chat */}
           </Link>
-          <Link to="/chat" className="p-2" title="Notification">
-            <IoMdNotificationsOutline className="w-6 h-6" />
-          </Link>
-          <Link to="/wishlist" className="p-2" title="Wishlist">
+          {/* <button
+            onClick={handleNotificationOpen}
+            className="py-2 px-4 relative text-center hover:bg-blue-500 hover:text-white rounded-lg"
+          >
+            <div>
+              <IoMdNotificationsOutline className="w-6 h-6" />
+            </div>
+            {isNotificationOpen && (
+              <>
+                <div className="bg-red-600 flex justify-center text-center items-center text-white text-xs w-6 h-6 top-0 -right-1 rounded-full absolute">
+                  {notifications.length}
+                </div>
+              </>
+            )}
+          </button> */}
+          <Link
+            to="/wishlist"
+            className="py-2 px-4 text-center hover:bg-blue-500 hover:text-white rounded-lg"
+            title="Wishlist"
+          >
             <FaRegHeart className="w-6 h-6" />
           </Link>
 
           {isLogin && (
-            <>
-              <Link to="/profile" className="p-2">
+            <div className="relative">
+              <button
+                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                className="py-2 px-4 text-center hover:bg-blue-500 hover:text-white rounded-lg"
+              >
                 <VscAccount className="w-6 h-6" title="Profile" />
-              </Link>
-            </>
-          )}
-
-          {isLogin ? (
-            <>
-              <button onClick={handleLogout} className="p-2">
-                <AiOutlineLogout className="w-6 h-6" title="Logout" />
               </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="p-2">
-                <AiOutlineLogout className="w-6 h-6" title="Login" />
-              </Link>
-            </>
+              {isProfileOpen && (
+                <div className="absolute top-10 -left-0 w-36 bg-white shadow-lg border">
+                  <div className="py-2 px-4 text-start cursor-pointer hover:bg-gray-200">
+                    Profile
+                  </div>
+                  <div
+                    className="py-2 px-4 text-start cursor-pointer hover:bg-gray-200"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </div>
+                </div>
+              )}
+            </div>
           )}
           <Link
             to="/sell"
-            className="bg-blue-500 text-white rounded-lg px-10 py-2"
+            className="py-2 px-4 w-20 text-center hover:bg-blue-500 hover:text-white rounded-lg"
           >
-            sell
+            Sell
           </Link>
+
+          {!isLogin && (
+            <>
+              <Link
+                to="/login"
+                className="py-2 px-4 w-20 text-center hover:bg-blue-500 hover:text-white rounded-lg"
+              >
+                Login
+              </Link>
+            </>
+          )}
         </div>
         <div className="md:hidden cursor-pointer">
           <FiMenu className="w-6 h-6" onClick={handleMenu} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

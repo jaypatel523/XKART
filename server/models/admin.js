@@ -13,11 +13,6 @@ const AdminSchema = new mongoose.Schema({
     match: [/.+\@.+\..+/, "Please fill a valid email address"],
     required: "Email is required",
   },
-  mobile: {
-    type: Number,
-    unique: "Mobile Number is already registered",
-    required: "Mobile Number is required",
-  },
   hashed_password: {
     type: String,
     required: "Password is required",
@@ -34,6 +29,7 @@ const AdminSchema = new mongoose.Schema({
   },
 });
 
+
 // set hashed_password = encrypted password in schema
 AdminSchema.virtual("password")
   .set(function (password) {
@@ -44,6 +40,7 @@ AdminSchema.virtual("password")
   .get(function () {
     return this._password;
   });
+
 
 // validating password
 AdminSchema.path("hashed_password").validate(function (v) {

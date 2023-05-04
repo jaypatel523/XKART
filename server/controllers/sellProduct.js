@@ -4,6 +4,8 @@ const AllProduct = require("../models/allProducts");
 const sellProduct = async (req, res) => {
   try {
 
+    // console.log(req.body);
+
     let oldSeller = await SellProduct.findOne({ userId: req.body.userId });
 
     if (!oldSeller) {
@@ -36,8 +38,8 @@ const updateApprove = async (req, res) => {
     // console.log(req.body);
 
 
-    let product = await AllProduct.updateOne(
-      { adminApproved: false },
+    let product = await AllProduct.findOneAndUpdate(
+      { _id: req.body._id },
       { adminApproved: true }
     );
 
@@ -54,7 +56,7 @@ const updateReject = async (req, res) => {
     // console.log(req.body);
 
     let product = await AllProduct.updateOne(
-      { adminRejected: false },
+      { _id: req.body._id },
       { adminRejected: true }
     );
 
@@ -67,4 +69,28 @@ const updateReject = async (req, res) => {
 };
 
 
-module.exports = { sellProduct, updateApprove, updateReject };
+const getProducts = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    console.log(req.params);
+
+    const products = await SellProduct.find({ userId: userId })
+      .populate({
+        path: 'products',
+        model: 'allProduct',
+        select: 'category brand'
+      })
+      .exec();
+
+
+    console.log("products", products[0].products);
+    res.send(products);
+
+
+  } catch (error) {
+    res.send(error);
+  }
+}
+
+
+module.exports = { sellProduct, updateApprove, updateReject, getProducts };

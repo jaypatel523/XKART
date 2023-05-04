@@ -69,6 +69,10 @@ io.on("connection", (socket) => {
   // when connect 
   // console.log('connected to socket server...');
 
+  socket.on("startConversation", (userId) => {
+    io.emit("startConversation", userId);
+  })
+
 
   // take userId and socketId from user
   socket.on("addUser", (userId) => {
@@ -96,6 +100,8 @@ io.on("connection", (socket) => {
 })
 
 start();
+
+
 
 
 

@@ -6,11 +6,11 @@ import ChatPage from "./components/Pages/Chat/ChatPage";
 import Home from "./components/Pages/Home";
 import Menu from "./components/Pages/Menu";
 import Sell from "./components/Pages/Sell";
-import Profile from "./components/Pages/Profile";
-import SingleProduct from "./components/Pages/AllProducts/SingleProduct/SingleProduct";
+import Profile from "./components/Pages/Profile/Profile";
 import Wishlist from "./components/Pages/Wishlist/Wishlist";
 import AdminDashboard from "./components/Authentication/AdminDashboard";
 import Products from "./components/Pages/AllProducts/Products";
+import SingleProduct from "./components/Pages/AllProducts/SingleProduct/SingleProduct";
 
 const router = createBrowserRouter([
   {
@@ -61,8 +61,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/admindashboard",
-    element : <AdminDashboard />
-  }
+    element: <AdminDashboard />,
+  },
 ]);
 
 export default router;
