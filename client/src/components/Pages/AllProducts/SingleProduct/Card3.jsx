@@ -21,6 +21,21 @@ const Card3 = ({ product }) => {
     }
   }, []);
 
+  const handleOpenChat = () => {
+    navigateTo("/chat");
+  };
+
+  const openDialog = () => {
+    setIsOpenDialog(true);
+    navigateTo("/chat");
+  };
+
+  const closeDialog = () => {
+    setIsOpenDialog(false);
+  };
+
+  console.log(user);
+
   const startConversation = () => {
     if (!user.userId) {
       toast("You need to login first", {

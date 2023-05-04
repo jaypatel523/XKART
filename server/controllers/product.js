@@ -1,4 +1,5 @@
 const AllProduct = require("../models/allProducts");
+const SellProduct = require("../models/sellProduct");
 
 const getAllProducts = async (req, res) => {
   try {
@@ -9,6 +10,10 @@ const getAllProducts = async (req, res) => {
     res.send(error);
   }
 };
+
+
+const getProductById = async (req, res) => {};
+
 
 const getProductCategorywise = async (req, res) => {
   try {
@@ -46,6 +51,27 @@ const getProductCitywise = async (req, res) => {
 };
 
 
+const getProductUser = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    console.log(req.params);
+
+    const products = await SellProduct.find({ userId: userId })
+      .populate({
+        path: "products",
+        model: "allProduct",
+        select: "",
+      })
+      .exec();
+
+    // console.log("products", products[0].products);
+    res.send({products : products[0].products});
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+
 const searchProducts = async (req, res) => {
   try {
     const query = req.query.q;
@@ -67,10 +93,15 @@ const searchProducts = async (req, res) => {
 }
 
 
+
 module.exports = {
   getAllProducts,
   getProductCategorywise,
   getProductStatewise,
   getProductCitywise,
+
+  getProductUser,
+
   searchProducts
+
 };

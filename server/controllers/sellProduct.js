@@ -1,8 +1,42 @@
 const SellProduct = require("../models/sellProduct");
 const AllProduct = require("../models/allProducts");
+const { findOneAndUpdate } = require("../models/user");
+
+// const sellProduct = async (req, res) => {
+//   try {
+//     let oldSeller = await SellProduct.findOne({ userId: req.body.userId });
+
+//     if (!oldSeller) {
+//       let newProduct = new SellProduct();
+//       newProduct.userId = req.body.userId;
+//       newProduct.products = req.body.state;
+
+//       let product = new AllProduct(req.body.state);
+//       console.log("newProduct", newProduct);
+//       console.log("product", product);
+
+//       await newProduct.save();
+//       await product.save();
+//     }
+
+//     oldSeller.products.push(req.body.state);
+//     let product = new AllProduct(req.body.state);
+
+//     await oldSeller.save();
+//     await product.save();
+
+//     res.send({ message: "new product added" });
+//   } catch (error) {
+//     res.send(error);
+//   }
+// };
 
 const sellProduct = async (req, res) => {
   try {
+    let product = new AllProduct(req.body.state);
+    await product.save();
+
+    // console.log(product._id);
 
     // console.log(req.body);
 
@@ -11,21 +45,13 @@ const sellProduct = async (req, res) => {
     if (!oldSeller) {
       let newProduct = new SellProduct();
       newProduct.userId = req.body.userId;
-      newProduct.products = req.body.state;
-
-      let product = new AllProduct(req.body.state);
-      console.log("newProduct", newProduct);
-      console.log("product", product);
+      newProduct.products = product._id;
 
       await newProduct.save();
-      await product.save();
     }
 
-    oldSeller.products.push(req.body.state);
-    let product = new AllProduct(req.body.state);
-
-    await oldSeller.save();
-    await product.save();
+    oldSeller.products.push(product._id);
+    oldSeller.save();
 
     res.send({ message: "new product added" });
   } catch (error) {
@@ -35,18 +61,14 @@ const sellProduct = async (req, res) => {
 
 const updateApprove = async (req, res) => {
   try {
-    // console.log(req.body);
-
-            let product = new AllProduct(req.body.state);
-            // console.log("newProduct", newProduct);
-            // console.log("product", product);
 
     let product = await AllProduct.findOneAndUpdate(
       { _id: req.body._id },
-      { adminApproved: true }
+      { adminApproved: true, isPending: false },
+
     );
 
-    await product.save()
+    await product.save();
 
     res.send({ message: "updated" });
   } catch (error) {
@@ -56,20 +78,21 @@ const updateApprove = async (req, res) => {
 
 const updateReject = async (req, res) => {
   try {
-    // console.log(req.body);
 
-    let product = await AllProduct.updateOne(
+    let product = await AllProduct.findOneAndUpdate(
       { _id: req.body._id },
-      { adminRejected: true }
+      { adminRejected: true, isPending: false }
+
     );
 
-    await product.save()
+    await product.save();
 
     res.send({ message: "updated" });
   } catch (error) {
     res.send(error);
   }
 };
+
 
 
 const getProducts = async (req, res) => {
@@ -97,3 +120,4 @@ const getProducts = async (req, res) => {
 
 
 module.exports = { sellProduct, updateApprove, updateReject, getProducts };
+

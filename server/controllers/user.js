@@ -6,6 +6,7 @@ const nodemailer = require('nodemailer');
 let otpSent = "";
 
 
+
 const otpGenerator = () => {
   const numbers = '0123456789';
 
@@ -135,6 +136,17 @@ const register = async (req, res) => {
 };
 
 
+    const dbemail = await User.findOne({ email: req.body.email });
+    if (dbemail) {
+      throw new Error("Email Address already exists");
+    }
+
+    await user.save();
+    res.status(200).json({ message: "Successfully Registered!" });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
 
 const login = async (req, res) => {
   try {
@@ -144,7 +156,6 @@ const login = async (req, res) => {
     if (!user.authenticate(req.body.password)) {
       throw new Error("Email and password don't match");
     }
-
 
 
     const token = jwttoken.sign(
@@ -180,7 +191,6 @@ const adminLogin = async (req, res) => {
     }
 
 
-
     const token = jwttoken.sign(
       {
         _id: user._id,
@@ -213,7 +223,6 @@ const logout = (req, res) => {
     .send({ message: "logged out!" });
 };
 
-
 const getUserDetails = async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.params.userId });
@@ -221,7 +230,9 @@ const getUserDetails = async (req, res) => {
   } catch (error) {
     res.json({ message: error.message, success: false });
   }
-}
+
+};
+
 
 
 const requireSignin = jwt({
@@ -242,10 +253,12 @@ module.exports = {
   login,
   logout,
   register,
-  requireSignin,
   hasAuthorization,
   getUserDetails,
   adminLogin,
-  generateOTP
-};
 
+  requireSignin,
+
+  generateOTP
+
+};

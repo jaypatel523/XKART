@@ -25,9 +25,11 @@ const initialState = {
   city: "",
   seller: "",
   contact: "",
+  sellerId: "",
   adminApproved: false,
   adminRejected: false,
-  sellerId: "",
+  markedSold : false,
+  isPending : true,
 };
 
 const Sell = () => {
@@ -41,8 +43,6 @@ const Sell = () => {
   const { user } = useContext(UserContext);
 
   const navigate = useNavigate();
-
-  const { user } = useContext(UserContext);
 
   const { isLogin, setIsLogin } = useContext(UserContext);
 

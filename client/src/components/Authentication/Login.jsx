@@ -15,7 +15,7 @@ const Login = () => {
 
   const handleLogin = () => {
     const data = { email, password, admin };
-
+ 
     if (admin === "admin") {
       axios.post("/api/adminlogin", data).then((res) => {
         if (res.data.success) {
@@ -92,6 +92,9 @@ const Login = () => {
         })
         .catch((err) => {
           alert(err.response.data.message);
+
+        });
+
     }
   };
 
