@@ -12,7 +12,7 @@ const getAllProducts = async (req, res) => {
 };
 
 
-const getProductById = async (req, res) => {};
+const getProductById = async (req, res) => { };
 
 
 const getProductCategorywise = async (req, res) => {
@@ -65,7 +65,7 @@ const getProductUser = async (req, res) => {
       .exec();
 
     // console.log("products", products[0].products);
-    res.send({products : products[0].products});
+    res.send({ products: products[0].products });
   } catch (error) {
     res.send(error);
   }
@@ -99,9 +99,8 @@ module.exports = {
   getProductCategorywise,
   getProductStatewise,
   getProductCitywise,
-
   getProductUser,
-
+  getProductById,
   searchProducts
 
 };

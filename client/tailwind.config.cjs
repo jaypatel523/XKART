@@ -9,6 +9,9 @@ module.exports = {
       screens: {
         'b11': '1200px',
         'b5': '500px'
+      },
+      colors: {
+        'whatsapp': "#164e63"
       }
     },
   },

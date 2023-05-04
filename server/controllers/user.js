@@ -136,18 +136,6 @@ const register = async (req, res) => {
 };
 
 
-    const dbemail = await User.findOne({ email: req.body.email });
-    if (dbemail) {
-      throw new Error("Email Address already exists");
-    }
-
-    await user.save();
-    res.status(200).json({ message: "Successfully Registered!" });
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-};
-
 const login = async (req, res) => {
   try {
     let user = await User.findOne({ email: req.body.email });

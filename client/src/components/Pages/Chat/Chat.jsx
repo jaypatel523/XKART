@@ -23,7 +23,7 @@ const Chat = ({ message }) => {
       ) : (
         <>
           <div className="flex flex-col items-start">
-            <span className="bg-blue-500 text-white p-2 rounded-full">
+            <span className="bg-whatsapp text-white p-2 rounded-full">
               {message.text}
             </span>
             <span className="text-[12px] mx-2">

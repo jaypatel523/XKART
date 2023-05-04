@@ -80,15 +80,20 @@ const Navbar = () => {
     navigateTo("/chat");
   };
 
+  const handleProfile = () => {
+    navigateTo("/profile");
+  };
+
   return (
     <div className="bg-gray-200">
       <div className="drop-shadow-sm p-2 py-4 shadow-md w-auto px-4 flex justify-between items-center">
         <div className=" flex items-center text-center">
           <div
-            className="px-8 mr-10 text-xl flex cursor-pointer bg-blue-500 text-white p-2 rounded"
+            className="px-8 mr-10 text-xl flex cursor-pointer bg-whatsapp text-white p-2 rounded"
             onClick={() => navigateTo("/")}
           >
-            XKART
+            <div className="text-3xl ">X</div>
+            <div className="text-xl pt-1 ml-1">KART</div>
           </div>
           {/* <div className="flex flex-col my-4">
             <div
@@ -154,7 +159,7 @@ const Navbar = () => {
         <div className="hidden md:flex justify-between items-center">
           <Link
             to="/chat"
-            className="py-2 px-4  text-center relative hover:bg-blue-500 hover:text-white rounded-lg"
+            className="py-2 px-4  text-center relative hover:bg-whatsapp hover:text-white rounded-lg"
             title="Chat"
           >
             <BsChatDots className="w-6 h-6" />
@@ -177,7 +182,7 @@ const Navbar = () => {
           </button> */}
           <Link
             to="/wishlist"
-            className="py-2 px-4 text-center hover:bg-blue-500 hover:text-white rounded-lg"
+            className="py-2 px-4 text-center hover:bg-whatsapp hover:text-white rounded-lg"
             title="Wishlist"
           >
             <FaRegHeart className="w-6 h-6" />
@@ -187,13 +192,16 @@ const Navbar = () => {
             <div className="relative">
               <button
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
-                className="py-2 px-4 text-center hover:bg-blue-500 hover:text-white rounded-lg"
+                className="py-2 px-4 text-center hover:bg-whatsapp hover:text-white rounded-lg"
               >
                 <VscAccount className="w-6 h-6" title="Profile" />
               </button>
               {isProfileOpen && (
                 <div className="absolute top-10 -left-0 w-36 bg-white shadow-lg border">
-                  <div className="py-2 px-4 text-start cursor-pointer hover:bg-gray-200">
+                  <div
+                    className="py-2 px-4 text-start cursor-pointer hover:bg-gray-200"
+                    onClick={handleProfile}
+                  >
                     Profile
                   </div>
                   <div
@@ -208,7 +216,7 @@ const Navbar = () => {
           )}
           <Link
             to="/sell"
-            className="py-2 px-4 w-20 text-center hover:bg-blue-500 hover:text-white rounded-lg"
+            className="py-2 px-4 w-20 text-center hover:bg-whatsapp hover:text-white rounded-lg"
           >
             Sell
           </Link>
@@ -217,7 +225,7 @@ const Navbar = () => {
             <>
               <Link
                 to="/login"
-                className="py-2 px-4 w-20 text-center hover:bg-blue-500 hover:text-white rounded-lg"
+                className="py-2 px-4 w-20 text-center hover:bg-whatsapp hover:text-white rounded-lg"
               >
                 Login
               </Link>

@@ -12,7 +12,7 @@ const Categories = () => {
       <div className="border p-2 px-4 text-sm flex gap-3 justify-between overflow-x-scroll">
         <div>
           <div
-            className="font-bold flex items-center p-2 hover:bg-gray-200 cursor-pointer"
+            className="font-bold flex items-center p-2 hover:bg-whatsapp hover:text-white cursor-pointer"
             onClick={() => setIsAllOpen(!isAllOpen)}
           >
             All categories <SlArrowDown className="ml-2" />
@@ -21,7 +21,7 @@ const Categories = () => {
         {isAllOpen && (
           <div className="absolute top-[135px] z-50 w-52 shadow-lg bg-white border border-gray-100">
             <div
-              className="p-2 hover:bg-gray-200 cursor-pointer"
+              className="p-2 hover:bg-whatsapp hover:text-white cursor-pointer"
               onClick={() => {
                 navigateTo("/Mobile");
                 setIsAllOpen(false);
@@ -30,7 +30,7 @@ const Categories = () => {
               Mobiles
             </div>
             <div
-              className="p-2 cursor-pointer hover:bg-gray-200"
+              className="p-2 cursor-pointer hover:bg-whatsapp hover:text-white"
               onClick={() => {
                 navigateTo("/Tv");
                 setIsAllOpen(false);
@@ -39,7 +39,7 @@ const Categories = () => {
               Tvs
             </div>
             <div
-              className="p-2 cursor-pointer hover:bg-gray-200"
+              className="p-2 cursor-pointer hover:bg-whatsapp hover:text-white"
               onClick={() => {
                 navigateTo("/Laptop");
                 setIsAllOpen(false);
@@ -48,7 +48,7 @@ const Categories = () => {
               Laptops
             </div>
             <div
-              className="p-2 cursor-pointer hover:bg-gray-200"
+              className="p-2 cursor-pointer hover:bg-whatsapp hover:text-white"
               onClick={() => {
                 navigateTo("/Book");
                 setIsAllOpen(false);
@@ -57,7 +57,7 @@ const Categories = () => {
               Books
             </div>
             <div
-              className="p-2 cursor-pointer hover:bg-gray-200"
+              className="p-2 cursor-pointer hover:bg-whatsapp hover:text-white"
               onClick={() => {
                 navigateTo("/Car");
                 setIsAllOpen(false);
@@ -66,7 +66,7 @@ const Categories = () => {
               Cars
             </div>
             <div
-              className="p-2 cursor-pointer hover:bg-gray-200"
+              className="p-2 cursor-pointer hover:bg-whatsapp hover:text-white"
               onClick={() => {
                 navigateTo("/Motorcycle");
                 setIsAllOpen(false);
@@ -77,7 +77,7 @@ const Categories = () => {
           </div>
         )}
         <div
-          className="p-2 rounded-md hover:bg-gray-200 cursor-pointer"
+          className="p-2 rounded-md hover:bg-whatsapp cursor-pointer hover:text-white"
           onClick={() => {
             navigateTo("/Mobile");
             setIsAllOpen(false);
@@ -86,7 +86,7 @@ const Categories = () => {
           Mobiles
         </div>
         <div
-          className="p-2 rounded-md cursor-pointer hover:bg-gray-200"
+          className="p-2 rounded-md cursor-pointer hover:bg-whatsapp hover:text-white"
           onClick={() => {
             navigateTo("/Tv");
             setIsAllOpen(false);
@@ -95,7 +95,7 @@ const Categories = () => {
           Tvs
         </div>
         <div
-          className="p-2 rounded-md cursor-pointer hover:bg-gray-200"
+          className="p-2 rounded-md cursor-pointer hover:bg-whatsapp hover:text-white"
           onClick={() => {
             navigateTo("/Laptop");
             setIsAllOpen(false);
@@ -104,7 +104,7 @@ const Categories = () => {
           Laptops
         </div>
         <div
-          className="p-2 rounded-md cursor-pointer hover:bg-gray-200"
+          className="p-2 rounded-md cursor-pointer hover:bg-whatsapp hover:text-white"
           onClick={() => {
             navigateTo("/Book");
             setIsAllOpen(false);
@@ -113,7 +113,7 @@ const Categories = () => {
           Books
         </div>
         <div
-          className="p-2 rounded-md cursor-pointer hover:bg-gray-200"
+          className="p-2 rounded-md cursor-pointer hover:bg-whatsapp hover:text-white"
           onClick={() => {
             navigateTo("/Car");
             setIsAllOpen(false);
@@ -122,7 +122,7 @@ const Categories = () => {
           Cars
         </div>
         <div
-          className="p-2 rounded-md cursor-pointer hover:bg-gray-200"
+          className="p-2 rounded-md cursor-pointer hover:bg-whatsapp hover:text-white"
           onClick={() => {
             navigateTo("/Motorcycle");
             setIsAllOpen(false);
