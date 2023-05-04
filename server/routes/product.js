@@ -1,19 +1,10 @@
 const epxress = require("express");
 const router = epxress.Router();
-const {
-  sellProduct,
-  updateApprove,
-  updateReject,
-} = require("../controllers/sellProduct");
-const {
-  getAllProducts,
-  getProductById,
-  getProductCategorywise,
-  getProductStatewise,
-  getProductCitywise,
-  getProductUser,
-} = require("../controllers/product");
-const authentication = require("../middleware/authentication");
+
+const { sellProduct, updateApprove, updateReject, getProducts } = require('../controllers/sellProduct');
+const { getAllProducts, getProductCategorywise, getProductStatewise, getProductCitywise, searchProducts , getProductById, getProductUser} = require('../controllers/product');
+const authentication = require('../middleware/authentication');
+
 
 router.route("/sellProduct").post(authentication, sellProduct);
 router.route("/adminApproved").patch(updateApprove);
@@ -25,4 +16,8 @@ router.route("/getProductStatewise/:state").get(getProductStatewise);
 router.route("/getProductCitywise/:city").get(getProductCitywise);
 router.route("/getProductUser/:userId").get(authentication,getProductUser)
 
+
+router.route('/search').get(searchProducts);
+
 module.exports = router;
+

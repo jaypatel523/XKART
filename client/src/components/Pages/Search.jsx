@@ -3,7 +3,7 @@ import React from "react";
 const Search = () => {
   return (
     <>
-      <div className="py-4  block md:hidden">
+      <div className="py-4 block md:hidden">
         <form className="mx-6 flex items-center justify-center">
           <input
             type="text"

@@ -54,8 +54,6 @@ const SingleProduct = () => {
       });
   };
 
-  console.log(location.state);
-
   return (
     <>
       <div className="m-10">

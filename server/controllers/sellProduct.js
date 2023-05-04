@@ -38,6 +38,8 @@ const sellProduct = async (req, res) => {
 
     // console.log(product._id);
 
+    // console.log(req.body);
+
     let oldSeller = await SellProduct.findOne({ userId: req.body.userId });
 
     if (!oldSeller) {
@@ -59,9 +61,11 @@ const sellProduct = async (req, res) => {
 
 const updateApprove = async (req, res) => {
   try {
+
     let product = await AllProduct.findOneAndUpdate(
       { _id: req.body._id },
       { adminApproved: true, isPending: false },
+
     );
 
     await product.save();
@@ -74,9 +78,11 @@ const updateApprove = async (req, res) => {
 
 const updateReject = async (req, res) => {
   try {
+
     let product = await AllProduct.findOneAndUpdate(
       { _id: req.body._id },
       { adminRejected: true, isPending: false }
+
     );
 
     await product.save();
@@ -87,4 +93,31 @@ const updateReject = async (req, res) => {
   }
 };
 
-module.exports = { sellProduct, updateApprove, updateReject };
+
+
+const getProducts = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    console.log(req.params);
+
+    const products = await SellProduct.find({ userId: userId })
+      .populate({
+        path: 'products',
+        model: 'allProduct',
+        select: 'category brand'
+      })
+      .exec();
+
+
+    console.log("products", products[0].products);
+    res.send(products);
+
+
+  } catch (error) {
+    res.send(error);
+  }
+}
+
+
+module.exports = { sellProduct, updateApprove, updateReject, getProducts };
+

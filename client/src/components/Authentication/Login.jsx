@@ -17,9 +17,8 @@ const Login = () => {
     const data = { email, password, admin };
  
     if (admin === "admin") {
-      axios
-        .post("/api/adminlogin", data)
-        .then((res) => {
+      axios.post("/api/adminlogin", data).then((res) => {
+        if (res.data.success) {
           sessionStorage.setItem("userId", res.data.user._id);
           sessionStorage.setItem("username", res.data.user.username);
           sessionStorage.setItem("email", res.data.user.email);
@@ -38,16 +37,23 @@ const Login = () => {
             draggable: true,
             progress: undefined,
           });
+        } else {
+          toast(res.data.message, {
+            position: "top-center",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        }
 
-          navigateTo("/admindashboard");
-        })
-        .catch((err) => {
-          alert(err.response.data.message);
-        });
+        navigateTo("/admindashboard");
+      });
     } else {
-      axios
-        .post("/api/login", data)
-        .then((res) => {
+      axios.post("/api/login", data).then((res) => {
+        if (res.data.success) {
           sessionStorage.setItem("userId", res.data.user._id);
           sessionStorage.setItem("username", res.data.user.username);
           sessionStorage.setItem("email", res.data.user.email);
@@ -66,6 +72,17 @@ const Login = () => {
             draggable: true,
             progress: undefined,
           });
+        } else {
+          toast(res.data.message, {
+            position: "top-center",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        }
 
           if (admin === "admin") {
             navigateTo("/admindashboard");
@@ -75,7 +92,9 @@ const Login = () => {
         })
         .catch((err) => {
           alert(err.response.data.message);
+
         });
+
     }
   };
 

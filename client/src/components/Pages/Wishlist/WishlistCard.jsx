@@ -1,17 +1,15 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
-
+import ReactLoading from "react-loading";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../Context";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Card = ({ product }) => {
+const WishlistCard = ({ product, isLoading, setIsLoading, setIsRemoved }) => {
   const { user, setUser } = useContext(UserContext);
-  const [wishlistProducts, setWishlistProducts] = useState([]);
   const [isWishlisted, setIsWishlisted] = useState(false);
-  const [isYourProduct, setIsYourProduct] = useState(false);
 
   // console.log(user);
   const navigateTo = useNavigate();
@@ -21,26 +19,8 @@ const Card = ({ product }) => {
     });
   };
 
-  const addToWishlist = (product) => {
-    let data = { userId: user.userId, productId: product._id };
-    if (user.userId) {
-      axios
-        .post("/api/addtowishlist", data)
-        .then((res) => {
-          toast("product added to wishlist", {
-            position: "top-center",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          setIsWishlisted(true);
-          console.log(res);
-        })
-        .catch((err) => console.log("error : ", err));
-    } else {
+  const removeFromWishlist = () => {
+    if (!user.userId) {
       toast("You need to login first", {
         position: "top-center",
         autoClose: 1500,
@@ -50,10 +30,9 @@ const Card = ({ product }) => {
         draggable: true,
         progress: undefined,
       });
+      return;
     }
-  };
 
-  const removeFromWishlist = (product) => {
     axios
       .patch("/api/deletefromwishlist/" + user.userId + "/" + product._id)
       .then((res) => {
@@ -67,6 +46,7 @@ const Card = ({ product }) => {
           progress: undefined,
         });
         console.log(res);
+        setIsRemoved(true);
         setIsWishlisted(res.data.isWishlisted);
       })
       .catch((err) => {
@@ -83,31 +63,21 @@ const Card = ({ product }) => {
     axios
       .get("/api/isProductWishlisted/" + user.userId + "/" + product._id)
       .then((res) => {
-        // console.log("result", res);
+        console.log("result", res);
         setIsWishlisted(res.data.isWishlisted);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [user]);
-
-  useEffect(() => {
-    if (!user.userId) return;
-    // console.log(product);
-    if (user.userId === product.sellerId) {
-      setIsYourProduct(true);
-    }
-  }, []);
-
-  // console.log(product);
+  }, [isWishlisted]);
 
   return (
     <>
       {/* <div>hio</div> */}
-      <div className="flex justify-center bg-white w-full rounded-2xl  b5:w-80 border border-gray-200 shadow-lg">
-        <div className="block py-2">
+      <div className="flex justify-center w-full b5:w-80 border border-gray-200 shadow-lg">
+        <div className="block py-2 bg-white ">
           <img
-            className="w-80 h-96 px-2 hover:cursor-pointer"
+            className="w-80 h-96 hover:cursor-pointer"
             src={product.image1}
             onClick={handleProduct}
             alt=""
@@ -119,23 +89,19 @@ const Card = ({ product }) => {
             <div>
               <div className="flex justify-between mb-2 text-base sm:text-2xl font-semibold">
                 Rs {product.price}
-                {!isYourProduct && (
+                {isWishlisted ? (
                   <>
-                    {isWishlisted ? (
-                      <>
-                        <FaHeart
-                          className="hover:cursor-pointer"
-                          onClick={() => removeFromWishlist(product)}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <FaRegHeart
-                          className="hover:cursor-pointer"
-                          onClick={() => addToWishlist(product)}
-                        />
-                      </>
-                    )}
+                    <FaHeart
+                      className="hover:cursor-pointer"
+                      onClick={() => removeFromWishlist(product)}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <FaRegHeart
+                      className="hover:cursor-pointer"
+                      onClick={() => addToWishlist(product)}
+                    />
                   </>
                 )}
               </div>
@@ -158,4 +124,4 @@ const Card = ({ product }) => {
   );
 };
 
-export default Card;
+export default WishlistCard;

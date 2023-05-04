@@ -5,11 +5,11 @@ import Navbar from "./Navbar";
 
 const index = () => {
   return (
-    <>
+    <div className="h-screen bg-gray-200">
       <Navbar />
       <Categories />
       <Outlet />
-    </>
+    </div>
   );
 };
 

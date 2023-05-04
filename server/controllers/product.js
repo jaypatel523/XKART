@@ -11,7 +11,9 @@ const getAllProducts = async (req, res) => {
   }
 };
 
+
 const getProductById = async (req, res) => {};
+
 
 const getProductCategorywise = async (req, res) => {
   try {
@@ -48,6 +50,7 @@ const getProductCitywise = async (req, res) => {
   }
 };
 
+
 const getProductUser = async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -68,11 +71,37 @@ const getProductUser = async (req, res) => {
   }
 };
 
+
+const searchProducts = async (req, res) => {
+  try {
+    const query = req.query.q;
+    const matchingProducts = await AllProduct.find({
+      $or: [
+        { title: { $regex: query, $options: 'i' } },
+        { description: { $regex: query, $options: 'i' } },
+        { brand: { $regex: query, $options: 'i' } },
+        { category: { $regex: query, $options: 'i' } },
+        { city: { $regex: query, $options: 'i' } },
+        { state: { $regex: query, $options: 'i' } },
+      ],
+    });
+    res.json(matchingProducts);
+  }
+  catch (error) {
+    res.send(error);
+  }
+}
+
+
+
 module.exports = {
   getAllProducts,
-  getProductById,
   getProductCategorywise,
   getProductStatewise,
   getProductCitywise,
+
   getProductUser,
+
+  searchProducts
+
 };

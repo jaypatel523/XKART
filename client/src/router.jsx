@@ -6,11 +6,13 @@ import ChatPage from "./components/Pages/Chat/ChatPage";
 import Home from "./components/Pages/Home";
 import Menu from "./components/Pages/Menu";
 import Sell from "./components/Pages/Sell";
+
 import SingleProduct from "./components/Pages/AllProducts/SingleProduct/SingleProduct";
 import Wishlist from "./components/Pages/Wishlist/Wishlist";
 import AdminDashboard from "./components/Authentication/AdminDashboard";
 import Products from "./components/Pages/AllProducts/Products";
 import Profile from "./components/ProfilePages/Profile";
+
 
 const router = createBrowserRouter([
   {
@@ -61,8 +63,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/admindashboard",
-    element : <AdminDashboard />
-  }
+    element: <AdminDashboard />,
+  },
 ]);
 
 export default router;

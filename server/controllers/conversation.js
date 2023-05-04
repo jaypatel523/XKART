@@ -4,6 +4,12 @@ const Conversation = require('../models/conversation');
 
 const startChat = async (req, res) => {
     try {
+
+        const oldConversation = await Conversation.findOne({ members: [req.body.senderId, req.body.receiverId] });
+        if (oldConversation) {
+            return res.json({ success: true })
+        }
+
         const newConversation = new Conversation({ members: [req.body.senderId, req.body.receiverId] })
         await newConversation.save();
         res.json({ success: true });
@@ -14,6 +20,7 @@ const startChat = async (req, res) => {
 
 const getConversation = async (req, res) => {
     try {
+        // console.log(req.params);
         const conversation = await Conversation.find({
             members: { $in: [req.params.userId] },
         });
@@ -26,7 +33,7 @@ const getConversation = async (req, res) => {
 
 const findConversation = async (req, res) => {
     try {
-        console.log(req.params);
+        // console.log(req.params);
         const conversation = await Conversation.find({
             members: { $in: [req.params.userId, req.params.receiverId] },
         });
