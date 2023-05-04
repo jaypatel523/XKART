@@ -37,6 +37,9 @@ const updateApprove = async (req, res) => {
   try {
     // console.log(req.body);
 
+            let product = new AllProduct(req.body.state);
+            // console.log("newProduct", newProduct);
+            // console.log("product", product);
 
     let product = await AllProduct.findOneAndUpdate(
       { _id: req.body._id },

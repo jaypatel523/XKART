@@ -147,7 +147,6 @@ const ChatPage = () => {
   }, [currentChat]);
 
   // handle current message which user will write in input box
-  // console.log(currentChat);
   const handleNewChat = (e) => {
     e.preventDefault();
 

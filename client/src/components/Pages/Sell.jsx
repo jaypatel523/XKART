@@ -38,6 +38,7 @@ const Sell = () => {
   const [img3, setImg3] = useState();
   const [isPostLoading, setIsPostLoading] = useState(false);
   const [isPosted, setIsPosted] = useState(false);
+  const { user } = useContext(UserContext);
 
   const navigate = useNavigate();
 

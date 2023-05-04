@@ -84,12 +84,14 @@ const Login = () => {
           });
         }
 
-        if (admin === "admin") {
-          navigateTo("/admindashboard");
-        } else {
-          navigateTo("/");
-        }
-      });
+          if (admin === "admin") {
+            navigateTo("/admindashboard");
+          } else {
+            navigateTo("/");
+          }
+        })
+        .catch((err) => {
+          alert(err.response.data.message);
     }
   };
 

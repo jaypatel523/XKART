@@ -52,7 +52,6 @@ const Card3 = ({ product }) => {
       });
   };
 
-  // console.log(product);
   useEffect(() => {
     if (!user.userId) {
       return;
