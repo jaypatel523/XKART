@@ -31,6 +31,7 @@ const Card3 = ({ product }) => {
     setIsOpenDialog(false);
   };
 
+  console.log(user);
   const startConversation = () => {
     const receiverId = product.sellerId;
     let conversation = { senderId: user.userId, receiverId };

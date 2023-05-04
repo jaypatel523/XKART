@@ -14,9 +14,8 @@ const Login = () => {
   const { isLogin, setIsLogin, user, setUser } = useContext(UserContext);
 
   const handleLogin = () => {
-
     const data = { email, password, admin };
-
+ 
     if (admin === "admin") {
       axios
         .post("/api/adminlogin", data)
@@ -26,10 +25,10 @@ const Login = () => {
           sessionStorage.setItem("email", res.data.user.email);
           setIsLogin(true);
           setUser({
-          userId: res.data.user._id,
-          username: res.data.user.username,
-          email: res.data.user.email,
-        });
+            userId: res.data.user._id,
+            username: res.data.user.username,
+            email: res.data.user.email,
+          });
           toast("Login successfully", {
             position: "top-center",
             autoClose: 1500,
@@ -54,10 +53,10 @@ const Login = () => {
           sessionStorage.setItem("email", res.data.user.email);
           setIsLogin(true);
           setUser({
-          userId: res.data.user._id,
-          username: res.data.user.username,
-          email: res.data.user.email,
-        });
+            userId: res.data.user._id,
+            username: res.data.user.username,
+            email: res.data.user.email,
+          });
           toast("Login successfully", {
             position: "top-center",
             autoClose: 1500,
@@ -76,7 +75,7 @@ const Login = () => {
         })
         .catch((err) => {
           alert(err.response.data.message);
-
+        });
     }
   };
 
