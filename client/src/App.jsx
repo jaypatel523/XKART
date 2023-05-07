@@ -20,6 +20,8 @@ const App = () => {
     sessionStorage.getItem("userId") ? true : false
   );
 
+  const [isAdmin, setIsAdmin] = useState(false);
+
   const socket = useRef();
   socket.current = io("http://localhost:8000");
 
@@ -27,7 +29,15 @@ const App = () => {
     <>
       <ToastContainer />
       <UserContext.Provider
-        value={{ user, setUser, isLogin, setIsLogin, socket }}
+        value={{
+          user,
+          setUser,
+          isLogin,
+          setIsLogin,
+          socket,
+          isAdmin,
+          setIsAdmin,
+        }}
       >
         <RouterProvider router={router} />
       </UserContext.Provider>

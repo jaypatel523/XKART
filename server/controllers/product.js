@@ -4,6 +4,7 @@ const SellProduct = require("../models/sellProduct");
 const getAllProducts = async (req, res) => {
   try {
     const products = await AllProduct.find({});
+    console.log(products);
     res.send({ products });
   } catch (error) {
     console.log(error);

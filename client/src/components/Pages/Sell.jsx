@@ -28,8 +28,8 @@ const initialState = {
   sellerId: "",
   adminApproved: false,
   adminRejected: false,
-  markedSold : false,
-  isPending : true,
+  markedSold: false,
+  isPending: true,
 };
 
 const Sell = () => {
@@ -47,14 +47,23 @@ const Sell = () => {
   const { isLogin, setIsLogin } = useContext(UserContext);
 
   const firebaseConfig = {
-    apiKey: "AIzaSyC22nzqEqUynJgTmhzDcKDla5lkillxWJ4",
-    authDomain: "temp-39228.firebaseapp.com",
-    projectId: "temp-39228",
-    storageBucket: "temp-39228.appspot.com",
-    messagingSenderId: "169880381340",
-    appId: "1:169880381340:web:23f3ce849c5ab7d81a8a59",
-    measurementId: "G-5YWBS426RW",
+    apiKey: "AIzaSyBV81SfQaxrhhJyItdNmOsyKF5ete8_nAU",
+    authDomain: "login-with-2dd02.firebaseapp.com",
+    projectId: "login-with-2dd02",
+    storageBucket: "login-with-2dd02.appspot.com",
+    messagingSenderId: "699339240954",
+    appId: "1:699339240954:web:28f6c90444b6e192da6043",
+    measurementId: "G-LMKXFDXN2V",
   };
+  // const firebaseConfig = {
+  //   apiKey: "AIzaSyC22nzqEqUynJgTmhzDcKDla5lkillxWJ4",
+  //   authDomain: "temp-39228.firebaseapp.com",
+  //   projectId: "temp-39228",
+  //   storageBucket: "temp-39228.appspot.com",
+  //   messagingSenderId: "169880381340",
+  //   appId: "1:169880381340:web:23f3ce849c5ab7d81a8a59",
+  //   measurementId: "G-5YWBS426RW",
+  // };
   const bucket_url = "gs://temp-39228.appspot.com/";
 
   const app = initializeApp(firebaseConfig);
@@ -118,6 +127,7 @@ const Sell = () => {
   if (state.image1 && state.image2 && state.image3) {
     console.log("Post request");
     state.sellerId = user.userId;
+    state.seller = user.username;
     let data = { userId: sessionStorage.getItem("userId"), state };
     axios
       .post("/api/sellProduct", data)

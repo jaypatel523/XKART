@@ -20,7 +20,7 @@ const Navbar = () => {
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [Location, setLocation] = useState("Location");
-  const { user, setUser, isLogin, setIsLogin, socket } =
+  const { user, setUser, isLogin, setIsLogin, socket, isAdmin } =
     useContext(UserContext);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [notifications, setNotifications] = useState([]);
@@ -30,7 +30,6 @@ const Navbar = () => {
   const handleMenu = () => {
     navigateTo("/menu");
   };
-
   const handleLogout = () => {
     axios
       .get("/api/logout")
@@ -85,17 +84,19 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-gray-200">
-      <div className="drop-shadow-sm p-2 py-4 shadow-md w-auto px-4 flex justify-between items-center">
-        <div className=" flex items-center text-center">
-          <div
-            className="px-8 mr-10 text-xl flex cursor-pointer bg-whatsapp text-white p-2 rounded"
-            onClick={() => navigateTo("/")}
-          >
-            <div className="text-3xl ">X</div>
-            <div className="text-xl pt-1 ml-1">KART</div>
-          </div>
-          {/* <div className="flex flex-col my-4">
+    <>
+      {!(user.username === "Admin") && (
+        <div className="bg-gray-200">
+          <div className="drop-shadow-sm p-2 py-4 shadow-md w-auto px-4 flex justify-between items-center">
+            <div className=" flex items-center text-center">
+              <div
+                className="px-8 mr-10 text-xl flex cursor-pointer bg-whatsapp text-white p-2 rounded"
+                onClick={() => navigateTo("/")}
+              >
+                <div className="text-3xl ">X</div>
+                <div className="text-xl pt-1 ml-1">KART</div>
+              </div>
+              {/* <div className="flex flex-col my-4">
             <div
               className="relative flex items-center justify-between  bg-white border border-gray-200 rounded-md cursor-pointer"
               onClick={() => setIsLocationOpen(!isLocationOpen)}
@@ -140,13 +141,13 @@ const Navbar = () => {
               )}
             </div>
           </div> */}
-          {/* <div className="mr-4">
+              {/* <div className="mr-4">
             <button className="border border-black  py-2 px-4 hidden md:flex justify-between items-center rounded-lg">
               <span>Location</span>
               <TiArrowSortedDown />
             </button>
           </div> */}
-          {/* <form className="hidden md:flex items-center">
+              {/* <form className="hidden md:flex items-center">
             <div>
               <input
                 type="text"
@@ -155,17 +156,17 @@ const Navbar = () => {
               />
             </div>
           </form> */}
-        </div>
-        <div className="hidden md:flex justify-between items-center">
-          <Link
-            to="/chat"
-            className="py-2 px-4  text-center relative hover:bg-whatsapp hover:text-white rounded-lg"
-            title="Chat"
-          >
-            <BsChatDots className="w-6 h-6" />
-            {/* Chat */}
-          </Link>
-          {/* <button
+            </div>
+            <div className="hidden md:flex justify-between items-center">
+              <Link
+                to="/chat"
+                className="py-2 px-4  text-center relative hover:bg-whatsapp hover:text-white rounded-lg"
+                title="Chat"
+              >
+                <BsChatDots className="w-6 h-6" />
+                {/* Chat */}
+              </Link>
+              {/* <button
             onClick={handleNotificationOpen}
             className="py-2 px-4 relative text-center hover:bg-blue-500 hover:text-white rounded-lg"
           >
@@ -180,63 +181,65 @@ const Navbar = () => {
               </>
             )}
           </button> */}
-          <Link
-            to="/wishlist"
-            className="py-2 px-4 text-center hover:bg-whatsapp hover:text-white rounded-lg"
-            title="Wishlist"
-          >
-            <FaRegHeart className="w-6 h-6" />
-          </Link>
-
-          {isLogin && (
-            <div className="relative">
-              <button
-                onClick={() => setIsProfileOpen(!isProfileOpen)}
+              <Link
+                to="/wishlist"
                 className="py-2 px-4 text-center hover:bg-whatsapp hover:text-white rounded-lg"
+                title="Wishlist"
               >
-                <VscAccount className="w-6 h-6" title="Profile" />
-              </button>
-              {isProfileOpen && (
-                <div className="absolute top-10 -left-0 w-36 bg-white shadow-lg border">
-                  <div
-                    className="py-2 px-4 text-start cursor-pointer hover:bg-gray-200"
-                    onClick={handleProfile}
+                <FaRegHeart className="w-6 h-6" />
+              </Link>
+
+              {isLogin && (
+                <div className="relative">
+                  <button
+                    onClick={() => setIsProfileOpen(!isProfileOpen)}
+                    className="py-2 px-4 text-center hover:bg-whatsapp hover:text-white rounded-lg"
                   >
-                    Profile
-                  </div>
-                  <div
-                    className="py-2 px-4 text-start cursor-pointer hover:bg-gray-200"
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </div>
+                    <VscAccount className="w-6 h-6" title="Profile" />
+                  </button>
+                  {isProfileOpen && (
+                    <div className="absolute top-10 -left-0 w-36 bg-white shadow-lg border">
+                      <div
+                        className="py-2 px-4 text-start cursor-pointer hover:bg-gray-200"
+                        onClick={handleProfile}
+                      >
+                        Profile
+                      </div>
+                      <div
+                        className="py-2 px-4 text-start cursor-pointer hover:bg-gray-200"
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
-            </div>
-          )}
-          <Link
-            to="/sell"
-            className="py-2 px-4 w-20 text-center hover:bg-whatsapp hover:text-white rounded-lg"
-          >
-            Sell
-          </Link>
-
-          {!isLogin && (
-            <>
               <Link
-                to="/login"
+                to="/sell"
                 className="py-2 px-4 w-20 text-center hover:bg-whatsapp hover:text-white rounded-lg"
               >
-                Login
+                Sell
               </Link>
-            </>
-          )}
+
+              {!isLogin && (
+                <>
+                  <Link
+                    to="/login"
+                    className="py-2 px-4 w-20 text-center hover:bg-whatsapp hover:text-white rounded-lg"
+                  >
+                    Login
+                  </Link>
+                </>
+              )}
+            </div>
+            <div className="md:hidden cursor-pointer">
+              <FiMenu className="w-6 h-6" onClick={handleMenu} />
+            </div>
+          </div>
         </div>
-        <div className="md:hidden cursor-pointer">
-          <FiMenu className="w-6 h-6" onClick={handleMenu} />
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

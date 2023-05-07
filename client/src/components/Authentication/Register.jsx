@@ -4,6 +4,9 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../../Context";
+import { FcGoogle } from "react-icons/fc";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "./config";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -99,6 +102,57 @@ const Register = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleSignupInWithGoogle = () => {
+    signInWithPopup(auth, provider).then((res) => {
+      // console.log(res);
+      const data = {
+        username: res.user.displayName,
+        email: res.user.email,
+        password: res.user.email,
+      };
+      axios
+        .post("/api/registerWithGoogle", data)
+        .then((res) => {
+          // console.log(res);
+          if (res.data.success) {
+            sessionStorage.setItem("userId", res.data.user._id);
+            sessionStorage.setItem("username", res.data.user.username);
+            sessionStorage.setItem("email", res.data.user.email);
+            setIsLogin(true);
+            setUser({
+              userId: res.data.user._id,
+              username: res.data.user.username,
+              email: res.data.user.email,
+            });
+            toast("Register successfully", {
+              position: "top-center",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+            navigateTo("/");
+          } else {
+            toast("Something went wrong, please try again", {
+              position: "top-center",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      // console.log(data);
+    });
   };
 
   return (
@@ -198,7 +252,21 @@ const Register = () => {
                         !isOTPGenerated ? handleGenerateOTP : handleRegister
                       }
                     >
-                      {!isOTPGenerated ? "Generate OTP" : "Submit"}
+                      Register
+                    </button>
+                  </div>
+                  <div className="relative text-center flex items-center">
+                    <div className="border border-gray-300 w-[110px] h-0 mr-2 my-2"></div>
+                    <div>or</div>
+                    <div className="border border-gray-300 w-[110px] h-0 ml-2 my-2"></div>
+                  </div>
+                  <div className="relative text-center">
+                    <button
+                      className="flex items-center justify-center border hover:bg-gray-100 py-2 px-4 rounded w-[100%]"
+                      onClick={handleSignupInWithGoogle}
+                    >
+                      <FcGoogle className="mr-2 w-6 h-6" /> signup in with
+                      google
                     </button>
                   </div>
                   {!isOTPGenerated && (

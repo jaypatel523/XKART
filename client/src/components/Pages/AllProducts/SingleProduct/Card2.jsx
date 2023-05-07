@@ -5,6 +5,7 @@ import { UserContext } from "../../../../Context";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { format } from "timeago.js";
 
 const Card2 = ({ product }) => {
   const { user, setUser } = useContext(UserContext);
@@ -106,27 +107,31 @@ const Card2 = ({ product }) => {
 
   return (
     <>
-      <div className="p-4 mb-10 border border-white bg-white rounded max-w-64">
+      <div className="p-4 mb-10 border bg-white rounded max-w-64 shadow-lg">
         <div className="">
           <div className="flex justify-between items-center">
             <div className="flex justify-between mb-2 mr-2 text-base sm:text-3xl font-semibold">
               Rs {product.price}
             </div>
-            {!isYourProduct && (
+            {!(user.username === "Admin") && (
               <>
-                {isWishlisted ? (
+                {!isYourProduct && (
                   <>
-                    <FaHeart
-                      className="hover:cursor-pointer w-6 h-6"
-                      onClick={() => removeFromWishlist(product)}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <FaRegHeart
-                      className="hover:cursor-pointer w-6 h-6"
-                      onClick={() => addToWishlist(product)}
-                    />
+                    {isWishlisted ? (
+                      <>
+                        <FaHeart
+                          className="hover:cursor-pointer w-6 h-6"
+                          onClick={() => removeFromWishlist(product)}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <FaRegHeart
+                          className="hover:cursor-pointer w-6 h-6"
+                          onClick={() => addToWishlist(product)}
+                        />
+                      </>
+                    )}
                   </>
                 )}
               </>
@@ -139,7 +144,7 @@ const Card2 = ({ product }) => {
             <p className="text-sm md:text-base">
               {product.city}, {product.state}
             </p>
-            <p className="text-sm md:text-base">4 days ago</p>
+            <p className="text-sm md:text-base">{format(product?.created)}</p>
           </div>
         </div>
       </div>

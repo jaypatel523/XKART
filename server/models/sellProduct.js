@@ -6,8 +6,6 @@ const SellProduct = new mongoose.Schema({
     type: String,
     ref: 'User',
   },
-
-  
   products: [{ type: mongoose.Schema.Types.ObjectId, ref: "allProduct" }]
 
 });

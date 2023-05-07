@@ -7,13 +7,13 @@ import { UserContext } from "../../../Context";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Card = ({ product }) => {
+const Product = ({ product }) => {
   const { user, setUser, isAdmin } = useContext(UserContext);
   const [wishlistProducts, setWishlistProducts] = useState([]);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [isYourProduct, setIsYourProduct] = useState(false);
 
-  // console.log(user);
+  console.log(user);
   const navigateTo = useNavigate();
   const handleProduct = () => {
     navigateTo(`/product/${product._id}`, {
@@ -103,7 +103,7 @@ const Card = ({ product }) => {
 
   return (
     <>
-      <div className="flex justify-center rounded bg-white w-full b5:w-80 border border-gray-200 shadow-lg">
+      <div className="flex justify-center bg-white rounded w-full b5:w-80 border border-gray-200 shadow-lg">
         <div className="block">
           <img
             className="w-80 h-96 hover:cursor-pointer"
@@ -115,7 +115,7 @@ const Card = ({ product }) => {
           <div></div>
 
           <div className="p-4">
-            {!isAdmin && (
+            {!(user.username === "Admin") && (
               <div>
                 <div className="flex justify-between mb-2 text-base sm:text-2xl font-semibold">
                   Rs {product.price}
@@ -159,4 +159,4 @@ const Card = ({ product }) => {
   );
 };
 
-export default Card;
+export default Product;
