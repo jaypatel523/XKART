@@ -66,7 +66,7 @@ const Products = () => {
 
   return (
     <>
-      <div className="bg-gray-100 h-screen">
+      <div className="bg-gray-100">
         <div className="bg-gray-100">
           <section className="max-w-[86rem] bg-gray-100 mx-10 px-4 sm:px-6 lg:px-4 py-10">
             <div className="mb-5">
