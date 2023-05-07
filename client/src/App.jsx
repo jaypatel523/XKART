@@ -6,7 +6,7 @@ import { RouterProvider } from "react-router-dom";
 import { UserContext } from "./Context";
 import router from "./router";
 import { io } from "socket.io-client";
-
+import "../src/temp.css";
 const App = () => {
   // console.log(socket);
 

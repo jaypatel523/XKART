@@ -26,6 +26,9 @@ const Profile = () => {
     if (e.target.name === "reject") {
       setTerm("reject");
     }
+    if (e.target.name === "sold") {
+      setTerm("sold");
+    }
   };
 
   useEffect(() => {
@@ -39,7 +42,7 @@ const Profile = () => {
           <Term />
 
           <div>
-            <div className="md:ml-14 md:mr-14 mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-20 ">
+            <div className="md:ml-14 md:mr-14 mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  b11:grid-cols-4  gap-20 ">
               <div className="border shadow-xl ">
                 <img
                   name="pending"
@@ -76,29 +79,48 @@ const Profile = () => {
                   View your rejected add
                 </div>
               </div>
+              <div className="border shadow-xl  ">
+                <img
+                  name="sold"
+                  src="../../../assets/sold.jpg"
+                  alt="sold image"
+                  className=" border h-[15.75rem] py-8 px-6 m-auto hover:cursor-pointer"
+                  onClick={(e) => handleClick(e)}
+                />
+                <div className="text-center my-2 text-xl text-whatsapp font-medium">
+                  View your Sold add
+                </div>
+              </div>
             </div>
           </div>
           <div className=" mt-10 ">
             {(term === "pending" && (
-              <div className="text-center text-3xl">
+              <div className="text-center text-3xl text-whatsapp font-semibold">
                 {" "}
                 Your Pending adds are{" "}
               </div>
             )) ||
               (term === "active" && (
-                <div className="text-center text-3xl">
+                <div className="text-center text-3xl text-whatsapp font-semibold">
                   {" "}
                   Your Active adds are{" "}
                 </div>
               )) ||
               (term === "reject" && (
-                <div className="text-center text-3xl">
+                <div className="text-center text-3xl text-whatsapp font-semibold">
                   {" "}
                   Your Rejected adds are{" "}
                 </div>
+              ))
+               ||
+              (term === "sold" && (
+                <div className="text-center text-3xl text-whatsapp font-semibold">
+                  {" "}
+                  Your Sold adds are{" "}
+                </div>
               ))}
           </div>
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 b11:grid-cols-4 gap-6">
+          <div className="md:ml-14 mr-14 mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 b11:grid-cols-4 gap-6">
             {(term === "pending" &&
               product &&
               product.map((p, index) => {
@@ -119,11 +141,20 @@ const Profile = () => {
                   if (p.isPending === false && p.adminRejected === true) {
                     return <Card key={index} product={p} />;
                   }
+                })) || 
+              (term === "sold" &&
+                product &&
+                product.map((p, index) => {
+                  if (p.markedSold === true) {
+                    return <Card key={index} product={p} />;
+                  }
                 }))}
           </div>
         </>
       ) : (
-        <div>Please login</div>
+        <div className="text-3xl flex justify-center text-whatsapp font-semibold">
+          Please login
+        </div>
       )}
     </>
   );
