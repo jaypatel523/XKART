@@ -101,7 +101,29 @@ const Card3 = ({ product }) => {
 
   const updateMarkAsSold = () => {
     axios.patch("/api/updateMarkAsSold", product).then((res) => {
-      console.log(res);
+      // console.log(res);
+      if (res.data.success) {
+        toast("Product mark as sold", {
+          position: "top-center",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        navigateTo("/profile");
+      } else {
+        toast(res.data.message, {
+          position: "top-center",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     });
   };
 
