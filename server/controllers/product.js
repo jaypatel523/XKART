@@ -79,7 +79,6 @@ const searchProducts = async (req, res) => {
     const matchingProducts = await AllProduct.find({
       $or: [
         { title: { $regex: query, $options: 'i' } },
-        { description: { $regex: query, $options: 'i' } },
         { brand: { $regex: query, $options: 'i' } },
         { category: { $regex: query, $options: 'i' } },
         { city: { $regex: query, $options: 'i' } },

@@ -81,7 +81,7 @@ const Wishlist = () => {
       {isLoading && (
         <>
           <div className="flex justify-center items-center">
-            <ReactLoading type="balls" color="#3B82F6" width="200px" />
+            <ReactLoading type="balls" color="#164e63" width="200px" />
           </div>
         </>
       )}

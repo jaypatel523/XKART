@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { UserContext } from "../../../Context";
 import Card from "./Card";
 import ReactLoading from "react-loading";
 import { BsSearch } from "react-icons/bs";
+import { useRef } from "react";
 
 const Products = () => {
   const { user } = useContext(UserContext);
@@ -14,8 +15,9 @@ const Products = () => {
   const [categoryWiseProduct, setCategoryWiseProduct] = useState([]);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
-  const [suggestions, setSuggestions] = useState([]);
-  const [isSearching, setIsSearching] = useState(false);
+  const isEmpty = useRef(true);
+
+  const location = useLocation();
 
   useEffect(() => {
     setIsLoading(true);
@@ -57,13 +59,13 @@ const Products = () => {
   };
 
   // console.log(results);
-
-  console.log(allProducts);
+  // console.log(location.state?.category);
+  // console.log(categoryWiseProduct);
 
   return (
     <>
-      <div className="bg-gray-100">
-        <section className="max-w-[86rem] mx-10 px-4 sm:px-6 lg:px-4 py-10">
+      <div className="bg-gray-100 h-screen">
+        <section className="max-w-[86rem] bg-gray-100 mx-10 px-4 sm:px-6 lg:px-4 py-10">
           <div className="mb-5">
             <div className="flex items-center rounded-lg justify-center border border-black">
               <input
@@ -88,6 +90,7 @@ const Products = () => {
                 {categoryWiseProduct &&
                   categoryWiseProduct.map((product, index) => {
                     if (product.adminApproved === true) {
+                      isEmpty.current = false;
                       return <Card key={index} product={product} />;
                     }
                   })}
@@ -126,15 +129,11 @@ const Products = () => {
           </>
         )}
 
-        {!isLoading &&
-          allProducts.length == 0 &&
-          categoryWiseProduct.length > 0 && (
-            <>
-              <h1 className="flex justify-center items-center text-4xl text-gray-400">
-                No Product Available Right Now
-              </h1>
-            </>
-          )}
+        {!isLoading && location.state?.category && isEmpty && (
+          <h1 className="flex justify-center items-center text-4xl text-gray-400">
+            No product avaible for category {location.state?.category}
+          </h1>
+        )}
       </div>
     </>
   );

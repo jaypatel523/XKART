@@ -9,13 +9,13 @@ const Categories = () => {
   const navigateTo = useNavigate();
   const { user } = useContext(UserContext);
 
-  console.log(user);
+  // console.log(user);
 
   return (
     <>
       {!(user.username === "Admin") && (
         <div className="bg-white">
-          <div className="border p-2 px-4 text-sm flex gap-3 justify-between overflow-x-scroll">
+          <div className="border p-2 px-4 text-sm flex gap-3 justify-between">
             <div>
               <div
                 className="font-bold flex items-center p-2 hover:bg-whatsapp hover:text-white cursor-pointer"
@@ -25,11 +25,14 @@ const Categories = () => {
               </div>
             </div>
             {isAllOpen && (
-              <div className="absolute top-[135px] z-50 w-52 shadow-lg bg-white border border-gray-100">
+              <div
+                className="absolute top-[135px] z-50 w-52 shadow-lg bg-white border border-gray-100"
+                onMouseLeave={() => setIsAllOpen(false)}
+              >
                 <div
                   className="p-2 hover:bg-whatsapp hover:text-white cursor-pointer"
                   onClick={() => {
-                    navigateTo("/Mobile");
+                    navigateTo("/Mobile", { state: { category: "Mobile" } });
                     setIsAllOpen(false);
                   }}
                 >
@@ -38,16 +41,16 @@ const Categories = () => {
                 <div
                   className="p-2 cursor-pointer hover:bg-whatsapp hover:text-white"
                   onClick={() => {
-                    navigateTo("/Tv");
+                    navigateTo("/Tv", { state: { category: "TV" } });
                     setIsAllOpen(false);
                   }}
                 >
-                  Tvs
+                  TVs
                 </div>
                 <div
                   className="p-2 cursor-pointer hover:bg-whatsapp hover:text-white"
                   onClick={() => {
-                    navigateTo("/Laptop");
+                    navigateTo("/Laptop", { state: { category: "Laptop" } });
                     setIsAllOpen(false);
                   }}
                 >
@@ -56,7 +59,7 @@ const Categories = () => {
                 <div
                   className="p-2 cursor-pointer hover:bg-whatsapp hover:text-white"
                   onClick={() => {
-                    navigateTo("/Book");
+                    navigateTo("/Book", { state: { category: "Book" } });
                     setIsAllOpen(false);
                   }}
                 >
@@ -65,7 +68,7 @@ const Categories = () => {
                 <div
                   className="p-2 cursor-pointer hover:bg-whatsapp hover:text-white"
                   onClick={() => {
-                    navigateTo("/Car");
+                    navigateTo("/Car", { state: { category: "Car" } });
                     setIsAllOpen(false);
                   }}
                 >
@@ -74,7 +77,9 @@ const Categories = () => {
                 <div
                   className="p-2 cursor-pointer hover:bg-whatsapp hover:text-white"
                   onClick={() => {
-                    navigateTo("/Motorcycle");
+                    navigateTo("/Motorcycle", {
+                      state: { category: "Motorcycle" },
+                    });
                     setIsAllOpen(false);
                   }}
                 >
@@ -85,7 +90,7 @@ const Categories = () => {
             <div
               className="p-2 rounded-md hover:bg-whatsapp cursor-pointer hover:text-white"
               onClick={() => {
-                navigateTo("/Mobile");
+                navigateTo("/Mobile", { state: { category: "Mobile" } });
                 setIsAllOpen(false);
               }}
             >
@@ -94,7 +99,7 @@ const Categories = () => {
             <div
               className="p-2 rounded-md cursor-pointer hover:bg-whatsapp hover:text-white"
               onClick={() => {
-                navigateTo("/Tv");
+                navigateTo("/Tv", { state: { category: "TV" } });
                 setIsAllOpen(false);
               }}
             >
@@ -103,7 +108,7 @@ const Categories = () => {
             <div
               className="p-2 rounded-md cursor-pointer hover:bg-whatsapp hover:text-white"
               onClick={() => {
-                navigateTo("/Laptop");
+                navigateTo("/Laptop", { state: { category: "Laptop" } });
                 setIsAllOpen(false);
               }}
             >
@@ -112,7 +117,7 @@ const Categories = () => {
             <div
               className="p-2 rounded-md cursor-pointer hover:bg-whatsapp hover:text-white"
               onClick={() => {
-                navigateTo("/Book");
+                navigateTo("/Book", { state: { category: "Book" } });
                 setIsAllOpen(false);
               }}
             >
@@ -121,7 +126,7 @@ const Categories = () => {
             <div
               className="p-2 rounded-md cursor-pointer hover:bg-whatsapp hover:text-white"
               onClick={() => {
-                navigateTo("/Car");
+                navigateTo("/Car", { state: { category: "Car" } });
                 setIsAllOpen(false);
               }}
             >
@@ -130,7 +135,9 @@ const Categories = () => {
             <div
               className="p-2 rounded-md cursor-pointer hover:bg-whatsapp hover:text-white"
               onClick={() => {
-                navigateTo("/Motorcycle");
+                navigateTo("/Mororcycle", {
+                  state: { category: "Motorcycle" },
+                });
                 setIsAllOpen(false);
               }}
             >
