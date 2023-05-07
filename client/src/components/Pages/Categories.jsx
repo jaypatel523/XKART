@@ -15,9 +15,7 @@ const Categories = () => {
     <>
       {!(user.username === "Admin") && (
         <div className="bg-white">
-
           <div className="border p-2 px-4 text-sm flex gap-3 justify-between ">
-
             <div>
               <div
                 className="font-bold flex items-center p-2 hover:bg-whatsapp hover:text-white cursor-pointer"
@@ -34,7 +32,9 @@ const Categories = () => {
                 <div
                   className="p-2 hover:bg-whatsapp hover:text-white cursor-pointer"
                   onClick={() => {
-                    navigateTo("/Mobile", { state: { category: "Mobile" } });
+                    navigateTo("/Mobile", {
+                      state: { category: "Mobile", isempty: true },
+                    });
                     setIsAllOpen(false);
                   }}
                 >
@@ -43,7 +43,9 @@ const Categories = () => {
                 <div
                   className="p-2 cursor-pointer hover:bg-whatsapp hover:text-white"
                   onClick={() => {
-                    navigateTo("/Tv", { state: { category: "TV" } });
+                    navigateTo("/Tv", {
+                      state: { category: "TV", isempty: true },
+                    });
                     setIsAllOpen(false);
                   }}
                 >
