@@ -62,10 +62,11 @@ const Products = () => {
   // console.log(allProducts);
   // console.log(location.state?.category);
   // console.log(categoryWiseProduct);
+  console.log(isEmpty)
 
   return (
     <>
-      <div className="bg-gray-100 h-screen">
+      <div className="bg-gray-100 ">
         <section className="max-w-[86rem] bg-gray-100 mx-10 px-4 sm:px-6 lg:px-4 py-10">
           <div className="mb-5">
             <div className="flex items-center rounded-lg justify-center border border-black">
@@ -95,6 +96,7 @@ const Products = () => {
                       product?.markedSold === false
                     ) {
                       isEmpty.current = false;
+                      console.log("hi")
                       return <Card key={index} product={product} />;
                     }
                   })}
@@ -109,6 +111,7 @@ const Products = () => {
                           product.adminApproved === true &&
                           product?.markedSold === false
                         ) {
+                          isEmpty.current = false
                           return <Card key={index} product={product} />;
                         }
                       })}
@@ -121,6 +124,7 @@ const Products = () => {
                           product.adminApproved === true &&
                           product?.markedSold === false
                         ) {
+                          isEmpty.current = false
                           return <Card key={index} product={product} />;
                         }
                       })}
@@ -139,7 +143,7 @@ const Products = () => {
           </>
         )}
 
-        {!isLoading && location.state?.category && isEmpty && (
+        { isEmpty.current=== true && (
           <h1 className="flex justify-center items-center text-4xl text-gray-400">
             No product avaible for category {location.state?.category}
           </h1>

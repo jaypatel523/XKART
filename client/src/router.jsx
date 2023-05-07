@@ -13,6 +13,7 @@ import Products from "./components/Pages/AllProducts/Products";
 import Profile from "./components/ProfilePages/Profile";
 
 import AdminDashboard from "./components/Authentication/Admin/AdminDashboard";
+import Footer from "./components/Pages/Footer";
 
 
 const router = createBrowserRouter([
@@ -66,6 +67,7 @@ const router = createBrowserRouter([
     path: "/admindashboard",
     element: <AdminDashboard />,
   },
+ 
   
 ]);
 
