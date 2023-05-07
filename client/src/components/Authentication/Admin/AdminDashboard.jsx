@@ -10,8 +10,10 @@ const AdminDashboard = () => {
   const { user, isAdmin } = useContext(UserContext);
   const navigateTo = useNavigate();
 
+  console.log(user);
+
   useEffect(() => {
-    if (!(user.username === "Admin")) {
+    if (!user) {
       navigateTo("/login");
     }
   }, []);

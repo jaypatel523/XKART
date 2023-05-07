@@ -145,12 +145,22 @@ const Card3 = ({ product }) => {
               <div>
                 {isSellerSame ? (
                   <>
-                    <div
-                      className="cursor-pointer text-center py-3 text-2xl bg-whatsapp text-white rounded-lg"
-                      onClick={updateMarkAsSold}
-                    >
-                      Mark as sold
-                    </div>
+                    {product.markedSold === true ? (
+                      <>
+                        <div className="cursor-pointer text-center py-3 text-2xl bg-whatsapp text-white rounded-lg">
+                          Product Sold
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div
+                          className="cursor-pointer text-center py-3 text-2xl bg-whatsapp text-white rounded-lg"
+                          onClick={updateMarkAsSold}
+                        >
+                          Mark as sold
+                        </div>
+                      </>
+                    )}
                   </>
                 ) : (
                   <>

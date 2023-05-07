@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Card1 from "./Card1";
 import Card2 from "./Card2";
 import Card3 from "./Card3";
@@ -6,10 +6,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserContext } from "../../../../Context";
 
 const SingleProduct = () => {
   const location = useLocation();
   const navigateTo = useNavigate();
+  const { user } = useContext(UserContext);
 
   const handleApprove = () => {
     axios
@@ -54,6 +56,8 @@ const SingleProduct = () => {
       });
   };
 
+  console.log(location.state);
+
   return (
     <>
       <div className="h-screen p-10 bg-gray-100">
@@ -65,7 +69,7 @@ const SingleProduct = () => {
           <div className="b5:min-w-[300px]">
             <Card2 product={location.state} />
             <Card3 product={location.state} />
-            {!location.state.adminApproved && (
+            {user.username === "Admin" && (
               <div className=" flex mt-10 justify-around">
                 <button
                   className="bg-green-500 text-white rounded-lg py-2 px-4 w-24"

@@ -43,7 +43,7 @@ const Categories = () => {
                 <div
                   className="p-2 cursor-pointer hover:bg-whatsapp hover:text-white"
                   onClick={() => {
-                    navigateTo("/Tv", {
+                    navigateTo("/TV", {
                       state: { category: "TV", isempty: true },
                     });
                     setIsAllOpen(false);
@@ -103,7 +103,7 @@ const Categories = () => {
             <div
               className="p-2 rounded-md cursor-pointer hover:bg-whatsapp hover:text-white"
               onClick={() => {
-                navigateTo("/Tv", { state: { category: "TV" } });
+                navigateTo("/TV", { state: { category: "TV" } });
                 setIsAllOpen(false);
               }}
             >

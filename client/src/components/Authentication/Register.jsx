@@ -260,12 +260,12 @@ const Register = () => {
                     <div>or</div>
                     <div className="border border-gray-300 w-[110px] h-0 ml-2 my-2"></div>
                   </div>
-                  <div className="relative text-center">
+                  <div className="relative text-center border-2 rounded">
                     <button
-                      className="flex items-center justify-center border hover:bg-gray-100 py-2 px-4 rounded w-[100%]"
+                      className="flex items-center justify-center hover:bg-gray-100 py-2 px-4 rounded w-[100%]"
                       onClick={handleSignupInWithGoogle}
                     >
-                      <FcGoogle className="mr-2 w-6 h-6" /> signup in with
+                      <FcGoogle className="mr-2 w-6 h-6" /> Signup in with
                       google
                     </button>
                   </div>
