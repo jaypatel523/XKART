@@ -25,6 +25,9 @@ const Navbar = () => {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [notifications, setNotifications] = useState([]);
   const [temp, settemp] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [query, setQuery] = useState("");
+  // const [results, setResults] = useState([]);
 
   const navigateTo = useNavigate();
   const handleMenu = () => {
@@ -83,6 +86,16 @@ const Navbar = () => {
     navigateTo("/profile");
   };
 
+  // const handleInputChange = (event) => {
+  //   setQuery(event.target.value);
+  //   search(event.target.value);
+  // };
+
+  // const search = async (query) => {
+  //   const response = await axios.get(`/api/search?q=${query}`);
+  //   setResults(response.data);
+  // };
+
   return (
     <>
       {!(user.username === "Admin") && (
@@ -125,15 +138,18 @@ const Navbar = () => {
                     <VscAccount className="w-6 h-6" title="Profile" />
                   </button>
                   {isProfileOpen && (
-                    <div className="absolute top-10 -left-0 w-36 bg-white shadow-lg border">
+                    <div
+                      className="absolute top-10 -left-0 w-36 bg-white shadow-lg border"
+                      onMouseLeave={() => setIsProfileOpen(false)}
+                    >
                       <div
-                        className="py-2 px-4 text-start cursor-pointer hover:bg-gray-200"
+                        className="py-2 px-4 text-start cursor-pointer hover:bg-whatsapp hover:text-white"
                         onClick={handleProfile}
                       >
                         Profile
                       </div>
                       <div
-                        className="py-2 px-4 text-start cursor-pointer hover:bg-gray-200"
+                        className="py-2 px-4 text-start cursor-pointer hover:bg-whatsapp hover:text-white"
                         onClick={handleLogout}
                       >
                         Logout

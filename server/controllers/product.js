@@ -4,7 +4,7 @@ const SellProduct = require("../models/sellProduct");
 const getAllProducts = async (req, res) => {
   try {
     const products = await AllProduct.find({});
-    console.log(products);
+    // console.log(products);
     res.send({ products });
   } catch (error) {
     console.log(error);
@@ -55,7 +55,7 @@ const getProductCitywise = async (req, res) => {
 const getProductUser = async (req, res) => {
   try {
     const userId = req.params.userId;
-    console.log(req.params);
+    // console.log(req.params);
 
     const products = await SellProduct.find({ userId: userId })
       .populate({
@@ -79,7 +79,6 @@ const searchProducts = async (req, res) => {
     const matchingProducts = await AllProduct.find({
       $or: [
         { title: { $regex: query, $options: 'i' } },
-        { description: { $regex: query, $options: 'i' } },
         { brand: { $regex: query, $options: 'i' } },
         { category: { $regex: query, $options: 'i' } },
         { city: { $regex: query, $options: 'i' } },
@@ -92,8 +91,6 @@ const searchProducts = async (req, res) => {
     res.send(error);
   }
 }
-
-
 
 module.exports = {
   getAllProducts,

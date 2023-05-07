@@ -1,25 +1,54 @@
-import React, { useContext, useEffect , useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../Context";
 import axios from "axios";
+import { format } from "timeago.js";
 
 const Term = () => {
   const { user } = useContext(UserContext);
-  const [join , setJoin] = useState("");
+  const [join, setJoin] = useState("");
 
   useEffect(() => {
     console.log(user);
-    axios.get(`/api/getuserdetails/${user.userId}`).then((res)=>{
-      setJoin(res.data.user.created)
+    axios.get(`/api/getuserdetails/${user.userId}`).then((res) => {
+      setJoin(res.data.user.created);
     });
   }, []);
 
   return (
     <>
       <div className="">
-        <div className="mt-5 text-center text-4xl font-semibold text-whatsapp">
+        <div className="mt-5 mb-10 text-center text-4xl font-semibold text-whatsapp">
           Welcome!! {user.username}
         </div>
-        <div className="md:mt-5">
+        <div className="flex mb-10 items-center justify-center">
+          <div className="text-left">
+            <div className="flex p-2">
+              <label className="w-32 flex items-center"> Email : </label>
+              <div className="rounded-xl p-2 font-semibold text-whatsapp">
+                {" "}
+                {user.email}
+              </div>
+            </div>
+            <div className="border border-gray-300"></div>
+            <div className="flex p-2">
+              <label className="w-32 flex items-center"> Username : </label>
+              <div className="rounded-xl p-2 font-semibold text-whatsapp">
+                {" "}
+                {user.username}
+              </div>
+            </div>
+            <div className="border border-gray-300"></div>
+            <div className="flex p-2">
+              <label className="w-32 flex items-center"> Joined Since : </label>
+              <div className="rounded-xl p-2 font-semibold text-whatsapp">
+                {" "}
+                {join.substring(0, 10)}
+              </div>
+            </div>
+            <div className="border border-gray-300"></div>
+          </div>
+        </div>
+        {/* <div className="md:mt-5">
           <div className="md:flex md:items-center mb-6 ">
             <div className="md:w-[52.5%] block text-whatsapp md:text-xl font-semibold md:text-right mb-1 md:mb-0 pr-4">
               Email :
@@ -51,7 +80,7 @@ const Term = () => {
           <div className="md:w-[51.5%] block  text-whatsapp md:text-base font-semibold md:text-end mb-1 md:mb-0 pr-4">
             Joined since {join.substring(0,10)}
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

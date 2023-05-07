@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { UserContext } from "../../Context";
 import axios from "axios";
 import Card from "../Pages/AllProducts/Card";
@@ -8,12 +8,13 @@ const Profile = () => {
   const { user } = useContext(UserContext);
   const [term, setTerm] = useState("");
   const [product, setProduct] = useState([]);
+  const isEmpty = useRef(true);
 
   const handleClick = (e) => {
+    isEmpty.current = true;
     axios
       .get(`/api/getProductUser/${user.userId}`)
       .then((res) => {
-        console.log(res.data.products);
         setProduct(res.data.products);
       })
       .catch((err) => console.log(err));
@@ -35,8 +36,11 @@ const Profile = () => {
     console.log(user);
   }, [product]);
 
+  console.log(product);
+
   return (
     <>
+
       {user.userId ? (
         <>
           <Term />
@@ -154,6 +158,7 @@ const Profile = () => {
       ) : (
         <div className="text-3xl flex justify-center text-whatsapp font-semibold">
           Please login
+
         </div>
       )}
     </>

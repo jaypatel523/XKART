@@ -99,6 +99,12 @@ const Card3 = ({ product }) => {
 
   // console.log(product);
 
+  const updateMarkAsSold = () => {
+    axios.patch("/api/updateMarkAsSold", product).then((res) => {
+      console.log(res);
+    });
+  };
+
   return (
     <>
       {!(user.username === "Admin") && (
@@ -111,20 +117,23 @@ const Card3 = ({ product }) => {
                     <VscAccount className="w-12 h-12" />
                     <div className="my-auto ml-2">{product.seller}</div>
                   </div>
-                  <IoIosArrowForward className="my-auto" />
+                  {/* <IoIosArrowForward className="my-auto" /> */}
                 </div>
               </div>
               <div>
                 {isSellerSame ? (
                   <>
-                    <div className="cursor-pointer text-center mb-2 py-3 text-2xl bg-whatsapp text-white rounded-lg">
-                      It's Your {product.category}
+                    <div
+                      className="cursor-pointer text-center py-3 text-2xl bg-whatsapp text-white rounded-lg"
+                      onClick={updateMarkAsSold}
+                    >
+                      Mark as sold
                     </div>
                   </>
                 ) : (
                   <>
                     <div
-                      className="cursor-pointer text-center mb-2 py-3 text-2xl bg-whatsapp text-white rounded-lg"
+                      className="cursor-pointer text-center py-3 text-2xl bg-whatsapp text-white rounded-lg"
                       onClick={startConversation}
                     >
                       Chat with seller

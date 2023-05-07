@@ -34,6 +34,44 @@ const initialState = {
 };
 
 const Sell = () => {
+  const [selectedImage1, setSelectedImage1] = useState(null);
+  const [selectedImage2, setSelectedImage2] = useState(null);
+  const [selectedImage3, setSelectedImage3] = useState(null);
+
+  const handleImageChange1 = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedImage1(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  const handleImageChange2 = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedImage2(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  const handleImageChange3 = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedImage3(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const [isListOpen, setIsListOpen] = useState(false);
   const [state, dispatch] = useReducer(sellReducer, initialState);
   const [img1, setImg1] = useState();
@@ -172,7 +210,7 @@ const Sell = () => {
     if (!isPosted) return;
     setTimeout(() => {
       setIsPosted(false);
-      navigate("/");
+      navigate("/profile");
     }, 2000);
   }, [isPosted]);
 
@@ -233,6 +271,30 @@ const Sell = () => {
                       }}
                     >
                       Car
+                    </div>
+                    <div
+                      className="p-2 hover:bg-gray-200 cursor-pointer"
+                      //   onClick={() => (state.category = "Motorcycle")}
+                      onClick={() => {
+                        dispatch({
+                          type: "CHAGE_CATEGORY",
+                          payload: "Book",
+                        });
+                      }}
+                    >
+                      Book
+                    </div>
+                    <div
+                      className="p-2 hover:bg-gray-200 cursor-pointer"
+                      //   onClick={() => (state.category = "Motorcycle")}
+                      onClick={() => {
+                        dispatch({
+                          type: "CHAGE_CATEGORY",
+                          payload: "TV",
+                        });
+                      }}
+                    >
+                      TV
                     </div>
                     <div
                       className="p-2 hover:bg-gray-200 cursor-pointer"
@@ -319,80 +381,110 @@ const Sell = () => {
         <div className="sm:px-6 md:px-10 md:py-4 p-2">
           <h1 className="font-bold text-xl my-4">Upload Photos</h1>
           <div className="flex justify-between">
-            <div className="">
+            <div className="flex items-center">
               <input
                 type="file"
                 id="img1"
                 className="hidden invisible w-[450px]"
                 name="img1"
-                onChange={(e) => setImg1(e.target.files[0])}
+                onChange={(e) => {
+                  setImg1(e.target.files[0]);
+                  handleImageChange1(e);
+                }}
               />
               <label htmlFor="img1">
                 <AiFillCamera className="cursor-pointer w-20 h-20 hover:bg-gray-200" />
               </label>
-              {img1 && (
+              {selectedImage1 && (
+                <img
+                  src={selectedImage1}
+                  className="w-20 h-20"
+                  alt="Selected"
+                />
+              )}
+              {/* {img1 && (
                 <div className="flex justify-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    color="#3B82F6"
+                    color="#164e63"
                     fill="currentColor"
                     className="w-8 h-8"
                   >
                     <path d="M7.493 18.75c-.425 0-.82-.236-.975-.632A7.48 7.48 0 016 15.375c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75 2.25 2.25 0 012.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23h-.777zM2.331 10.977a11.969 11.969 0 00-.831 4.398 12 12 0 00.52 3.507c.26.85 1.084 1.368 1.973 1.368H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 01-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227z" />
                   </svg>
                 </div>
-              )}
+              )} */}
             </div>
-            <div className="">
+            <div className="flex items-center">
               <input
                 type="file"
                 id="img2"
                 className="hidden invisible w-[450px] my-4"
                 name="img2"
-                onChange={(e) => setImg2(e.target.files[0])}
+                onChange={(e) => {
+                  setImg2(e.target.files[0]);
+                  handleImageChange2(e);
+                }}
               />
               <label htmlFor="img2">
                 <AiFillCamera className="cursor-pointer w-20 h-20 hover:bg-gray-200" />
               </label>
-              {img2 && (
+              {selectedImage2 && (
+                <img
+                  src={selectedImage2}
+                  className="w-20 h-20"
+                  alt="Selected"
+                />
+              )}
+              {/* {img2 && (
                 <div className="flex justify-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    color="#3B82F6"
+                    color="#164e63"
                     fill="currentColor"
                     className="w-8 h-8"
                   >
                     <path d="M7.493 18.75c-.425 0-.82-.236-.975-.632A7.48 7.48 0 016 15.375c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75 2.25 2.25 0 012.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23h-.777zM2.331 10.977a11.969 11.969 0 00-.831 4.398 12 12 0 00.52 3.507c.26.85 1.084 1.368 1.973 1.368H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 01-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227z" />
                   </svg>
                 </div>
-              )}
+              )} */}
             </div>
-            <div>
+            <div className="flex items-center">
               <input
                 type="file"
                 id="img3"
                 className="hidden invisible w-[450px] my-4"
                 name="img3"
-                onChange={(e) => setImg3(e.target.files[0])}
+                onChange={(e) => {
+                  setImg3(e.target.files[0]);
+                  handleImageChange3(e);
+                }}
               />
               <label htmlFor="img3">
                 <AiFillCamera className="cursor-pointer w-20 h-20 hover:bg-gray-200" />
               </label>
-              {img3 && (
+              {selectedImage3 && (
+                <img
+                  src={selectedImage3}
+                  className="w-20 h-20"
+                  alt="Selected"
+                />
+              )}
+              {/* {img3 && (
                 <div className="flex justify-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    color="#3B82F6"
+                    color="#164e63"
                     fill="currentColor"
                     className="w-8 h-8"
                   >
                     <path d="M7.493 18.75c-.425 0-.82-.236-.975-.632A7.48 7.48 0 016 15.375c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75 2.25 2.25 0 012.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23h-.777zM2.331 10.977a11.969 11.969 0 00-.831 4.398 12 12 0 00.52 3.507c.26.85 1.084 1.368 1.973 1.368H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 01-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227z" />
                   </svg>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>
@@ -461,7 +553,7 @@ const Sell = () => {
           {!isPostLoading && !isPosted && (
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-10 py-2"
+              className="bg-[#1b5d75] hover:bg-[#164e63] text-white rounded-lg px-10 py-2"
               onClick={handleSell}
             >
               Post Now
@@ -471,7 +563,7 @@ const Sell = () => {
           {isPostLoading && (
             <button
               type="submit"
-              className="bg-blue-500 text-white rounded-lg px-10 py-2 disabled:opacity-75"
+              className="bg-[#164e63] text-white rounded-lg px-10 py-2 disabled:opacity-75"
               disabled
             >
               Posting...
@@ -481,7 +573,7 @@ const Sell = () => {
           {isPosted && !isPostLoading && (
             <button
               type="submit"
-              className="bg-blue-500 text-white rounded-lg px-10 py-2 disabled:opacity-75"
+              className="bg-[#164e63] text-white rounded-lg px-10 py-2 disabled:opacity-75"
               disabled
             >
               Posted
@@ -490,7 +582,7 @@ const Sell = () => {
 
           {isPostLoading && (
             <div className="ml-4 w-10 h-10">
-              <ReactLoading type="spin" color="#3B82F6" width="100%" />
+              <ReactLoading type="spin" color="#164e63" width="100%" />
             </div>
           )}
 
@@ -499,7 +591,7 @@ const Sell = () => {
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
-                color="#3B82F6"
+                color="#164e63"
                 fill="currentColor"
                 className="w-full"
               >
