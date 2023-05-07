@@ -1,65 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { AiOutlineClose, AiOutlineLogout } from "react-icons/ai";
-import { GrNext, GrPrevious } from "react-icons/gr";
-import "./Slider.css";
+
+import AliceCarousel from "react-alice-carousel";
+import "react-alice-carousel/lib/alice-carousel.css";
 
 const Card1 = ({ product }) => {
-  let allImages = [product?.image1, product?.image2, product?.image3];
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  setTimeout(() => {
-    const newIndex = (currentImageIndex + 1) % allImages.length;
-    setCurrentImageIndex(() => newIndex);
-  }, 3500);
-
-  const handlePrevClick = () => {
-    const newIndex =
-      (currentImageIndex - 1 + allImages.length) % allImages.length;
-    setCurrentImageIndex(newIndex);
-  };
-
-  const handleNextClick = () => {
-    const newIndex = (currentImageIndex + 1) % allImages.length;
-    setCurrentImageIndex(newIndex);
-  };
+  const allImages = [
+    <div className="bg-black flex justify-center">
+      <img src={product?.image1} className="h-96" />
+    </div>,
+    <div className="bg-black flex justify-center">
+      <img src={product?.image2} className="h-96" />
+    </div>,
+    <div className="bg-black flex justify-center">
+      <img src={product?.image3} className="h-96" />
+    </div>,
+  ];
 
   return (
     <>
       <div className="flex flex-col p-2 justify-center rounded-lg border bg-white border-gray-200 shadow-lg">
-        <div className="slider-container">
-          <div className="slider bg-black border border-black">
-            {allImages.map((image, index) => (
-              <img
-                key={index}
-                src={image}
-                className={`b5:px-20 slide ${
-                  index === currentImageIndex ? "active" : ""
-                } ${
-                  index > currentImageIndex
-                    ? "next"
-                    : index < currentImageIndex
-                    ? "prev"
-                    : ""
-                }`}
-              />
-            ))}
-          </div>
-          <div className="">
-            <button
-              className="bg-white rounded-full p-1 absolute top-1/2 left-2"
-              onClick={handlePrevClick}
-            >
-              {/* Prev */}
-              <GrPrevious className="h-6 w-6 text-white" />
-            </button>
-            <button
-              className="bg-white rounded-full p-1 absolute top-1/2 right-2"
-              onClick={handleNextClick}
-            >
-              <GrNext className="h-6 w-6 text-white" />
-            </button>
-          </div>
-        </div>
+        <AliceCarousel
+          mouseTracking
+          items={allImages}
+          autoPlay="true"
+          autoPlayInterval={2000}
+          infinite="true"
+          disableButtonsControls="true"
+        />
         <div className="block px-4 py-2">
           <div className="py-4">
             <h5 className="mb-2 text-xl font-semibold">Details</h5>

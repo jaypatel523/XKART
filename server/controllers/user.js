@@ -212,6 +212,7 @@ const logout = (req, res) => {
 };
 
 const getUserDetails = async (req, res) => {
+  
   try {
     const user = await User.findOne({ _id: req.params.userId });
     res.json({ user, success: true });

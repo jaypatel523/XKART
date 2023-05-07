@@ -12,6 +12,7 @@ import Wishlist from "./components/Pages/Wishlist/Wishlist";
 import AdminDashboard from "./components/Authentication/AdminDashboard";
 import Products from "./components/Pages/AllProducts/Products";
 import Profile from "./components/ProfilePages/Profile";
+import ImageSlider from "./ImageSlider";
 
 
 const router = createBrowserRouter([
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
   {
     path: "/admindashboard",
     element: <AdminDashboard />,
+  },
+  {
+    path: "/img",
+    element: <ImageSlider />,
   },
 ]);
 
