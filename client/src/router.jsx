@@ -11,7 +11,9 @@ import SingleProduct from "./components/Pages/AllProducts/SingleProduct/SinglePr
 import Wishlist from "./components/Pages/Wishlist/Wishlist";
 import Products from "./components/Pages/AllProducts/Products";
 import Profile from "./components/ProfilePages/Profile";
+
 import AdminDashboard from "./components/Authentication/Admin/AdminDashboard";
+
 
 const router = createBrowserRouter([
   {
@@ -64,6 +66,7 @@ const router = createBrowserRouter([
     path: "/admindashboard",
     element: <AdminDashboard />,
   },
+  
 ]);
 
 export default router;

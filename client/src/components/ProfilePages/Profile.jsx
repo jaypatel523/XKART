@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../Context";
 import axios from "axios";
 import Card from "../Pages/AllProducts/Card";
+import Term from "./Term";
 
 const Profile = () => {
   const { user } = useContext(UserContext);
@@ -35,12 +36,11 @@ const Profile = () => {
     <>
       {user.userId ? (
         <>
-          <div className=" mt-5 text-center text-3xl">
-            Welcome {user.username}
-          </div>
+          <Term />
+
           <div>
-            <div className=" mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 b11:grid-cols-4 gap-6">
-              <div className="border shadow-xl  ">
+            <div className="md:ml-14 md:mr-14 mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-20 ">
+              <div className="border shadow-xl ">
                 <img
                   name="pending"
                   src="../../../assets/pending.png"
@@ -48,7 +48,9 @@ const Profile = () => {
                   className=" border h-[15.75rem] m-auto hover:cursor-pointer"
                   onClick={(e) => handleClick(e)}
                 />
-                <div className="text-center">View your pending add </div>
+                <div className="text-center my-2 text-xl text-whatsapp font-medium">
+                  View your pending add{" "}
+                </div>
               </div>
               <div className="border shadow-xl  ">
                 <img
@@ -58,7 +60,9 @@ const Profile = () => {
                   className=" border h-[15.75rem] m-auto hover:cursor-pointer"
                   onClick={(e) => handleClick(e)}
                 />
-                <div className="text-center">View your active add</div>
+                <div className="text-center my-2 text-xl text-whatsapp font-medium">
+                  View your active add
+                </div>
               </div>
               <div className="border shadow-xl  ">
                 <img
@@ -68,7 +72,9 @@ const Profile = () => {
                   className=" border h-[15.75rem] m-auto hover:cursor-pointer"
                   onClick={(e) => handleClick(e)}
                 />
-                <div className="text-center">View your rejected add</div>
+                <div className="text-center my-2 text-xl text-whatsapp font-medium">
+                  View your rejected add
+                </div>
               </div>
             </div>
           </div>
