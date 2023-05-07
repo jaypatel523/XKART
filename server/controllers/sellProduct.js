@@ -98,7 +98,7 @@ const updateReject = async (req, res) => {
 const getProducts = async (req, res) => {
   try {
     const userId = req.params.userId;
-    console.log(req.params);
+    // console.log(req.params);
 
     const products = await SellProduct.find({ userId: userId })
       .populate({
@@ -109,7 +109,7 @@ const getProducts = async (req, res) => {
       .exec();
 
 
-    console.log("products", products[0].products);
+    // console.log("products", products[0].products);
     res.send(products);
 
 
@@ -119,5 +119,30 @@ const getProducts = async (req, res) => {
 }
 
 
-module.exports = { sellProduct, updateApprove, updateReject, getProducts };
+
+
+const updateMarkAsSold = async (req, res) => {
+  try {
+
+    // console.log(req.body);
+
+    let product = await AllProduct.findOneAndUpdate(
+      { _id: req.body._id },
+      {
+        markedSold: true
+      }
+    );
+
+    await product.save();
+
+    res.send({ message: "updated", success: true });
+  }
+  catch (err) {
+    res.json({ message: err.message, success: false });
+  }
+}
+
+
+
+module.exports = { sellProduct, updateApprove, updateReject, getProducts, updateMarkAsSold };
 

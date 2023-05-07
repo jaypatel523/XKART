@@ -99,6 +99,12 @@ const Card3 = ({ product }) => {
 
   // console.log(product);
 
+  const updateMarkAsSold = () => {
+    axios.patch("/api/updateMarkAsSold", product).then((res) => {
+      console.log(res);
+    });
+  };
+
   return (
     <>
       {!(user.username === "Admin") && (
@@ -117,8 +123,11 @@ const Card3 = ({ product }) => {
               <div>
                 {isSellerSame ? (
                   <>
-                    <div className="cursor-pointer text-center py-3 text-2xl bg-whatsapp text-white rounded-lg">
-                      It's Your {product.category}
+                    <div
+                      className="cursor-pointer text-center py-3 text-2xl bg-whatsapp text-white rounded-lg"
+                      onClick={updateMarkAsSold}
+                    >
+                      Mark as sold
                     </div>
                   </>
                 ) : (

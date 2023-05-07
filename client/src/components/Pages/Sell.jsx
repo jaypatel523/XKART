@@ -209,7 +209,7 @@ const Sell = () => {
     if (!isPosted) return;
     setTimeout(() => {
       setIsPosted(false);
-      navigate("/");
+      navigate("/profile");
     }, 2000);
   }, [isPosted]);
 

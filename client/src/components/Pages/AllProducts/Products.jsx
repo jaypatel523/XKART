@@ -59,6 +59,7 @@ const Products = () => {
   };
 
   // console.log(results);
+  // console.log(allProducts);
   // console.log(location.state?.category);
   // console.log(categoryWiseProduct);
 
@@ -89,7 +90,10 @@ const Products = () => {
               <>
                 {categoryWiseProduct &&
                   categoryWiseProduct.map((product, index) => {
-                    if (product.adminApproved === true) {
+                    if (
+                      product.adminApproved === true &&
+                      product?.markedSold === false
+                    ) {
                       isEmpty.current = false;
                       return <Card key={index} product={product} />;
                     }
@@ -101,7 +105,10 @@ const Products = () => {
                   <>
                     {allProducts &&
                       allProducts.map((product, index) => {
-                        if (product.adminApproved === true) {
+                        if (
+                          product.adminApproved === true &&
+                          product?.markedSold === false
+                        ) {
                           return <Card key={index} product={product} />;
                         }
                       })}
@@ -110,7 +117,10 @@ const Products = () => {
                   <>
                     {results &&
                       results.map((product, index) => {
-                        if (product.adminApproved === true) {
+                        if (
+                          product.adminApproved === true &&
+                          product?.markedSold === false
+                        ) {
                           return <Card key={index} product={product} />;
                         }
                       })}
