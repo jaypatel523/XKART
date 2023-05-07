@@ -56,13 +56,13 @@ const SingleProduct = () => {
 
   return (
     <>
-      <div className="m-10">
+      <div className="h-screen p-10 bg-gray-100">
         <div className="block md:flex justify-evenly">
-          <div className="mb-10 w-full md:w-[700px] md:mr-4">
+          <div className="mb-10 w-full md:w-[700px]">
             <Card1 product={location.state} />
           </div>
 
-          <div className="b5:min-w-[250px]">
+          <div className="b5:min-w-[300px]">
             <Card2 product={location.state} />
             <Card3 product={location.state} />
             {!location.state.adminApproved && (

@@ -62,13 +62,6 @@ const generateOTP = async (req, res) => {
 
     console.log(req.body);
 
-    const dbmobile = await User.findOne({ mobile: req.body.mobile });
-    if (dbmobile) {
-      throw new Error('Mobile Number already exists');
-    }
-
-    // console.log("dbmobile", dbmobile);
-
     const dbemail = await User.findOne({ email: req.body.email });
     if (dbemail) {
       throw new Error("Email Address already exists")
@@ -201,6 +194,64 @@ const adminLogin = async (req, res) => {
   }
 };
 
+
+const loginWithGoogle = async (req, res) => {
+  try {
+    let user = await User.findOne({ email: req.body.email });
+    // console.log(user);
+    // console.log(req.body);
+    if (!user) throw new Error("User not found");
+
+
+
+
+    const token = jwttoken.sign(
+      {
+        _id: user._id,
+      },
+      process.env.JWT_SECRET
+    );
+
+    res.cookie("token", token, {
+      maxAge: 86400000,
+    });
+
+    res.json({
+      token,
+      user: { _id: user._id, username: user.username, email: user.email },
+      message: "Successfully logged in!",
+      success: true
+    });
+  } catch (err) {
+    res.json({ message: err.message, success: false })
+  }
+}
+
+
+
+const registerWithGoogle = async (req, res) => {
+
+  try {
+    const dbemail = await User.findOne({ email: req.body.email });
+    if (dbemail) {
+      throw new Error("Email Address already exists")
+    }
+    const user = new User(req.body);
+
+    await user.save()
+    res.status(200).json({ message: "Successfully Registered!", user, success: true })
+
+  }
+  catch (err) {
+    res.json({ message: err.message, success: false })
+  }
+
+
+}
+
+
+
+
 const logout = (req, res) => {
   res
     .cookie("token", "", {
@@ -221,6 +272,17 @@ const getUserDetails = async (req, res) => {
 
 };
 
+
+const getUser = async (req, res) => {
+  try {
+    // console.log(req.body, "hi");
+    const user = await User.findOne({ email: req.body.data });
+    res.json({ user, success: true });
+  }
+  catch (err) {
+    res.json({ message: err.message, success: false });
+  }
+}
 
 
 const requireSignin = jwt({
@@ -244,9 +306,9 @@ module.exports = {
   hasAuthorization,
   getUserDetails,
   adminLogin,
-
+  loginWithGoogle,
   requireSignin,
-
-  generateOTP
-
+  registerWithGoogle,
+  generateOTP,
+  getUser
 };

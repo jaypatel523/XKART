@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { io } from "socket.io-client";
 
 const Card3 = ({ product }) => {
-  const { user } = useContext(UserContext);
+  const { user, isAdmin, setIsAdmin } = useContext(UserContext);
   const [isSellerSame, setIsSameSeller] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
   const navigateTo = useNavigate();
@@ -34,7 +34,9 @@ const Card3 = ({ product }) => {
     setIsOpenDialog(false);
   };
 
-  console.log(user);
+  // console.log(isAdmin);
+
+  // console.log(user);
 
   const startConversation = () => {
     if (!user.userId) {
@@ -83,41 +85,57 @@ const Card3 = ({ product }) => {
       });
   }, []);
 
+  // useEffect(() => {
+  //   if (!user.userId) return;
+  //   // console.log(user.email);
+
+  //   axios.post("/api/getUser", { data: user.email }).then((res) => {
+  //     console.log(res);
+  //     if (res.data.user?.isAdmin) {
+  //       setIsAdmin(res.data.user.isAdmin);
+  //     }
+  //   });
+  // }, []);
+
+  // console.log(product);
+
   return (
     <>
-      <div className="border rounded border-gray-200 bg-white shadow-lg">
-        <div className="">
-          <div className="p-4">
-            <div>
-              <div className="flex mb-2 justify-between text-xl font-semibold cursor-pointer">
-                <div className="flex justify-between">
-                  <VscAccount className="w-12 h-12" />
-                  <div className="my-auto ml-2">{product.seller}</div>
+      {!(user.username === "Admin") && (
+        <div className="border rounded border-gray-200 bg-white shadow-lg">
+          <div className="">
+            <div className="p-4">
+              <div>
+                <div className="flex mb-2 justify-between text-xl font-semibold cursor-pointer">
+                  <div className="flex justify-between">
+                    <VscAccount className="w-12 h-12" />
+                    <div className="my-auto ml-2">{product.seller}</div>
+                  </div>
+                  <IoIosArrowForward className="my-auto" />
                 </div>
-                <IoIosArrowForward className="my-auto" />
               </div>
-            </div>
-            <div>
-              {isSellerSame ? (
-                <>
-                  <div className="cursor-pointer text-center mb-2 py-3 text-2xl bg-blue-500 text-white rounded-lg">
-                    It's Your {product.category}
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div
-                    className="cursor-pointer text-center mb-2 py-3 text-2xl bg-blue-500 text-white rounded-lg"
-                    onClick={startConversation}
-                  >
-                    Chat with seller
-                  </div>
-                </>
-              )}
+              <div>
+                {isSellerSame ? (
+                  <>
+                    <div className="cursor-pointer text-center mb-2 py-3 text-2xl bg-whatsapp text-white rounded-lg">
+                      It's Your {product.category}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div
+                      className="cursor-pointer text-center mb-2 py-3 text-2xl bg-whatsapp text-white rounded-lg"
+                      onClick={startConversation}
+                    >
+                      Chat with seller
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

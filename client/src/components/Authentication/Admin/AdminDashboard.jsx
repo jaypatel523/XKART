@@ -1,9 +1,20 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
-import Card from "../Pages/AllProducts/Card";
+import Card from "../../Pages/AllProducts/Card";
+import { UserContext } from "../../../Context";
+import { useNavigate } from "react-router-dom";
+import Product from "./product";
 
 const AdminDashboard = () => {
   const [allProducts, setAllProducts] = useState();
+  const { user, isAdmin } = useContext(UserContext);
+  const navigateTo = useNavigate();
+
+  useEffect(() => {
+    if (!(user.username === "Admin")) {
+      navigateTo("/login");
+    }
+  }, []);
 
   useEffect(() => {
     axios
@@ -27,7 +38,7 @@ const AdminDashboard = () => {
                 product.adminApproved === false &&
                 product.adminRejected === false
               ) {
-                return <Card key={index} product={product} />;
+                return <Product key={index} product={product} />;
               }
               // console.log(product)
             })}

@@ -4,6 +4,9 @@ import axios from "axios";
 import { UserContext } from "../../Context";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FcGoogle } from "react-icons/fc";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "./config";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,12 +14,14 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigateTo = useNavigate();
 
-  const { isLogin, setIsLogin, user, setUser } = useContext(UserContext);
+  const { isLogin, setIsLogin, user, setUser, isAdmin, setIsAdmin } =
+    useContext(UserContext);
 
   const handleLogin = () => {
     const data = { email, password, admin };
- 
+
     if (admin === "admin") {
+      setIsAdmin(true);
       axios.post("/api/adminlogin", data).then((res) => {
         if (res.data.success) {
           sessionStorage.setItem("userId", res.data.user._id);
@@ -52,50 +57,91 @@ const Login = () => {
         navigateTo("/admindashboard");
       });
     } else {
-      axios.post("/api/login", data).then((res) => {
-        if (res.data.success) {
-          sessionStorage.setItem("userId", res.data.user._id);
-          sessionStorage.setItem("username", res.data.user.username);
-          sessionStorage.setItem("email", res.data.user.email);
-          setIsLogin(true);
-          setUser({
-            userId: res.data.user._id,
-            username: res.data.user.username,
-            email: res.data.user.email,
-          });
-          toast("Login successfully", {
-            position: "top-center",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        } else {
-          toast(res.data.message, {
-            position: "top-center",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        }
-
-          if (admin === "admin") {
-            navigateTo("/admindashboard");
+      axios
+        .post("/api/login", data)
+        .then((res) => {
+          if (res.data.success) {
+            sessionStorage.setItem("userId", res.data.user._id);
+            sessionStorage.setItem("username", res.data.user.username);
+            sessionStorage.setItem("email", res.data.user.email);
+            setIsLogin(true);
+            setUser({
+              userId: res.data.user._id,
+              username: res.data.user.username,
+              email: res.data.user.email,
+            });
+            toast("Login successfully", {
+              position: "top-center",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
           } else {
+            toast(res.data.message, {
+              position: "top-center",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+          }
+          navigateTo("/");
+        })
+        .catch((err) => {
+          alert(err.response.data.message);
+        });
+    }
+  };
+
+  const handleSignInWithGoogle = () => {
+    signInWithPopup(auth, provider).then((res) => {
+      // setEmail(res.user.email);
+
+      axios
+        .post("/api/loginWithGoogle", { email: res.user.email })
+        .then((res) => {
+          if (res.data.success) {
+            sessionStorage.setItem("userId", res.data.user._id);
+            sessionStorage.setItem("username", res.data.user.username);
+            sessionStorage.setItem("email", res.data.user.email);
+            setIsLogin(true);
+            setUser({
+              userId: res.data.user._id,
+              username: res.data.user.username,
+              email: res.data.user.email,
+            });
+            toast("Login successfully", {
+              position: "top-center",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+
             navigateTo("/");
+          } else {
+            toast(res.data.message, {
+              position: "top-center",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
           }
         })
         .catch((err) => {
           alert(err.response.data.message);
-
         });
-
-    }
+    });
   };
 
   return (
@@ -180,9 +226,25 @@ const Login = () => {
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-[100%]"
                       onClick={handleLogin}
                     >
-                      Submit
+                      Login
                     </button>
                   </div>
+                  <div className="relative text-center flex items-center">
+                    <div className="border border-gray-300 w-[110px] h-0 mr-2 my-2"></div>
+                    <div>or</div>
+                    <div className="border border-gray-300 w-[110px] h-0 ml-2 my-2"></div>
+                  </div>
+                  {admin === "user" && (
+                    <div className="relative text-center">
+                      <button
+                        className="flex items-center justify-center border hover:bg-gray-100 py-2 px-4 rounded w-[100%]"
+                        onClick={handleSignInWithGoogle}
+                      >
+                        <FcGoogle className="mr-2 w-6 h-6" /> sign in with
+                        google
+                      </button>
+                    </div>
+                  )}
                   <div className="text-center text-blue-500 text-sm">
                     <Link
                       className="text-blue-500 py-2 px-4  cursor-pointer rounded"

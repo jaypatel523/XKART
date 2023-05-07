@@ -7,10 +7,10 @@ const Card1 = ({ product }) => {
   let allImages = [product?.image1, product?.image2, product?.image3];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  setTimeout(() => {
-    const newIndex = (currentImageIndex + 1) % allImages.length;
-    setCurrentImageIndex(() => newIndex);
-  }, 3500);
+  // setTimeout(() => {
+  //   const newIndex = (currentImageIndex + 1) % allImages.length;
+  //   setCurrentImageIndex(() => newIndex);
+  // }, 3500);
 
   const handlePrevClick = () => {
     const newIndex =
@@ -25,14 +25,14 @@ const Card1 = ({ product }) => {
 
   return (
     <>
-      <div className="flex flex-col p-2 justify-center rounded-lg border bg-white border-gray-200 shadow-lg">
+      <div className="flex flex-col  justify-center rounded-lg border bg-gray-white border-gray-200 shadow-lg">
         <div className="slider-container">
           <div className="slider bg-black border border-black">
             {allImages.map((image, index) => (
               <img
                 key={index}
                 src={image}
-                className={`b5:px-20 slide ${
+                className={`b5:px-20 h-[500px] slide ${
                   index === currentImageIndex ? "active" : ""
                 } ${
                   index > currentImageIndex
@@ -60,9 +60,9 @@ const Card1 = ({ product }) => {
             </button>
           </div>
         </div>
-        <div className="block px-4 py-2">
+        <div className="block px-4 py-2 bg-white">
           <div className="py-4">
-            <h5 className="mb-2 text-xl font-semibold">Details</h5>
+            <h5 className="mb-2 text-xl  font-semibold">Details</h5>
             <div>
               <p className="mb-2">
                 Brand

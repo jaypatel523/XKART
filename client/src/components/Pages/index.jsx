@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 
 const index = () => {
   return (
-    <div className="h-screen bg-gray-200">
+    <div className="">
       <Navbar />
       <Categories />
       <Outlet />
