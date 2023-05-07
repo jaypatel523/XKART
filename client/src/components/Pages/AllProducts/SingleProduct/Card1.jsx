@@ -33,7 +33,7 @@ const Card1 = ({ product }) => {
         <div className="block px-4 py-2">
 
           <div className="py-4">
-            <h5 className="mb-2 text-xl  font-semibold">Details</h5>
+            <h5 className="mb-2 text-xl text-whatsapp font-semibold">Details</h5>
             <div>
               <p className="mb-2">
                 Brand
@@ -42,7 +42,7 @@ const Card1 = ({ product }) => {
             </div>
             <hr />
             <hr />
-            <h5 className=" mt-2 mb-2 text-xl font-semibold">Description</h5>
+            <h5 className=" mt-2 mb-2 text-xl text font-semibold">Description</h5>
             <p className="mb-4 text-base">{product.description}</p>
           </div>
         </div>

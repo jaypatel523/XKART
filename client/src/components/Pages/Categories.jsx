@@ -15,7 +15,9 @@ const Categories = () => {
     <>
       {!(user.username === "Admin") && (
         <div className="bg-white">
-          <div className="border p-2 px-4 text-sm flex gap-3 justify-between">
+
+          <div className="border p-2 px-4 text-sm flex gap-3 justify-between ">
+
             <div>
               <div
                 className="font-bold flex items-center p-2 hover:bg-whatsapp hover:text-white cursor-pointer"

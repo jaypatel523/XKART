@@ -30,6 +30,7 @@ const initialState = {
   adminRejected: false,
   markedSold: false,
   isPending: true,
+ 
 };
 
 const Sell = () => {
