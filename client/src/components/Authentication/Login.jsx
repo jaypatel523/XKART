@@ -24,6 +24,7 @@ const Login = () => {
       setIsAdmin(true);
       axios.post("/api/adminlogin", data).then((res) => {
         if (res.data.success) {
+          console.log(res.data.user);
           sessionStorage.setItem("userId", res.data.user._id);
           sessionStorage.setItem("username", res.data.user.username);
           sessionStorage.setItem("email", res.data.user.email);
@@ -53,7 +54,6 @@ const Login = () => {
             progress: undefined,
           });
         }
-
         navigateTo("/admindashboard");
       });
     } else {
@@ -235,12 +235,12 @@ const Login = () => {
                     <div className="border border-gray-300 w-[110px] h-0 ml-2 my-2"></div>
                   </div>
                   {admin === "user" && (
-                    <div className="relative text-center">
+                    <div className="relative text-center border-2 rounded">
                       <button
-                        className="flex items-center justify-center border hover:bg-gray-100 py-2 px-4 rounded w-[100%]"
+                        className="flex items-center justify-center hover:bg-gray-100 py-2 px-4 rounded w-[100%]"
                         onClick={handleSignInWithGoogle}
                       >
-                        <FcGoogle className="mr-2 w-6 h-6" /> sign in with
+                        <FcGoogle className="mr-2 w-6 h-6" /> Sign in with
                         google
                       </button>
                     </div>
