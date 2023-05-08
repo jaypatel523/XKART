@@ -13,7 +13,7 @@ const Product = ({ product }) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [isYourProduct, setIsYourProduct] = useState(false);
 
-  console.log(user);
+  // console.log(user);
   const navigateTo = useNavigate();
   const handleProduct = () => {
     navigateTo(`/product/${product._id}`, {
