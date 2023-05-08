@@ -2,6 +2,8 @@ const User = require("../models/user");
 const jwttoken = require("jsonwebtoken");
 const { expressjwt: jwt } = require("express-jwt");
 const Admin = require("../models/admin");
+
+
 const nodemailer = require('nodemailer');
 let otpSent = "";
 
@@ -263,8 +265,10 @@ const logout = (req, res) => {
 };
 
 const getUserDetails = async (req, res) => {
-  
+
   try {
+    console.log(req.body);
+
     const user = await User.findOne({ _id: req.params.userId });
     res.json({ user, success: true });
   } catch (error) {

@@ -1,6 +1,8 @@
 const SellProduct = require("../models/sellProduct");
 const AllProduct = require("../models/allProducts");
 const { findOneAndUpdate } = require("../models/user");
+const nodemailer = require('nodemailer');
+
 
 // const sellProduct = async (req, res) => {
 //   try {
@@ -62,11 +64,42 @@ const sellProduct = async (req, res) => {
 const updateApprove = async (req, res) => {
   try {
 
-    let product = await AllProduct.findOneAndUpdate(
-      { _id: req.body._id },
-      { adminApproved: true, isPending: false },
+    // console.log(req.body);
 
+    let product = await AllProduct.findOneAndUpdate(
+      { _id: req.body.product._id },
+      { adminApproved: true, isPending: false },
     );
+
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: 'mystudyemail0523@gmail.com',
+        pass: 'siznogegcfjnkpxj',
+      },
+    });
+
+
+    // Define email options
+    // otpSent = otpGenerator();
+    // console.log(otpSent)
+    const mailOptions = {
+      from: 'mystudyemail0523@gmail.com',
+      to: req.body.email,
+      subject: 'XKART Product Approval',
+      html: `<div> ${req.body.message} </div>`,
+    };
+
+    // Send email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.log(`Email sent: ${info.response}`);
+      }
+    });
 
     await product.save();
 
@@ -80,10 +113,40 @@ const updateReject = async (req, res) => {
   try {
 
     let product = await AllProduct.findOneAndUpdate(
-      { _id: req.body._id },
+      { _id: req.body.product._id },
       { adminRejected: true, isPending: false }
 
     );
+
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: 'mystudyemail0523@gmail.com',
+        pass: 'siznogegcfjnkpxj',
+      },
+    });
+
+
+    // Define email options
+    // otpSent = otpGenerator();
+    // console.log(otpSent)
+    const mailOptions = {
+      from: 'mystudyemail0523@gmail.com',
+      to: req.body.email,
+      subject: 'XKART Product Reject',
+      html: `<div> ${req.body.message} </div>`,
+    };
+
+    // Send email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.log(`Email sent: ${info.response}`);
+      }
+    });
 
     await product.save();
 

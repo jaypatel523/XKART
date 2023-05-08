@@ -30,7 +30,6 @@ const initialState = {
   adminRejected: false,
   markedSold: false,
   isPending: true,
- 
 };
 
 const Sell = () => {
@@ -229,7 +228,7 @@ const Sell = () => {
             >
               <input
                 type="text"
-                className="focus:outline-none cursor-pointer"
+                className="border-0 focus:outline-none cursor-pointer"
                 name="category"
                 id="category"
                 value={state.category}

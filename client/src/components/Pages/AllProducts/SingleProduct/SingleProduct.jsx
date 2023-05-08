@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Card1 from "./Card1";
 import Card2 from "./Card2";
 import Card3 from "./Card3";
@@ -12,13 +12,52 @@ const SingleProduct = () => {
   const location = useLocation();
   const navigateTo = useNavigate();
   const { user } = useContext(UserContext);
+  const [msg, setMsg] = useState("");
 
   const handleApprove = () => {
-    axios
-      .patch("/api/adminApproved", location.state)
-      .then((res) => {
-        // console.log(res);
-        toast("Product Approved", {
+    let message = msg.trim();
+    if (message.length == 0) {
+      toast("Please enter the reason for approving this product", {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+    // console.log(location.state);
+    axios.get("/api/getuserdetails/" + location.state.sellerId).then((res) => {
+      // console.log(res);
+      if (res.data.success) {
+        const data = {
+          message,
+          product: location.state,
+          email: res.data.user.email,
+        };
+        axios
+          .patch("/api/adminApproved", data)
+          .then((res) => {
+            // console.log(res);
+            toast("Product Approved", {
+              position: "top-center",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+
+            navigateTo("/admindashboard");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        toast("Something went wrong", {
           position: "top-center",
           autoClose: 1500,
           hideProgressBar: false,
@@ -27,19 +66,53 @@ const SingleProduct = () => {
           draggable: true,
           progress: undefined,
         });
-
-        navigateTo("/admindashboard");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      }
+    });
   };
 
   const handleReject = () => {
-    axios
-      .patch("/api/adminRejected", location.state)
-      .then((res) => {
-        toast("Product Rejected", {
+    let message = msg.trim();
+    if (message.length == 0) {
+      toast("Please enter the reason for approving this product", {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
+    axios.get("/api/getuserdetails/" + location.state.sellerId).then((res) => {
+      // console.log(res);
+      if (res.data.success) {
+        const data = {
+          message,
+          product: location.state,
+          email: res.data.user.email,
+        };
+        axios
+          .patch("/api/adminRejected", data)
+          .then((res) => {
+            toast("Product Rejected", {
+              position: "top-center",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+
+            navigateTo("/admindashboard");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        toast("Something went wrong", {
           position: "top-center",
           autoClose: 1500,
           hideProgressBar: false,
@@ -48,15 +121,11 @@ const SingleProduct = () => {
           draggable: true,
           progress: undefined,
         });
-
-        navigateTo("/admindashboard");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      }
+    });
   };
 
-  console.log(location.state);
+  // console.log(location.state);
 
   return (
     <>
@@ -70,20 +139,37 @@ const SingleProduct = () => {
             <Card2 product={location.state} />
             <Card3 product={location.state} />
             {user.username === "Admin" && (
-              <div className=" flex mt-10 justify-around">
-                <button
-                  className="bg-green-500 text-white rounded-lg py-2 px-4 w-24"
-                  onClick={handleApprove}
-                >
-                  Aprrove
-                </button>
-                <button
-                  className="bg-red-500 text-white rounded-lg py-2 px-4 w-24"
-                  onClick={handleReject}
-                >
-                  Reject
-                </button>
-              </div>
+              <>
+                <div className="text-whatsapp text-3xl text-center">
+                  Enter the message
+                </div>
+                <div className="my-4">
+                  <textarea
+                    className="p-2 border w-full border-gray-200 hover:border-gray-400 focus:outline-none"
+                    cols="3"
+                    rows="3"
+                    type="text"
+                    name="msg"
+                    id="msg"
+                    value={msg}
+                    onChange={(e) => setMsg(e.target.value)}
+                  />
+                </div>
+                <div className=" flex mt-10 justify-around">
+                  <button
+                    className="bg-green-500 text-white rounded-lg py-2 px-4 w-24"
+                    onClick={handleApprove}
+                  >
+                    Aprrove
+                  </button>
+                  <button
+                    className="bg-red-500 text-white rounded-lg py-2 px-4 w-24"
+                    onClick={handleReject}
+                  >
+                    Reject
+                  </button>
+                </div>
+              </>
             )}
           </div>
         </div>
