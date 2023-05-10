@@ -139,7 +139,7 @@ const Categories = () => {
             <div
               className="p-2 rounded-md cursor-pointer hover:bg-whatsapp hover:text-white"
               onClick={() => {
-                navigateTo("/Mororcycle", {
+                navigateTo("/Motorcycle", {
                   state: { category: "Motorcycle" },
                 });
                 setIsAllOpen(false);

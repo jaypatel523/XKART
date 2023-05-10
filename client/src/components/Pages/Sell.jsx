@@ -327,7 +327,7 @@ const Sell = () => {
             />
           </div>
           <div className="flex flex-col my-4">
-            <label htmlFor="brand">Brand</label>
+            <label htmlFor="brand">Brand or Publisher</label>
             <input
               type="text"
               className="p-2 border border-gray-200 hover:border-gray-400 focus:outline-none"
@@ -365,7 +365,7 @@ const Sell = () => {
               </label>
               <input
                 type="text"
-                className="w-full p-2 focus:outline-none"
+                className="w-full border-0 p-2 focus:outline-none"
                 name="price"
                 id="price"
                 value={state.price}

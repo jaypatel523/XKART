@@ -80,7 +80,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sendMessage", ({ senderId, receiverId, text }) => {
-    console.log("send message is working");
+    // console.log("send message is working");
     const user = getUser(receiverId);
     io.to(user.socketId).emit("getMessage", { senderId, text });
   });

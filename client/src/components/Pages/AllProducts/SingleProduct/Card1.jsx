@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
-
 
 const Card1 = ({ product }) => {
   const allImages = [
@@ -20,7 +18,6 @@ const Card1 = ({ product }) => {
 
   return (
     <>
-
       <div className="flex flex-col p-2 justify-center rounded-lg border bg-white border-gray-200 shadow-lg">
         <AliceCarousel
           mouseTracking
@@ -31,18 +28,21 @@ const Card1 = ({ product }) => {
           disableButtonsControls="true"
         />
         <div className="block px-4 py-2">
-
           <div className="py-4">
-            <h5 className="mb-2 text-xl text-whatsapp font-semibold">Details</h5>
+            <h5 className="mb-2 text-xl text-whatsapp font-semibold">
+              Details
+            </h5>
             <div>
               <p className="mb-2">
-                Brand
+                Brand or Publisher
                 <span className="ml-20">{product.brand}</span>
               </p>
             </div>
             <hr />
             <hr />
-            <h5 className=" mt-2 mb-2 text-xl text font-semibold">Description</h5>
+            <h5 className=" mt-2 mb-2 text-xl text font-semibold">
+              Description
+            </h5>
             <p className="mb-4 text-base">{product.description}</p>
           </div>
         </div>
