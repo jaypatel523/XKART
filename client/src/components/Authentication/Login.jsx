@@ -7,12 +7,37 @@ import "react-toastify/dist/ReactToastify.css";
 import { FcGoogle } from "react-icons/fc";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "./config";
+import validator from "validator";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [admin, setAdmin] = useState("user");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState();
+  const [passwordError, setPasswordError] = useState();
   const navigateTo = useNavigate();
+
+  const validatePassword = (e) => {
+    setPassword(e.target.value);
+    if (admin === "admin") return;
+    if (validator.isStrongPassword(e.target.value)) {
+      setPasswordError("Strong Password");
+    } else {
+      setPasswordError(
+        "Passwords must have at least 8 characters and contain the following: uppercase letters, lowercase letters, numbers, and symbols*"
+      );
+    }
+  };
+
+  const validateEmail = (e) => {
+    setEmail(e.target.value);
+    if (admin === "admin") return;
+    if (validator.isEmail(e.target.value)) {
+      setEmailError("Valid Email");
+    } else {
+      setEmailError("Invalid Email*");
+    }
+  };
 
   const { isLogin, setIsLogin, user, setUser, isAdmin, setIsAdmin } =
     useContext(UserContext);
@@ -147,7 +172,7 @@ const Login = () => {
   return (
     <>
       <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-        <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+        <div className="relative py-3 w-[500px] sm:max-w-xl sm:mx-auto">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 rounded-xl"></div>
           <div className="relative px-4 py-10 bg-white shadow-lg rounded-xl sm:p-20">
             <div className="max-w-md mx-auto">
@@ -188,6 +213,15 @@ const Login = () => {
               <div className="divide-y divide-gray-200">
                 <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
                   <div className="relative">
+                    <span
+                      className={
+                        emailError === "Valid Email"
+                          ? "text-success text-red-500 text-sm"
+                          : "text-danger text-red-500 text-sm"
+                      }
+                    >
+                      {emailError}
+                    </span>
                     <input
                       id="email"
                       name="email"
@@ -195,7 +229,7 @@ const Login = () => {
                       className="mb-3 peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
                       placeholder="Email address"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={validateEmail}
                     />
                     <label
                       htmlFor="email"
@@ -205,6 +239,15 @@ const Login = () => {
                     </label>
                   </div>
                   <div className="relative">
+                    <span
+                      className={
+                        passwordError === "Strong Password"
+                          ? "text-success text-red-500 text-sm mb-10"
+                          : "text-danger text-red-500 text-sm mb-10"
+                      }
+                    >
+                      {passwordError}
+                    </span>
                     <input
                       id="password"
                       name="password"
@@ -212,7 +255,7 @@ const Login = () => {
                       className="mb-3 peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
                       placeholder="Password"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={validatePassword}
                     />
                     <label
                       htmlFor="password"
@@ -223,16 +266,22 @@ const Login = () => {
                   </div>
                   <div className="relative text-center">
                     <button
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-[100%]"
+                      className="bg-blue-500 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded w-[100%]"
                       onClick={handleLogin}
+                      // disabled={
+                      //   emailError === "Valid Email" &&
+                      //   passwordError === "Strong Password"
+                      //     ? false
+                      //     : true
+                      // }
                     >
                       Login
                     </button>
                   </div>
                   <div className="relative text-center flex items-center">
-                    <div className="border border-gray-300 w-[110px] h-0 mr-2 my-2"></div>
+                    <div className="border border-gray-300 w-[200px] h-0 mr-2 my-2"></div>
                     <div>or</div>
-                    <div className="border border-gray-300 w-[110px] h-0 ml-2 my-2"></div>
+                    <div className="border border-gray-300 w-[200px] h-0 ml-2 my-2"></div>
                   </div>
                   {admin === "user" && (
                     <div className="relative text-center border-2 rounded">

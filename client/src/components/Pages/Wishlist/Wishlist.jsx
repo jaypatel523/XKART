@@ -87,7 +87,7 @@ const Wishlist = () => {
       )}
       {!isLoading && wishlist.length == 0 && (
         <>
-          <h1 className="flex justify-center items-center text-4xl text-gray-400">
+          <h1 className="flex mb-64 justify-center items-center text-4xl text-gray-400">
             Wishlist is empty
           </h1>
         </>
