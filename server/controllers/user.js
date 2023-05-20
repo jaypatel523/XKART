@@ -267,10 +267,17 @@ const logout = (req, res) => {
 const getUserDetails = async (req, res) => {
 
   try {
-    console.log(req.body);
 
     const user = await User.findOne({ _id: req.params.userId });
-    res.json({ user, success: true });
+    const admin = await Admin.findOne({ _id: req.params.userId });
+
+    if (user) {
+      return res.json({ user: user, success: true });
+    }
+    else {
+      return res.json({ user: admin, success: true });
+    }
+
   } catch (error) {
     res.json({ message: error.message, success: false });
   }
@@ -290,29 +297,13 @@ const getUser = async (req, res) => {
 }
 
 
-const requireSignin = jwt({
-  secret: process.env.JWT_SECRET,
-  userProperty: "auth",
-  algorithms: ["HS256"],
-});
-
-const hasAuthorization = (req, res, next) => {
-  const authorized = req.profile && req.auth && req.profile._id == req.auth._id;
-  if (!authorized) {
-    return res.status(403).json({ error: "User is not authorized" });
-  }
-  next();
-};
-
 module.exports = {
   login,
   logout,
   register,
-  hasAuthorization,
   getUserDetails,
   adminLogin,
   loginWithGoogle,
-  requireSignin,
   registerWithGoogle,
   generateOTP,
   getUser

@@ -14,7 +14,6 @@ import Profile from "./components/ProfilePages/Profile";
 
 import AdminDashboard from "./components/Authentication/Admin/AdminDashboard";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -44,6 +43,10 @@ const router = createBrowserRouter([
         path: "/product/:productId",
         element: <SingleProduct />,
       },
+      {
+        path: "/admindashboard",
+        element: <AdminDashboard />,
+      },
     ],
   },
   {
@@ -62,11 +65,6 @@ const router = createBrowserRouter([
     path: "/menu",
     element: <Menu />,
   },
-  {
-    path: "/admindashboard",
-    element: <AdminDashboard />,
-  },
-  
 ]);
 
 export default router;
