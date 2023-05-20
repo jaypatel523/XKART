@@ -157,13 +157,13 @@ const SingleProduct = () => {
                 </div>
                 <div className=" flex mt-10 justify-around">
                   <button
-                    className="bg-green-500 text-white rounded-lg py-2 px-4 w-24"
+                    className="bg-green-500 text-white hover:bg-green-600 rounded-lg py-2 px-4 w-24"
                     onClick={handleApprove}
                   >
                     Aprrove
                   </button>
                   <button
-                    className="bg-red-500 text-white rounded-lg py-2 px-4 w-24"
+                    className="bg-red-500 text-white hover:bg-red-600 rounded-lg py-2 px-4 w-24"
                     onClick={handleReject}
                   >
                     Reject

@@ -220,7 +220,7 @@ const ChatPage = () => {
 
   return (
     <>
-      <div className="bg-gray-200">
+      <div className="bg-gray-50">
         <section className="max-w-[84rem] mx-20 px-4 sm:px-6 lg:px-4 py-10">
           <div className="border border-white bg-whatsapp text-white rounded-lg shadow-lg flex">
             <div className="w-full  md:w-1/2 border-r-2">

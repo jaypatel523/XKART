@@ -12,6 +12,7 @@ import validator from "validator";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [admin, setAdmin] = useState("user");
+  const [isAdminSelected, setisAdminSelected] = useState(false);
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState();
   const [passwordError, setPasswordError] = useState();
@@ -45,7 +46,7 @@ const Login = () => {
   const handleLogin = () => {
     const data = { email, password, admin };
 
-    if (admin === "admin") {
+    if (isAdminSelected) {
       setIsAdmin(true);
       axios.post("/api/adminlogin", data).then((res) => {
         if (res.data.success) {
@@ -190,6 +191,7 @@ const Login = () => {
                     value="admin"
                     onChange={(e) => {
                       setAdmin(e.target.value);
+                      setisAdminSelected(true);
                     }}
                     checked={admin === "admin"}
                     className="mx-1.5"
@@ -203,7 +205,10 @@ const Login = () => {
                     id="user"
                     name="user"
                     value="user"
-                    onChange={(e) => setAdmin(e.target.value)}
+                    onChange={(e) => {
+                      setAdmin(e.target.value);
+                      setisAdminSelected(false);
+                    }}
                     checked={admin === "user"}
                     className="mx-1.5"
                   />
@@ -265,25 +270,38 @@ const Login = () => {
                     </label>
                   </div>
                   <div className="relative text-center">
-                    <button
-                      className="bg-blue-500 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded w-[100%]"
-                      onClick={handleLogin}
-                      // disabled={
-                      //   emailError === "Valid Email" &&
-                      //   passwordError === "Strong Password"
-                      //     ? false
-                      //     : true
-                      // }
-                    >
-                      Login
-                    </button>
+                    {isAdminSelected ? (
+                      <>
+                        <button
+                          className="bg-blue-500 text-white hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded w-[100%]"
+                          onClick={handleLogin}
+                        >
+                          Login
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          className="hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded w-[100%]"
+                          onClick={handleLogin}
+                          disabled={
+                            emailError === "Valid Email" &&
+                            passwordError === "Strong Password"
+                              ? false
+                              : true
+                          }
+                        >
+                          Login
+                        </button>
+                      </>
+                    )}
                   </div>
                   <div className="relative text-center flex items-center">
                     <div className="border border-gray-300 w-[200px] h-0 mr-2 my-2"></div>
                     <div>or</div>
                     <div className="border border-gray-300 w-[200px] h-0 ml-2 my-2"></div>
                   </div>
-                  {admin === "user" && (
+                  {!isAdminSelected && (
                     <div className="relative text-center border-2 rounded">
                       <button
                         className="flex items-center justify-center hover:bg-gray-100 py-2 px-4 rounded w-[100%]"
