@@ -109,7 +109,6 @@ const Navbar = () => {
                 <div className="text-3xl text-white">X</div>
                 <div className="text-xl pt-1 ml-1 text-white">KART</div>
               </div>
-          
             </div>
             <div className="hidden md:flex justify-between items-center">
               <Link
@@ -120,7 +119,7 @@ const Navbar = () => {
                 <BsChatDots className="w-6 h-6" />
                 {/* Chat */}
               </Link>
-              
+
               <Link
                 to="/wishlist"
                 className="py-2 px-4 text-center hover:bg-whatsapp hover:text-white rounded-lg"

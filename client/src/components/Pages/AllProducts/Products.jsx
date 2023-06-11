@@ -6,6 +6,11 @@ import Card from "./Card";
 import ReactLoading from "react-loading";
 import { BsSearch } from "react-icons/bs";
 import { useRef } from "react";
+import { Pagination } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 const Products = () => {
   const { user } = useContext(UserContext);
@@ -15,20 +20,59 @@ const Products = () => {
   const [categoryWiseProduct, setCategoryWiseProduct] = useState([]);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
+  const [pageIndex, setPageIndex] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
+  const [sortType, setSortType] = useState("");
+  const [defaultProducts, setDefaultProducts] = useState(null);
+
+  const handleChange = (event) => {
+    setSortType(event.target.value);
+  };
+
+  useEffect(() => {
+    if (sortType === "a-z") {
+      const Ascending = [...allProducts].sort((a, b) =>
+        a.title > b.title ? 1 : -1
+      );
+      setAllProducts(Ascending);
+    } else if (sortType === "z-a") {
+      const Descending = [...allProducts].sort((a, b) =>
+        a.title > b.title ? -1 : 1
+      );
+      setAllProducts(Descending);
+    } else if (sortType === "none") {
+      setAllProducts(defaultProducts);
+    }
+  }, [sortType]);
 
   const location = useLocation();
+
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   axios
+  //     .get("/api/getAllProducts")
+  //     .then((res) => {
+  //       // console.log(res);
+  //       setAllProducts(res.data.products);
+  //       setIsLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       console.log("err", err);
+  //     });
+  // }, []);
 
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("/api/getAllProducts")
+      .get(
+        "/api/getPaginatedProducts/query?pageNumber=" + pageIndex + "&limit=8"
+      )
       .then((res) => {
-        // console.log(res);
-        setAllProducts(res.data.products);
+        console.log(res);
+        setTotalPage(res.data.totalPages);
+        setDefaultProducts(res.data.paginatedProducts);
+        setAllProducts(res.data.paginatedProducts);
         setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log("err", err);
       });
   }, []);
 
@@ -57,18 +101,51 @@ const Products = () => {
     setResults(response.data);
   };
 
-  // console.log(results);
-  // console.log(allProducts);
-  // console.log(location.state);
-  // console.log(categoryWiseProduct);
-  // console.log(isEmpty);
-  // console.log(params);
+  const handlePageChage = (e, page) => {
+    setIsLoading(true);
+    setPageIndex(page);
+    axios
+      .get(
+        "/api/getPaginatedProducts/query?pageNumber=" + (page - 1) + "&limit=8"
+      )
+      .then((res) => {
+        console.log(res);
+        setDefaultProducts(res.data.paginatedProducts);
+        setAllProducts(res.data.paginatedProducts);
+        setIsLoading(false);
+      });
+  };
+
+  console.log(params);
 
   return (
     <>
       <div className="bg-gray-100">
         <div className="bg-gray-100">
           <section className="max-w-[86rem] bg-gray-100 mx-10 px-4 sm:px-6 lg:px-4 py-10">
+            <div className="flex mb-5 justify-between items-center">
+              <div>
+                <h1 className="text-gray-500 text-2xl">Filters</h1>
+              </div>
+              <div>
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                  <InputLabel id="demo-select-small-label"> Sort </InputLabel>
+                  <Select
+                    labelId="demo-select-small-label"
+                    id="demo-select-small"
+                    value={sortType}
+                    label="Sort"
+                    onChange={handleChange}
+                  >
+                    <MenuItem value="none">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={"a-z"}>A-Z</MenuItem>
+                    <MenuItem value={"z-a"}>Z-A</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
             <div className="mb-5">
               <div className="flex items-center rounded-lg justify-center border border-black">
                 <input
@@ -85,60 +162,55 @@ const Products = () => {
               </button> */}
               </div>
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 b11:grid-cols-4 gap-10">
-              {/* {isSearching ? <>yes</> : <>no</>} */}
-              {params?.category ? (
-                <>
-                  {categoryWiseProduct &&
-                    categoryWiseProduct.map((product, index) => {
-                      if (
-                        product.adminApproved === true &&
-                        product?.markedSold === false
-                      ) {
+            {!isLoading && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 b11:grid-cols-4 gap-10">
+                {params?.category ? (
+                  <>
+                    {categoryWiseProduct &&
+                      categoryWiseProduct.map((product, index) => {
                         return <Card key={index} product={product} />;
-                      }
-                    })}
-                </>
-              ) : (
-                <>
-                  {query.length == 0 ? (
-                    <>
-                      {allProducts &&
-                        allProducts.map((product, index) => {
-                          if (
-                            product.adminApproved === true &&
-                            product?.markedSold === false
-                          ) {
+                      })}
+                  </>
+                ) : (
+                  <>
+                    {query.length == 0 ? (
+                      <>
+                        {allProducts &&
+                          allProducts.map((product, index) => {
                             return <Card key={index} product={product} />;
-                          }
-                        })}
-                    </>
-                  ) : (
-                    <>
-                      {results &&
-                        results.map((product, index) => {
-                          if (
-                            product.adminApproved === true &&
-                            product?.markedSold === false
-                          ) {
+                          })}
+                      </>
+                    ) : (
+                      <>
+                        {results &&
+                          results.map((product, index) => {
                             return <Card key={index} product={product} />;
-                          }
-                        })}
-                    </>
-                  )}
-                </>
-              )}
-            </div>
-          </section>
-
-          {isLoading && (
-            <>
-              <div className="flex justify-center h-[540px]">
-                <ReactLoading type="balls" color="#164e63" width="200px" />
+                          })}
+                      </>
+                    )}
+                  </>
+                )}
               </div>
-            </>
-          )}
+            )}
+            {isLoading && (
+              <>
+                <div className="flex my-20 justify-center h-96">
+                  <ReactLoading type="spokes" color="#164e63" width="200px" />
+                </div>
+              </>
+            )}
+
+            {!params?.category && (
+              <div className="flex justify-center mt-10">
+                <Pagination
+                  count={totalPage}
+                  variant="outlined"
+                  shape="rounded"
+                  onChange={handlePageChage}
+                />
+              </div>
+            )}
+          </section>
         </div>
       </div>
     </>
